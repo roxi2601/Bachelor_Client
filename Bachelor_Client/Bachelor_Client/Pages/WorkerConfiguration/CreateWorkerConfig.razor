@@ -1,0 +1,659 @@
+@page "/CreateWorkerConfig"
+@layout WorkerConfigurationsLayout
+@using Bunit.Extensions
+@using Bachelor_Client.Models.WorkerConfiguration
+@using Bachelor_Client.Models.Body
+@using Bachelor_Client.Models.General
+@using Bachelor_Client.Services.WorkerConfig
+@inject IWorkerConfigService _WorkerService
+@inject NavigationManager NavigationManager
+<h1 style="color: black;   font-weight: bold; ">
+
+</h1>
+
+<main>
+
+<input id="tabParam" type="radio" name="tabs" checked>
+<label for="tabParam">Parameters</label>
+
+<input id="tabAuth" type="radio" name="tabs">
+<label for="tabAuth">Authorization</label>
+
+<input id="tabHeader" type="radio" name="tabs">
+<label for="tabHeader">Headers</label>
+
+<input id="tabBody" type="radio" name="tabs">
+<label for="tabBody">Body</label>
+
+<section id="content1" >
+    <div class="containerCreate">
+        <div class="row">
+
+            <div class="col-sm">
+                <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="requestType">
+                    <option value="get">GET</option>
+                    <option value="post">POST</option>
+                    <option value="put">PUT</option>
+                    <option value="delete">DELETE</option>
+                </select>
+            </div>
+            <div class="col-sm">
+                <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="url"/>
+                <div class="errorLabel">@errorMessage</div>
+            </div>
+            <div class="col-sm">
+                <button class="button-5" style="width: 50px; height: 50px" @onclick="CreateWorker">Store</button>
+            </div>
+        </div>
+        <div class="row"> </div>
+        <div class="row">
+            <div class="col-sm">
+                <p>Query Parameters</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <table style="width:100%">
+                    <tr>
+                        <th>KEY</th>
+                        <th>VALUE</th>
+                        <th>DESCRIPTION</th>
+                    </tr>
+                    @foreach (var model in parameters)
+                    {
+                        <tr>
+                            <td>@model.Key</td>
+                            <td>@model.Value</td>
+                            <td>@model.Description</td>
+                            <td>
+                                <button style="border: none;" @onclick="() => parameters.Remove(model)">
+                                    X
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <div class="row"> </div>
+                 <a class="add" @onclick="@(() => parameters.Add(new ParametersHeaderModel() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
+                                     
+                <div class="row">
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldParameter" @oninput="(e) => { keyTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldParameter" @oninput="(e) => { valueTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldParameter" @oninput="(e) => { descTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="content2">
+<div class="containerCreate">
+<div class="row">
+
+    <div class="col-sm">
+        <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="requestType">
+            <option value="get">GET</option>
+            <option value="post">POST</option>
+            <option value="put">PUT</option>
+            <option value="delete">DELETE</option>
+        </select>
+    </div>
+    <div class="col-sm">
+        <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="url"/>
+        <div class="errorLabel">@errorMessage</div>
+    </div>
+    <div class="col-sm">
+        <button class="button-5" style="width: 50px; height: 50px" @onclick="CreateWorker">Store</button>
+    </div>
+</div>
+<div class="row"> </div>
+<div class="row">
+    <div class="col-sm">
+        <p>Authorization</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm">
+        <p>Type:</p>
+    </div>
+    <div class="col-sm">
+        <select id="authType" name="authType" style="width: 100px;height: 40px; font-size: 12px;" @bind="authorizationType">
+            <option value="noAuth">No Auth</option>
+            <option value="APIKey">API Key</option>
+            <option value="BearerToken">Bearer Token</option>
+            <option value="BasicAuth">Basic Auth</option>
+            <option value="OAuth1.0">OAuth 1.0</option>
+            <option value="OAuth2.0">OAuth 2.0</option>
+        </select>
+    </div>
+    <div class="col-sm"></div>
+    <div class="col-sm"></div>
+    <div class="col-sm"></div>
+    <div class="col-sm"></div>
+</div>
+@if (authorizationType == "noAuth")
+{
+    <div class="row">
+        <div class="col-sm">
+            <p>This request does not use any authorization. </p>
+        </div>
+    </div>
+}
+@if (authorizationType == "APIKey")
+{
+    <div class="row">
+        <div class="col-sm">
+            <p>Key:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="APIKey_KEY"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Value:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="APIKey_Value"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            Add to:
+        </div>
+        <div class="col-sm">
+            <select id="addTo" name="addTo" style="width: 200px; height: 40px; font-size: 12px;" @bind="APIKEY_AddTo">
+                <option value="Header">Header</option>
+                <option value="QueryParameters">Query Parameters</option>
+            </select>
+        </div>
+    </div>
+}
+@if (authorizationType == "BearerToken")
+{
+    <div class="row">
+        <div class="col-sm">
+            <p>Token:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Token" style="width: 200px; height: 30px" @bind="BearerToken_Token"/>
+        </div>
+    </div>
+}
+@if (authorizationType == "BasicAuth")
+{
+    <div class="row">
+        <div class="col-sm">
+            <p>Username:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Username" style="width: 200px; height: 30px" @bind="BasicAuth_Username"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Password:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Password" style="width: 200px; height: 30px" @bind="BasicAuth_Password"/>
+        </div>
+    </div>
+}
+@if (authorizationType == "OAuth1.0")
+{
+    <div class="row">
+        <div class="col-sm">
+            Signature method:
+        </div>
+        <div class="col-sm">
+            <select id="signatureMethod" name="signatureMethod" style="width: 200px; height: 40px; font-size: 12px;" @bind="OAuth1_SignatureMethod">
+                <option value="1">HMAC-SHA1</option>
+                <option value="2">HMAC-SHA256</option>
+                <option value="3">HMAC-SHA512</option>
+                <option value="4">RSA-SHA1</option>
+                <option value="5">RSA-SHA256</option>
+                <option value="6">RSA-SHA512</option>
+                <option value="7">PLAINTEXT</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Consumer Key:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Consumer Key" style="width: 200px; height: 30px" @bind="OAuth1_CusKey"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Consumer Secret:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Consumer Secret" style="width: 200px; height: 30px" @bind="OAuth1_CusSecret"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Access Token:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Access Token" style="width: 200px; height: 30px" @bind="OAuth1_AccessToken"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Token Secret:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Token Secret" style="width: 200px; height: 30px" @bind="OAuth1_TokenSecret"/>
+        </div>
+    </div>
+    <div class="row">
+        <p style="font-weight: bold">ADVANCED:</p>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Callback URL:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Callback URL" style="width: 200px; height: 30px" @bind="OAuth1_CallbackURL"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Timestamp:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Timestamp" style="width: 200px; height: 30px" @bind="OAuth1_Timestamp"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Nonce:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Nonce" style="width: 200px; height: 30px" @bind="OAuth1_Nonce"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Version:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="1" style="width: 200px; height: 30px" @bind="OAuth1_Version"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Realm:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Realm" style="width: 200px; height: 30px" @bind="OAuth1_Realm"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Include body hash:</p>
+        </div>
+        <div class="col-sm">
+            <select id="bodyHash" name="bodyHash" style="width: 200px;height: 40px; font-size: 12px;" @bind="OAuth1_BodyHash">
+                <option value="yes2">YES</option>
+                <option value="no2">NO</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Add empty parameters to signature:</p>
+        </div>
+        <div class="col-sm">
+            <select id="paramSig" name="paramSig" style="width: 200px;height: 40px; font-size: 12px;" @bind="OAuth1_ParamSig">
+                <option value="yes1">YES</option>
+                <option value="no1">NO</option>
+            </select>
+        </div>
+    </div>
+}
+@if (authorizationType == "OAuth2.0")
+{
+    <div class="row">
+        <div class="col-sm">
+            <p>Access Token:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Access Token" style="width: 200px; height: 30px" @bind="OAuth2_AccessToken"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Header Prefix:</p>
+        </div>
+        <div class="col-sm">
+            <input class="form-control" type="text" placeholder="Header Prefix" style="width: 200px; height: 30px" @bind="OAuth2_HeaderPrefix"/>
+        </div>
+    </div>
+}
+</div>
+
+</section>
+
+<section id="content3">
+    <div class="containerCreate">
+        <div class="row">
+
+            <div class="col-sm">
+                <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="requestType">
+                    <option value="get">GET</option>
+                    <option value="post">POST</option>
+                    <option value="put">PUT</option>
+                    <option value="delete">DELETE</option>
+                </select>
+            </div>
+            <div class="col-sm">
+                <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="url"/>
+                <div class="errorLabel">@errorMessage</div>
+            </div>
+            <div class="col-sm">
+                <button class="button-5" style="width: 50px; height: 50px" @onclick="CreateWorker">Store</button>
+            </div>
+        </div>
+        <div class="row"> </div>
+        <div class="row">
+            <div class="col-sm">
+                <p>Headers</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <table style="width:100%">
+                    <tr>
+                        <th>KEY</th>
+                        <th>VALUE</th>
+                        <th>DESCRIPTION</th>
+                    </tr>
+                    @foreach (var model in headers)
+                    {
+                        <tr>
+                            <td>@model.Key</td>
+                            <td>@model.Value</td>
+                            <td>@model.Description</td>
+                            <td>
+                                <button style="border: none;" @onclick="() => headers.Remove(model)">
+                                    X
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <div class="row"> </div>
+                 <a class="add" @onclick="@(() => headers.Add(new ParametersHeaderModel() { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
+                                   
+                <div class="row">
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldHeader" @oninput="(e) => { keyTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldHeader" @oninput="(e) => { valueTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldHeader" @oninput="(e) => { descTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="content4">
+    <div class="containerCreate">
+        <div class="row">
+
+            <div class="col-sm">
+                <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="requestType">
+                    <option value="get">GET</option>
+                    <option value="post">POST</option>
+                    <option value="put">PUT</option>
+                    <option value="delete">DELETE</option>
+                </select>
+            </div>
+            <div class="col-sm">
+                <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="url"/>
+                <div class="errorLabel">@errorMessage</div>
+            </div>
+            <div class="col-sm">
+                <button class="button-5" style="width: 50px; height: 50px" @onclick="CreateWorker">Store</button>
+            </div>
+        </div>
+        <div class="row"> </div>
+        <div class="row">
+            <div class="col-sm">
+                <p>Body</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <p>Type:</p>
+            </div>
+            <div class="col-sm">
+                <select id="bodyType" name="bodyType" style="width: 100px; height: 40px; font-size: 12px;" @bind="bodyType">
+                    <option value="none">none</option>
+                    <option value="form-data">form-data</option>
+                    <option value="raw">raw</option>
+                </select>
+            </div>
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
+        </div>
+
+        @if (bodyType == "none")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <p>This request does not have a body. </p>
+                </div>
+            </div>
+        }
+        @if (bodyType == "form-data")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <table style="width:100%">
+                        <tr>
+                            <th>KEY</th>
+                            <th>VALUE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                        @foreach (var model in bodies)
+                        {
+                            <tr>
+                                <td>@model.Key</td>
+                                <td>@model.Value</td>
+                                <td>@model.Description</td>
+                                <td>
+                                    <button style="border: none;" @onclick="() => bodies.Remove(model)">
+                                        X
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                    <div class="row"> </div>
+                   <a class="add" @onclick="@(() => bodies.Add(new FormDataModel() { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
+                                           
+                    <div class="row">
+                        <div class="col-sm">
+                            <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldBody" @oninput="(e) => { keyTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                        </div>
+                        <div class="col-sm">
+                            <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldBody" @oninput="(e) => { valueTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                        </div>
+                        <div class="col-sm">
+                            <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldBody" @oninput="(e) => { descTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (bodyType == "raw")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <textarea  id="raw" name="raw" rows="4" cols="50" @bind="Body_Raw">
+                     </textarea>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+</main>
+
+@code {
+
+    #region bindings
+    string requestType = "get";
+    string authorizationType = "noAuth";
+    string bodyType = "none";
+    string APIKEY_AddTo = "Header";
+    string descTextFieldHeader = "";
+    string keyTextFieldHeader = "";
+    string valueTextFieldHeader = "";
+    string descTextFieldParameter = "";
+    string keyTextFieldParameter = "";
+    string valueTextFieldParameter = "";
+    string keyTextFieldBody = "";
+    string valueTextFieldBody = "";
+    string descTextFieldBody = "";
+    string url { get; set; }
+    string Body_Raw { get; set; }
+    string OAuth2_HeaderPrefix { get; set; }
+    string OAuth2_AccessToken { get; set; }
+    string OAuth1_ParamSig { get; set; }
+    string OAuth1_BodyHash { get; set; }
+    string OAuth1_Realm { get; set; }
+    string OAuth1_Version { get; set; }
+    string OAuth1_Nonce { get; set; }
+    string OAuth1_Timestamp { get; set; }
+    string OAuth1_CallbackURL { get; set; }
+    string OAuth1_TokenSecret { get; set; }
+    string OAuth1_AccessToken { get; set; }
+    string OAuth1_CusSecret { get; set; }
+    string OAuth1_CusKey { get; set; }
+    string OAuth1_SignatureMethod { get; set; }
+    string BasicAuth_Password { get; set; }
+    string BasicAuth_Username { get; set; }
+    string BearerToken_Token { get; set; }
+    string APIKey_KEY { get; set; }
+    string APIKey_Value { get; set; }
+    private string errorMessage { get; set; }
+    List<ParametersHeaderModel> parameters = new();
+    List<ParametersHeaderModel> headers = new();
+    List<FormDataModel> bodies = new();
+    #endregion
+
+    private async Task CreateWorker()
+    {
+        try
+        {
+            if (!url.IsNullOrEmpty())
+            {
+                await _WorkerService.CreateWorkerConfiguration(url, requestType, parameters, headers, Data());
+                NavigationManager.NavigateTo("WorkerConfigurationsList");
+    #region empty fields after pressing the button
+
+                errorMessage = "";
+                url = "";
+                Body_Raw = "";
+                OAuth2_HeaderPrefix = "";
+                OAuth2_AccessToken = "";
+                OAuth1_ParamSig = "";
+                OAuth1_BodyHash = "";
+                OAuth1_Realm = "";
+                OAuth1_Version = "";
+                OAuth1_Nonce = "";
+                OAuth1_Timestamp = "";
+                OAuth1_CallbackURL = "";
+                OAuth1_TokenSecret = "";
+                OAuth1_AccessToken = "";
+                OAuth1_CusSecret = "";
+                OAuth1_CusKey = "";
+                OAuth1_SignatureMethod = "";
+                BasicAuth_Password = "";
+                BasicAuth_Username = "";
+                BearerToken_Token = "";
+                APIKEY_AddTo = "";
+                APIKey_KEY = "";
+                APIKey_Value = "";
+                descTextFieldHeader = "";
+                keyTextFieldHeader = "";
+                valueTextFieldHeader = "";
+                descTextFieldParameter = "";
+                keyTextFieldParameter = "";
+                valueTextFieldParameter = "";
+                keyTextFieldBody = "";
+                valueTextFieldBody = "";
+                descTextFieldBody = "";
+
+    #endregion
+            }
+            else
+            {
+                throw new Exception("Please, specify the URL");
+            }
+           
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorMessage = e.Message;
+        }
+       
+    }
+
+    private WorkerConfigData Data()
+    {
+        return new WorkerConfigData
+        {
+            OAuth2_HeaderPrefix = OAuth2_HeaderPrefix,
+            OAuth2_AccessToken = OAuth2_AccessToken,
+            OAuth1_ParamSig = OAuth1_ParamSig,
+            OAuth1_BodyHash = OAuth1_BodyHash,
+            OAuth1_Realm = OAuth1_Realm,
+            OAuth1_Version = OAuth1_Version,
+            OAuth1_Nonce = OAuth1_Nonce,
+            OAuth1_Timestamp = OAuth1_Timestamp,
+            OAuth1_CallbackURL = OAuth1_CallbackURL,
+            OAuth1_TokenSecret = OAuth1_TokenSecret,
+            OAuth1_AccessToken = OAuth1_AccessToken,
+            OAuth1_CusSecret = OAuth1_CusSecret,
+            OAuth1_CusKey = OAuth1_CusKey,
+            OAuth1_SignatureMethod = OAuth1_SignatureMethod,
+            BasicAuth_Password = BasicAuth_Password,
+            BasicAuth_Username = BasicAuth_Username,
+            BearerToken_Token = BearerToken_Token,
+            APIKEY_AddTo = APIKEY_AddTo,
+            APIKey_KEY = APIKey_KEY,
+            APIKey_Value = APIKey_Value,
+            Raw = Body_Raw,
+            Formdata = bodies,
+            AuthType = authorizationType,
+            BodyType = bodyType
+        };
+    }
+    
+}

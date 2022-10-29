@@ -1,0 +1,106 @@
+﻿using Aspose.Cells;
+using Aspose.Cells.Utility;
+
+
+namespace Bachelor_Client.Services.Rest;
+
+public class RestService : IRestService
+{
+    private string CachedContent { get; set; } = "";
+    
+    public async Task<string> GenerateRequest(int workerConfigId, string requestType)
+    {
+        try
+        {
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage responseMessage =
+                await httpClient.GetAsync("https://localhost:8080/requests/" + $"{requestType}" + "/" +
+                                          $"{workerConfigId}"); //Change here
+            return CachedContent = responseMessage.Content.ToString();
+        }
+        catch (Exception e)
+        {
+            return e.Message;
+        }
+       
+    }
+    
+    
+    public Task<string> ExportExcel(string content)
+    {
+        content = CachedContent;
+        Workbook workbook = new Workbook();
+        Worksheet worksheet = workbook.Worksheets[0];
+        JsonLayoutOptions options = new JsonLayoutOptions();
+        options.ArrayAsTable = true;
+        string status;
+
+        if (content != null && !content.Equals("The URL is not valid"))
+        {
+            JsonUtility.ImportData(content, worksheet.Cells, 0, 0, options);
+            workbook.Save("Import-Data-JSON-To-Excel.xlsx");
+            status = "File Exported";
+        }
+        else status = "Cannot export the file";
+        
+        return Task.FromResult(status);
+    }
+
+    public Task<string> ExportCSV(string content)
+    {
+        content = CachedContent;
+        Workbook workbook = new Workbook();
+        Worksheet worksheet = workbook.Worksheets[0];
+        JsonLayoutOptions options = new JsonLayoutOptions();
+        options.ArrayAsTable = true;
+        string status;
+
+        if (content != null && !content.Equals("The URL is not valid"))
+        {
+            JsonUtility.ImportData(content, worksheet.Cells, 0, 0, options);
+            workbook.Save("Import-Data-JSON-To-CSV.csv");
+            status = "File Exported";
+        }
+        else status = "Cannot export the file";
+        
+        return Task.FromResult(status);
+    }
+
+    // public Task<string> GeneratePostRequestRaw(WorkerConfigurationModel workerConfigurationModel, string rawModelText)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+    // public Task<string> GeneratePostRequestFormData(WorkerConfigurationModel workerConfigurationModel,
+    //     List<FormDataModel> formDataModel)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+    // public Task<string> GeneratePutRequestRaw(WorkerConfigurationModel workerConfigurationModel, string rawModelText)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+    // public Task<string> GeneratePutRequestFormdata(WorkerConfigurationModel workerConfigurationModel,
+    //     List<FormDataModel> formDataModel)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+    // public Task<string> GeneratePatchRequestRaw(WorkerConfigurationModel workerConfigurationModel, string rawModelText)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+    // public Task<string> GeneratePatchRequestFormdata(WorkerConfigurationModel workerConfigurationModel,
+    //     List<FormDataModel> formDataModel)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+    // public Task<string> GenerateDeleteRequest(WorkerConfigurationModel workerConfigurationModel)
+    // {
+    //     throw new NotImplementedException();
+    // }
+}

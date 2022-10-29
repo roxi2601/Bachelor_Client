@@ -1,0 +1,476 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: url("background/background.jpg") no-repeat fixed center;
+    background-size: cover;
+    line-height: 1.8;
+
+}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+.w3-bar .w3-button {
+    padding: 16px;
+}
+
+
+/* ---------- WORKERCONFIGURATIONS.RAZOR ---------- */
+.container {
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: rgba(242, 242, 242, 0.90);
+}
+.worker-configlist .card {
+    border-radius: 10px;
+    margin-top: 50%;
+    padding: 20px;
+}
+.worker-configlist .card .card-header  {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px auto;
+    border: 10px solid #f2f2f280;
+    border-radius: 50%;
+}
+.worker-configlist .card .card-header {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px auto;
+    border: 10px solid #f2f2f2;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.worker-configlist .card p {
+    font-size: 16px;
+    color: #000;
+}
+.worker-configlist .table th,
+.worker-configlist .table td {
+    font-size: 14px;
+    padding: 5px 10px;
+    color: #000;
+}
+
+.spinner {
+    border: 10px solid silver;
+    border-top: 10px solid #000509;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 700ms linear infinite;
+    top: 50%;
+
+    position: absolute;
+    left: 50%;
+    margin-left: -4em;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+/* ------------------------------------------------- */
+
+
+/* ---------- CREATEWORKERCONFIG.RAZOR  && EDITWORKERCONFIG---------- */
+
+.containerCreate, .containerEdit {
+    padding: 20px;
+    border-radius: 5px;
+}
+
+a:hover {
+    color: #fffdfe;
+}
+
+.add:hover
+{
+    background-color:transparent;
+    color: #6c757d;
+}
+.add{
+    text-decoration: none;
+    color: black;
+}
+
+h1 {
+    padding: 50px 0;
+    font-weight: 400;
+    text-align: center;
+}
+
+p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+main {
+    min-width: 320px;
+    max-width: 800px;
+    padding: 50px;
+    margin: 0 auto;
+    background-color: rgba(242, 242, 242, 0.90);
+    border-radius: 5px;
+}
+
+section {
+    display: none;
+    padding: 20px 0 0;
+    border-top: 1px solid #ddd;
+}
+
+input {
+    display: none;
+}
+.button-5 {
+    align-items: center;
+    background-clip: padding-box;
+    background-color: #050200;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+}
+
+.button-5:hover,
+.button-5:focus {
+    background-color: #fffdfe;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.button-5:hover {
+    transform: translateY(-1px);
+}
+
+.button-5:active {
+    background-color: #c85000;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+    transform: translateY(0);
+}
+/* ----------------------------------------------------------------- */
+
+/* ---------- CREATEWORKERCONFIG.RAZOR ---------- */
+
+
+
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #777575;
+    border: 1px solid transparent;
+}
+.newvalue:hover
+{
+    background-color: #fffdfe;
+    color: #050001;
+}
+.newvalue
+{
+    background-color: #000305;
+    color: white;
+}
+label:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+label[for*='1']:before {
+    content: '\f1cb';
+}
+
+label[for*='2']:before {
+    content: '\f17d';
+}
+
+label[for*='3']:before {
+    content: '\f16b';
+}
+
+label[for*='4']:before {
+    content: '\f1a9';
+}
+
+label:hover {
+    color: #888;
+    cursor: pointer;
+}
+label:active {
+    color: #696868;
+    cursor: pointer;
+}
+
+input:checked + label {
+    color: #232222;
+    border: 1px solid #ddd;
+    border-top: 2px solid #050001;
+    border-bottom: 1px solid #fff;
+}
+
+#tabParam:checked ~  #content1,
+#tabAuth:checked ~ #content2,
+#tabHeader:checked ~ #content3,
+#tabBody:checked ~ #content4 {
+    display: block;
+
+}
+
+@media screen and (max-width: 650px) {
+    label {
+        font-size: 0;
+    }
+
+    label:before {
+        margin: 0;
+        font-size: 18px;
+    }
+}
+@media screen and (max-width: 400px) {
+    label {
+        padding: 15px;
+    }
+}
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 2%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    /* display: inline-block;*/
+}
+
+/*
+
+h1:focus {
+    outline: none;
+}
+
+a, .btn-link {
+    color: #f4f5f6;
+}
+
+
+.btn-primary {
+    color: #fff;
+    background-color: #fcfcfc;
+    border-color: #f8fafc;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+* {
+    box-sizing: border-box;
+}*/
+
+
+
+/*input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}*/
+
+
+
+/*.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}*/
+
+/*
+!* Clear floats after the columns *!
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+!* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other *!
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+.demo-rowexpander {
+    width: 100%;
+    max-width: 31.375rem;
+    height: 25rem;
+}
+
+.btn:hover {
+    background-color: rgba(131, 131, 136, 0.7);
+}
+
+
+.errorLabel{
+    color: red;
+}
+*/
+/*nav{
+    background: #000203;
+    height: 80px;
+    width: 100%;
+}
+label.logo{
+    color: white;
+    font-size: 25px;
+    line-height: 80px;
+    padding: 0 100px;
+    font-weight: bold;
+}
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+nav ul li a{
+    color: white;
+    font-size: 17px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+a.active,a:hover{
+    background: #717273;
+    transition: .5s;
+}*/
+/*
+.checkbtn{
+    font-size: 30px;
+    color: white;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+#check{
+    display: none;
+}
+@media (max-width: 952px){
+    label.logo{
+        font-size: 30px;
+        padding-left: 50px;
+    }
+    nav ul li a{
+        font-size: 16px;
+    }
+}
+@media (max-width: 858px){
+    .checkbtn{
+        display: block;
+    }
+    ul{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #2c3e50;
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+    }
+    nav ul li{
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+    }
+    nav ul li a{
+        font-size: 20px;
+    }
+    a:hover,a.active{
+        background: none;
+        color: #000305;
+    }
+    #check:checked ~ ul{
+        left: 0;
+    }
+}
+*/
+
+/*
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*/
+
+
+
+
