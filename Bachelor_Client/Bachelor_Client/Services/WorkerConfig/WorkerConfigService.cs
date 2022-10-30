@@ -27,7 +27,7 @@ public class WorkerConfigService : IWorkerConfigService
             Encoding.UTF8,
             "application/json"
         );
-        HttpResponseMessage responseMessage = await httpClient.PostAsync("https://localhost:8080/workerConfig", content);
+        HttpResponseMessage responseMessage = await httpClient.PostAsync("https://localhost:7261/workerConfig", content);
     }
 
     public async Task EditWorkerConfiguration(WorkerConfigurationModel workerConfigurationModel)
@@ -38,7 +38,7 @@ public class WorkerConfigService : IWorkerConfigService
             Encoding.UTF8,
             "application/json"
         );
-        HttpResponseMessage responseMessage = await httpClient.PatchAsync("https://localhost:8080/workerConfig/", content);
+        HttpResponseMessage responseMessage = await httpClient.PatchAsync("https://localhost:7261/workerConfig/", content);
     }
 
     public WorkerConfigurationModel GetWorkerConfigurationById(int workerConfigId)
@@ -60,7 +60,7 @@ public class WorkerConfigService : IWorkerConfigService
     public async Task DeleteWorkerConfiguration(int workerConfigId)
     {
         HttpClient httpClient = new HttpClient();
-        HttpResponseMessage responseMessage = await httpClient.DeleteAsync("https://localhost:8080/workerConfig/" + $"{workerConfigId}");
+        HttpResponseMessage responseMessage = await httpClient.DeleteAsync("https://localhost:7261/workerConfig/" + $"{workerConfigId}");
        // if(responseMessage.Content.)
     }
 }

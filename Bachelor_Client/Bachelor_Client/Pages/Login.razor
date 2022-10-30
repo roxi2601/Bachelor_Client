@@ -4,6 +4,7 @@
 @using Bachelor_Client.Services.Account
 @using Microsoft.AspNetCore.Components.Authorization
 @using Bachelor_Client.Authentication
+@using Bunit.Extensions
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
@@ -56,14 +57,15 @@
 		</div>
 	</div>
 @code {
-	public AccountModel _accountModel = new AccountModel();
+	public AccountModel _accountModel = new();
 	private string errorMessage;
 	private async Task PerformLogin()
 	{
 		errorMessage = "";
 		try
 		{
-			if (await AccountService.GetLoggedAccount(_accountModel) != null)
+			AccountModel accountModel = await AccountService.GetLoggedAccount(_accountModel);
+			if (!accountModel.Email.IsNullOrEmpty())
 			{
 				await ((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(_accountModel);
 				_accountModel.Email = "";
