@@ -110,7 +110,7 @@
     {
         
         GenerateAPICallConfirmation.Content =
-            await RestService.GenerateRequest(workerConfigurationModel.ID, workerConfigurationModel.requestType + workerConfigurationModel.bodyType);
+            await RestService.GenerateRequest(workerConfigurationModel, workerConfigurationModel.requestType + workerConfigurationModel.bodyType);
         GenerateAPICall_Click(confirmed);
     // switch (workerConfigurationModel.requestType)
        //          {

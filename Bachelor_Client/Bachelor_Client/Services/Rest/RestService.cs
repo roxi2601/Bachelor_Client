@@ -1,5 +1,8 @@
-﻿using Aspose.Cells;
+﻿using System.Text;
+using Aspose.Cells;
 using Aspose.Cells.Utility;
+using Bachelor_Client.Models.WorkerConfiguration;
+using Newtonsoft.Json;
 
 
 namespace Bachelor_Client.Services.Rest;
@@ -8,14 +11,18 @@ public class RestService : IRestService
 {
     private string CachedContent { get; set; } = "";
     
-    public async Task<string> GenerateRequest(int workerConfigId, string requestType)
+    public async Task<string> GenerateRequest(WorkerConfigurationModel workerConfigurationModel, string requestType)
     {
         try
         {
             HttpClient httpClient = new HttpClient();
+            StringContent content = new StringContent(
+                JsonConvert.SerializeObject(workerConfigurationModel),
+                Encoding.UTF8,
+                "application/json"
+            );
             HttpResponseMessage responseMessage =
-                await httpClient.GetAsync("https://localhost:8080/requests/" + $"{requestType}" + "/" +
-                                          $"{workerConfigId}"); //Change here
+                await httpClient.PostAsync("https://localhost:8080/requests/" + $"{requestType}", content); //Change here
             return CachedContent = responseMessage.Content.ToString();
         }
         catch (Exception e)
