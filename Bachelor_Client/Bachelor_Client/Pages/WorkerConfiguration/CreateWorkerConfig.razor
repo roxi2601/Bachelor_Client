@@ -5,8 +5,13 @@
 @using Bachelor_Client.Models.Body
 @using Bachelor_Client.Models.General
 @using Bachelor_Client.Services.WorkerConfig
+@using Microsoft.AspNetCore.Components.Authorization
 @inject IWorkerConfigService _WorkerService
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<CascadingAuthenticationState>
+  <AuthorizeView Policy="loggedAccount">
+    <Authorized>
 <h1 style="color: black;   font-weight: bold; ">
 
 </h1>
@@ -522,7 +527,9 @@
 </section>
 
 </main>
-
+   </Authorized>
+      </AuthorizeView>
+    </CascadingAuthenticationState>
 @code {
 
     #region bindings

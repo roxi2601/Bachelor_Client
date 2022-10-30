@@ -4,74 +4,81 @@
 @using Bachelor_Client.Pages.WorkerConfiguration.SendRequest
 @using Bachelor_Client.Services.Rest
 @using Bachelor_Client.Services.WorkerConfig
+@using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager NavigationManager
 @inject IRestService RestService
 @inject IWorkerConfigService WorkerConfigService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<CascadingAuthenticationState>
+  <AuthorizeView Policy="loggedAccount">
+    <Authorized>
 
-
-<div class="worker-configlist py-4">
+    <div class="worker-configlist py-4">
 
                                     
-    <div class="container">
-         <div class="row">
-             <input  class="form-control" type="text" placeholder="Search..." style="width: 15%; height: 5%; background-color: transparent; border: none; margin-left: 82%" />
-         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div style="color: black">
-                    <div class="card-header bg-transparent text-center">
+        <div class="container">
+            <div class="row">
+                <input  class="form-control" type="text" placeholder="Search..." style="width: 15%; height: 5%; background-color: transparent; border: none; margin-left: 82%" />
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div style="color: black">
+                        <div class="card-header bg-transparent text-center">
 
-                    </div>
-                    <div class="card-body">
+                        </div>
+                        <div class="card-body">
 
 
-                        @if (WorkerConfigList.Count == 0)
-                                {
-                                    <div class="spinner"></div>
+                            @if (WorkerConfigList.Count == 0)
+                            {
+                                <div class="spinner"></div>
                                  
-                                    <p>
-                                        <em>@errorMessage</em>
-                                    </p>
-                                }
-                                else
-                                {
-                        <table class='table' style=" color: black">
-                            <thead>
-                            <tr>
-                                <th class="url" style="width: 35%">Worker Configuration</th>
-                                <th class="requestType" style="width: 15%">Request Type</th>
-                                <th class="authType" style="width: 15%">Authorization Type</th>
-                                <th class="bodyType" style="width: 15%">Body Type</th>
-                                <th class="actions" style="width: 30%">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                                <p>
+                                    <em>@errorMessage</em>
+                                </p>
+                            }
+                            else
+                            {
+                                <table class='table' style=" color: black">
+                                    <thead>
+                                    <tr>
+                                        <th class="url" style="width: 35%">Worker Configuration</th>
+                                        <th class="requestType" style="width: 15%">Request Type</th>
+                                        <th class="authType" style="width: 15%">Authorization Type</th>
+                                        <th class="bodyType" style="width: 15%">Body Type</th>
+                                        <th class="actions" style="width: 30%">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                            @foreach(var workerConfig in WorkerConfigList)
-                                        {
-                                            <tr>
-                                                <td>@workerConfig.url</td>
-                                                <td>@workerConfig.requestType</td>
-                                                <td>@workerConfig.authorizationType</td>
-                                                <td>@workerConfig.bodyType</td>
+                                    @foreach(var workerConfig in WorkerConfigList)
+                                    {
+                                        <tr>
+                                            <td>@workerConfig.url</td>
+                                            <td>@workerConfig.requestType</td>
+                                            <td>@workerConfig.authorizationType</td>
+                                            <td>@workerConfig.bodyType</td>
                                                 
-                                                <td>
-                                                     <button class="btn" @onclick="() => NavigateToEdit(workerConfig.ID)"><i class="fa fa-edit"></i> </button>
-                                                    <button class="btn" @onclick="() => DeleteWorkerConfig(workerConfig, true)"><i class="fa fa-trash"></i> </button>
-                                                    <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
-                                                </td>
-                                            </tr>
-                                        }
-                            </tbody>
-                        </table>
-                        }
+                                            <td>
+                                                <button class="btn" @onclick="() => NavigateToEdit(workerConfig.ID)"><i class="fa fa-edit"></i> </button>
+                                                <button class="btn" @onclick="() => DeleteWorkerConfig(workerConfig, true)"><i class="fa fa-trash"></i> </button>
+                                                <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
+        </Authorized>
+      </AuthorizeView>
+    </CascadingAuthenticationState>
  <DeleteWorkerConfig @ref="DeleteWorkerConfigConfirmation" ConfirmationChanged="DeleteWorkerConfig_Click"
                    />
 <SendRequestConfirm @ref="GenerateAPICallConfirmation" ConfirmationChanged="GenerateAPICall_Click" />
