@@ -67,10 +67,7 @@ namespace Bachelor_Client.Authentication
                 Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
         }
 
-        public async Task<AccountModel> GetLoggedAccount()
-        {
-            return cachedAccount;
-        }
+        
         public void Logout()
         {
             

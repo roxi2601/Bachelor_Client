@@ -11,8 +11,8 @@ function onClick(element) {
 var mySidebar = document.getElementById("mySidebar");
 
 function w3_open() {
-    if (mySidebar.style.display === 'block') {
-        mySidebar.style.display = 'none';
+    if (mySidebar.style.display === 'none') {
+        mySidebar.style.display = 'block';
     } else {
         mySidebar.style.display = 'block';
     }

@@ -12,4 +12,5 @@ public interface IWorkerConfigService
     Task<List<WorkerConfigurationModel>> ReadAllWorkerConfigurations();
     Task DeleteWorkerConfiguration(int id);
     WorkerConfigurationModel GetWorkerConfigurationById(int id);
+ 
 }

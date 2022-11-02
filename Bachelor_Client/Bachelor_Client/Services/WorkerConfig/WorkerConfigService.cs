@@ -46,6 +46,10 @@ public class WorkerConfigService : IWorkerConfigService
         return workerConfigs.Find(w => w.ID == workerConfigId);
     }
 
+    public async Task<List<WorkerConfigurationModel>> GetWorkerConfigurationsByURL(string url)
+    {
+        return workerConfigs.FindAll(w => w.url == url);
+    }
     public async Task<List<WorkerConfigurationModel>> ReadAllWorkerConfigurations()
     {
         HttpClient httpClient = new HttpClient();
