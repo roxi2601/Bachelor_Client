@@ -1,9 +1,8 @@
 @page "/EditWorkerConfig/{workerConfigID}"
 @using Microsoft.AspNetCore.Components
-@using Bachelor_Client.Models.WorkerConfiguration
-@using Bachelor_Client.Models.Body
 @using Bachelor_Client.Services.WorkerConfig
 @using Microsoft.AspNetCore.Components.Authorization
+@using Bachelor_Client.Models
 @inject IWorkerConfigService _WorkerService
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -42,13 +41,13 @@
 
 <div class="containerEdit">
     <h3 style="color: black;   font-weight: bold; ">
-                Edit worker configuration for @_workerConfigurationModel.url
+                Edit worker configuration for @_workerConfigurationModel.Url
             </h3>
             
             <div class="row">
     
                 <div class="col-sm">
-                    <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="_workerConfigurationModel.requestType">
+                    <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="_workerConfigurationModel.RequestType">
                         <option value="get">GET</option>
                         <option value="post">POST</option>
                         <option value="put">PUT</option>
@@ -56,7 +55,7 @@
                     </select>
                 </div>
                 <div class="col-sm">
-                    <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="_workerConfigurationModel.url"/>
+                    <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="_workerConfigurationModel.Url"/>
                     <div style="color:red">@errorMessage</div>
                 </div>
                 <div class="col-sm">
@@ -80,14 +79,14 @@
                             <th>VALUE</th>
                             <th>DESCRIPTION</th>
                         </tr>
-                        @foreach (var model in _workerConfigurationModel.parameters)
+                        @foreach (var model in _workerConfigurationModel.Parameters)
                         {
                             <tr>
                                 <td>@model.Key</td>
                                 <td>@model.Value</td>
                                 <td>@model.Description</td>
                                 <td>
-                                    <button style="border: none;" @onclick="() => _workerConfigurationModel.parameters.Remove(model)">
+                                    <button style="border: none;" @onclick="() => _workerConfigurationModel.Parameters.Remove(model)">
                                         X
                                     </button>
                                 </td>
@@ -96,7 +95,7 @@
     
                     </table>
                     <div class="row"> </div>
-                    <a class="add" @onclick="@(() => _workerConfigurationModel.parameters.Add(new ParametersHeaderModel() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
+                    <a class="add" @onclick="@(() => _workerConfigurationModel.Parameters.Add(new Parameter() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
                                         
                     
                     <div class="row">
@@ -128,7 +127,7 @@
             <p>Type:</p>
         </div>
         <div class="col-sm">
-            <select id="authType" name="authType" style="width: 100px;height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.authorizationType">
+            <select id="authType" name="authType" style="width: 100px;height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.LastSavedAuth">
                 <option value="noAuth">No Auth</option>
                 <option value="APIKey">API Key</option>
                 <option value="BearerToken">Bearer Token</option>
@@ -142,7 +141,7 @@
         <div class="col-sm"></div>
         <div class="col-sm"></div>
     </div>
-    @if (_workerConfigurationModel.authorizationType == "noAuth")
+    @if (_workerConfigurationModel.LastSavedAuth == "noAuth")
     {
         <div class="row">
             <div class="col-sm">
@@ -150,14 +149,14 @@
             </div>
         </div>
     }
-    @if (_workerConfigurationModel.authorizationType == "APIKey")
+    @if (_workerConfigurationModel.LastSavedAuth == "APIKey")
     {
         <div class="row">
             <div class="col-sm">
                 <p>Key:</p>
             </div>
             <div class="col-sm">
-                <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.ApiKeyModel.Key"/>
+                <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkApikey.Key"/>
             </div>
         </div>
         <div class="row">
@@ -165,7 +164,7 @@
                 <p>Value:</p>
             </div>
             <div class="col-sm">
-                <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.ApiKeyModel.Value"/>
+                <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkApikey.Value"/>
             </div>
         </div>
     
@@ -174,32 +173,32 @@
                 Add to:
             </div>
             <div class="col-sm">
-                <select id="addTo" name="addTo" style="width: 200px; height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.ApiKeyModel.AddTo">
+                <select id="addTo" name="addTo" style="width: 200px; height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.FkApikey.AddTo">
                     <option value="Header">Header</option>
                     <option value="QueryParameters">Query Parameters</option>
                 </select>
             </div>
         </div>
     }
-    @if (_workerConfigurationModel.authorizationType == "BearerToken")
+    @if (_workerConfigurationModel.LastSavedAuth == "BearerToken")
     {
         <div class="row">
             <div class="col-sm">
                 <p>Token:</p>
             </div>
             <div class="col-sm">
-                <input class="form-control" type="text" placeholder="Token" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.BearerTokenModel.Token"/>
+                <input class="form-control" type="text" placeholder="Token" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkBearerToken.Token"/>
             </div>
         </div>
     }
-    @if (_workerConfigurationModel.authorizationType == "BasicAuth")
+    @if (_workerConfigurationModel.LastSavedAuth == "BasicAuth")
     {
         <div class="row">
             <div class="col-sm">
                 <p>Username:</p>
             </div>
             <div class="col-sm">
-                <input class="form-control" type="text" placeholder="Username" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.BasicAuthModel.Username"/>
+                <input class="form-control" type="text" placeholder="Username" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkBasicAuth.Username"/>
             </div>
         </div>
         <div class="row">
@@ -207,11 +206,11 @@
                 <p>Password:</p>
             </div>
             <div class="col-sm">
-                <input class="form-control" type="text" placeholder="Password" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.BasicAuthModel.Password"/>
+                <input class="form-control" type="text" placeholder="Password" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkBasicAuth.Password"/>
             </div>
         </div>
     }
-    @if (_workerConfigurationModel.authorizationType == "OAuth1.0")
+    @if (_workerConfigurationModel.LastSavedAuth == "OAuth1.0")
     {
         <div class="row">
             <div class="col-sm">
@@ -320,21 +319,21 @@
                 <p>Add empty parameters to signature:</p>
             </div>
             <div class="col-sm">
-                <select id="paramSig" name="paramSig" style="width: 200px;height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.OAuth1Model.EmptyParamToSig">
+                <select id="paramSig" name="paramSig" style="width: 200px;height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.FkOauth10.EmptyParamToSig">
                     <option value="yes1">YES</option>
                     <option value="no1">NO</option>
                 </select>
             </div>
         </div>
     }
-    @if (_workerConfigurationModel.authorizationType == "OAuth2.0")
+    @if (_workerConfigurationModel.LastSavedAuth == "OAuth2.0")
     {
         <div class="row">
             <div class="col-sm">
                 <p>Access Token:</p>
             </div>
             <div class="col-sm">
-                <input class="form-control" type="text" placeholder="Access Token" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.OAuth2Model.AccessToken"/>
+                <input class="form-control" type="text" placeholder="Access Token" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkOauth20.AccessToken"/>
             </div>
         </div>
         <div class="row">
@@ -342,7 +341,7 @@
                 <p>Header Prefix:</p>
             </div>
             <div class="col-sm">
-                <input class="form-control" type="text" placeholder="Header Prefix" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.OAuth2Model.HeaderPrefix"/>
+                <input class="form-control" type="text" placeholder="Header Prefix" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkOauth20.HeaderPrefix"/>
             </div>
         </div>
     }
@@ -363,14 +362,14 @@
                             <th>VALUE</th>
                             <th>DESCRIPTION</th>
                         </tr>
-                        @foreach (var model in _workerConfigurationModel.headers)
+                        @foreach (var model in _workerConfigurationModel.Headers)
                         {
                             <tr>
                                 <td>@model.Key</td>
                                 <td>@model.Value</td>
                                 <td>@model.Description</td>
                                 <td>
-                                    <button style="border: none" @onclick="() => _workerConfigurationModel.headers.Remove(model)">
+                                    <button style="border: none" @onclick="() => _workerConfigurationModel.Headers.Remove(model)">
                                         X
                                     </button>
                                 </td>
@@ -379,7 +378,7 @@
     
                     </table>
                     <div class="row"> </div>
-                    <a class="add"  @onclick="@(() => _workerConfigurationModel.headers.Add(new ParametersHeaderModel() { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
+                    <a class="add"  @onclick="@(() => _workerConfigurationModel.Headers.Add(new Header { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
                     
                     <div class="row">
                         <div class="col-sm">
@@ -412,7 +411,7 @@
                     <p>Type:</p>
                 </div>
                 <div class="col-sm">
-                    <select id="bodyType" name="bodyType" style="width: 100px; height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.bodyType">
+                    <select id="bodyType" name="bodyType" style="width: 100px; height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.LastSavedBody">
                         <option value="none">none</option>
                         <option value="form-data">form-data</option>
                         <option value="raw">raw</option>
@@ -424,7 +423,7 @@
                 <div class="col-sm"></div>
             </div>
     
-            @if (_workerConfigurationModel.bodyType == "none")
+            @if (_workerConfigurationModel.LastSavedBody == "none")
             {
                 <div class="row">
                     <div class="col-sm">
@@ -432,7 +431,7 @@
                     </div>
                 </div>
             }
-            @if (_workerConfigurationModel.bodyType == "form-data")
+            @if (_workerConfigurationModel.LastSavedBody == "form-data")
             {
                 <div class="row">
                     <div class="col-sm">
@@ -458,7 +457,7 @@
     
                         </table>
                         <div class="row"> </div>
-                        <a class="add" @onclick="@(() => bodies.Add(new FormDataModel() { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
+                        <a class="add" @onclick="@(() => bodies.Add(new FormDatum { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
                         
                         <div class="row"></div>
                         <div class="row">
@@ -475,11 +474,11 @@
                     </div>
                 </div>
             }
-            @if (_workerConfigurationModel.bodyType == "raw")
+            @if (_workerConfigurationModel.LastSavedBody == "raw")
             {
                 <div class="row">
                     <div class="col-sm">
-                        <textarea  id="raw" name="raw" rows="4" cols="50" @bind="_workerConfigurationModel.RawModel.Text">
+                        <textarea  id="raw" name="raw" rows="4" cols="50" @bind="_workerConfigurationModel.FkRaw.Text">
                          </textarea>
                     </div>
                 </div>
@@ -497,9 +496,9 @@
 
     [Parameter]
     public string workerConfigID { get; set; }
-    List<ParametersHeaderModel> parameters = new();
-    List<ParametersHeaderModel> headers = new();
-    List<FormDataModel> bodies = new();
+    List<Parameter> parameters = new();
+    List<Header> headers = new();
+    List<FormDatum> bodies = new();
     private string errorMessage { get; set; }
     string descTextFieldHeader = "";
     string keyTextFieldHeader = "";
@@ -510,7 +509,7 @@
     string keyTextFieldBody = "";
     string valueTextFieldBody = "";
     string descTextFieldBody = "";
-    private WorkerConfigurationModel _workerConfigurationModel;
+    private WorkerConfiguration _workerConfigurationModel;
 
 
     

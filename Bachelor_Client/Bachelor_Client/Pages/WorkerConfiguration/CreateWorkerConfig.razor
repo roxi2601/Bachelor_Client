@@ -1,11 +1,9 @@
 @page "/CreateWorkerConfig"
 @layout WorkerConfigurationsLayout
 @using Bunit.Extensions
-@using Bachelor_Client.Models.WorkerConfiguration
-@using Bachelor_Client.Models.Body
-@using Bachelor_Client.Models.General
 @using Bachelor_Client.Services.WorkerConfig
 @using Microsoft.AspNetCore.Components.Authorization
+@using Bachelor_Client.Models
 @inject IWorkerConfigService _WorkerService
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -90,7 +88,7 @@
 
                 </table>
                 <div class="row"> </div>
-                <a class="add" @onclick="@(() => parameters.Add(new ParametersHeaderModel() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
+                <a class="add" @onclick="@(() => parameters.Add(new Parameter() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
 
                 <div class="row">
                     <div class="col-sm">
@@ -411,7 +409,7 @@
 
                 </table>
                 <div class="row"> </div>
-                <a class="add" @onclick="@(() => headers.Add(new ParametersHeaderModel() { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
+                <a class="add" @onclick="@(() => headers.Add(new Header() { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
 
                 <div class="row">
                     <div class="col-sm">
@@ -508,7 +506,7 @@
 
                     </table>
                     <div class="row"> </div>
-                    <a class="add" @onclick="@(() => bodies.Add(new FormDataModel() { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
+                    <a class="add" @onclick="@(() => bodies.Add(new FormDatum() { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
 
                     <div class="row">
                         <div class="col-sm">
@@ -578,9 +576,9 @@
     string APIKey_KEY { get; set; }
     string APIKey_Value { get; set; }
     private string errorMessage { get; set; }
-    List<ParametersHeaderModel> parameters = new();
-    List<ParametersHeaderModel> headers = new();
-    List<FormDataModel> bodies = new();
+    List<Parameter> parameters = new();
+    List<Header> headers = new();
+    List<FormDatum> bodies = new();
     #endregion
 
     private async Task CreateWorker()
@@ -589,7 +587,7 @@
         {
             if (!url.IsNullOrEmpty())
             {
-                await _WorkerService.CreateWorkerConfiguration(url, requestType, parameters, headers, Data());
+                await _WorkerService.CreateWorkerConfiguration(InitData());
                 NavigationManager.NavigateTo("WorkerConfigurationsList");
     #region empty fields after pressing the button
 
@@ -642,34 +640,39 @@
        
     }
 
-    private WorkerConfigData Data()
+    private WorkerConfiguration InitData()
     {
-        return new WorkerConfigData
+        return new WorkerConfiguration()
         {
-            OAuth2_HeaderPrefix = OAuth2_HeaderPrefix,
-            OAuth2_AccessToken = OAuth2_AccessToken,
-            OAuth1_ParamSig = OAuth1_ParamSig,
-            OAuth1_BodyHash = OAuth1_BodyHash,
-            OAuth1_Realm = OAuth1_Realm,
-            OAuth1_Version = OAuth1_Version,
-            OAuth1_Nonce = OAuth1_Nonce,
-            OAuth1_Timestamp = OAuth1_Timestamp,
-            OAuth1_CallbackURL = OAuth1_CallbackURL,
-            OAuth1_TokenSecret = OAuth1_TokenSecret,
-            OAuth1_AccessToken = OAuth1_AccessToken,
-            OAuth1_CusSecret = OAuth1_CusSecret,
-            OAuth1_CusKey = OAuth1_CusKey,
-            OAuth1_SignatureMethod = OAuth1_SignatureMethod,
-            BasicAuth_Password = BasicAuth_Password,
-            BasicAuth_Username = BasicAuth_Username,
-            BearerToken_Token = BearerToken_Token,
-            APIKEY_AddTo = APIKEY_AddTo,
-            APIKey_KEY = APIKey_KEY,
-            APIKey_Value = APIKey_Value,
-            Raw = Body_Raw,
-            Formdata = bodies,
-            AuthType = authorizationType,
-            BodyType = bodyType
+            Url = url,
+            FkRaw = new Raw
+            {
+                Text = Body_Raw
+            },
+            FormData = bodies,
+            LastSavedAuth = authorizationType,
+            LastSavedBody = bodyType,
+            FkApikey = new Apikey
+            {
+                AddTo = APIKEY_AddTo,
+                Key = APIKey_KEY,
+                Value = APIKey_Value
+            },
+            FkBasicAuth = new BasicAuth
+            {
+                Password = BasicAuth_Password,
+                Username = BasicAuth_Username
+            },
+            FkBearerToken = new BearerToken
+            {
+                Token = BearerToken_Token
+            },
+            FkOauth10 = new Oauth10(),
+            FkOauth20 = new Oauth20
+            {
+                AccessToken = OAuth2_AccessToken,
+                HeaderPrefix = OAuth2_HeaderPrefix
+            }
         };
     }
     

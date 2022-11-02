@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Aspose.Cells;
 using Aspose.Cells.Utility;
-using Bachelor_Client.Models.WorkerConfiguration;
+using Bachelor_Client.Models;
 using Newtonsoft.Json;
 
 
@@ -11,7 +11,7 @@ public class RestService : IRestService
 {
     private string CachedContent { get; set; } = "";
     
-    public async Task<string> GenerateRequest(WorkerConfigurationModel workerConfigurationModel, string requestType)
+    public async Task<string> GenerateRequest(WorkerConfiguration workerConfigurationModel, string requestType)
     {
         try
         {

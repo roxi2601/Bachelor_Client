@@ -1,15 +1,14 @@
 ﻿
 
-using Bachelor_Client.Models.General;
-using Bachelor_Client.Models.WorkerConfiguration;
+using Bachelor_Client.Models;
 
 namespace Bachelor_Client.Services.WorkerConfig;
 
 public interface IWorkerConfigService
 {
-    Task CreateWorkerConfiguration(string url, string requestType, List<ParametersHeaderModel> parameters, List<ParametersHeaderModel> headers, WorkerConfigData data);
-    Task EditWorkerConfiguration(WorkerConfigurationModel workerConfigurationModel);
-    Task<List<WorkerConfigurationModel>> ReadAllWorkerConfigurations();
+    Task CreateWorkerConfiguration(WorkerConfiguration workerConfiguration);
+    Task EditWorkerConfiguration(WorkerConfiguration workerConfigurationModel);
+    Task<List<WorkerConfiguration>> ReadAllWorkerConfigurations();
     Task DeleteWorkerConfiguration(int id);
-    WorkerConfigurationModel GetWorkerConfigurationById(int id);
+    WorkerConfiguration GetWorkerConfigurationById(int id);
 }

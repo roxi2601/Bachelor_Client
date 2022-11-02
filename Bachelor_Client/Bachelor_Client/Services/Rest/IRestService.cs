@@ -1,6 +1,6 @@
 ﻿
 
-using Bachelor_Client.Models.WorkerConfiguration;
+using Bachelor_Client.Models;
 
 namespace Bachelor_Client.Services.Rest;
 
@@ -10,7 +10,7 @@ public interface IRestService
 
       Task<string> ExportCSV(string content);
       
-      Task<string> GenerateRequest(WorkerConfigurationModel workerConfigurationModel, string requestType);
+      Task<string> GenerateRequest(WorkerConfiguration workerConfigurationModel, string requestType);
       
       
       
