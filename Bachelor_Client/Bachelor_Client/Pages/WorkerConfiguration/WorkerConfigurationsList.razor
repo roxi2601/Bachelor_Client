@@ -1,11 +1,11 @@
 @page "/WorkerConfigurationsList"
-@using Bachelor_Client.Models.WorkerConfiguration
 @using Bachelor_Client.Pages.WorkerConfiguration.DeleteWorkerConfig
 @using Bachelor_Client.Pages.WorkerConfiguration.SendRequest
 @using Bachelor_Client.Services.Rest
 @using Bachelor_Client.Services.WorkerConfig
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Rendering
+@using Bachelor_Client.Models
 @inject NavigationManager NavigationManager
 @inject IRestService RestService
 @inject IWorkerConfigService WorkerConfigService
@@ -67,13 +67,13 @@
                                             @foreach (var workerConfig in Filtered)
                                             {
                                                 <tr>
-                                                    <td>@workerConfig.url</td>
-                                                    <td>@workerConfig.requestType</td>
-                                                    <td>@workerConfig.authorizationType</td>
-                                                    <td>@workerConfig.bodyType</td>
+                                                    <td>@workerConfig.Url</td>
+                                                    <td>@workerConfig.RequestType</td>
+                                                    <td>@workerConfig.LastSavedAuth</td>
+                                                    <td>@workerConfig.LastSavedBody</td>
 
                                                     <td>
-                                                        <button class="btn" @onclick="() => NavigateToEdit(workerConfig.ID)"><i class="fa fa-edit"></i> </button>
+                                                        <button class="btn" @onclick="() => NavigateToEdit(workerConfig.PkWorkerConfigurationId)"><i class="fa fa-edit"></i> </button>
                                                         <button class="btn" @onclick="() => DeleteWorkerConfig(workerConfig, true)"><i class="fa fa-trash"></i> </button>
                                                         <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
                                                     </td>
@@ -97,57 +97,27 @@
 <SendRequestConfirm @ref="GenerateAPICallConfirmation" ConfirmationChanged="GenerateAPICall_Click" />
 
 @code {
-    public List<WorkerConfigurationModel> WorkerConfigList = new();
+    public List<WorkerConfiguration> WorkerConfigList = new();
     private SendRequestBase GenerateAPICallConfirmation { get; set; }
     private DeleteWorkerConfigBase DeleteWorkerConfigConfirmation { get; set; }
     private string errorMessage = "";
     public string SearchText = "";
-    List<WorkerConfigurationModel> Filtered => WorkerConfigList.Where(
-        w => w.url.ToLower().Contains(SearchText.ToLower())).ToList();
+    
 
     protected override async Task OnInitializedAsync()
     {
         WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
-        WorkerConfigList.Add(new WorkerConfigurationModel
-        {
-            ID = 1,
-            url = "https://ipinfo.io/161.185.160.93/geo",
-            headers = new List<ParametersHeaderModel>(),
-            parameters = new List<ParametersHeaderModel>(),
-            authorizationType = "NoAuth",
-            bodyType = "none",
-            requestType = "get"
-        });
-        WorkerConfigList.Add(new WorkerConfigurationModel
-        {
-            ID = 2,
-            url = "https://caca.io/161.185.160.93/geo",
-            headers = new List<ParametersHeaderModel>(),
-            parameters = new List<ParametersHeaderModel>(),
-            authorizationType = "NoAuth",
-            bodyType = "none",
-            requestType = "get"
-        });
-        WorkerConfigList.Add(new WorkerConfigurationModel
-        {
-            ID = 3,
-            url = "https://pipi.io/161.185.160.93/geo",
-            headers = new List<ParametersHeaderModel>(),
-            parameters = new List<ParametersHeaderModel>(),
-            authorizationType = "NoAuth",
-            bodyType = "none",
-            requestType = "get"
-        });
     }
     
-   
+    List<WorkerConfiguration> Filtered => WorkerConfigList.Where(
+        w => w.Url.ToLower().Contains(SearchText.ToLower())).ToList();
 
-    private async Task DeleteWorkerConfig(WorkerConfigurationModel workerConfigurationModel, bool confirmed)
+    private async Task DeleteWorkerConfig(WorkerConfiguration workerConfigurationModel, bool confirmed)
     {
-        DeleteWorkerConfigConfirmation.URL = workerConfigurationModel.url;
+        DeleteWorkerConfigConfirmation.URL = workerConfigurationModel.Url;
         DeleteWorkerConfigConfirmation.ConfirmationMessage = "Are you sure you want to delete worker configuration for " + DeleteWorkerConfigConfirmation.URL + " ?";
         DeleteWorkerConfig_Click(confirmed);
-        await WorkerConfigService.DeleteWorkerConfiguration(workerConfigurationModel.ID);
+        await WorkerConfigService.DeleteWorkerConfiguration(workerConfigurationModel.PkWorkerConfigurationId);
     }
     private void DeleteWorkerConfig_Click(bool confirmed)
     {
@@ -158,11 +128,11 @@
         
     }
     
-    private async Task GenerateAPICall(WorkerConfigurationModel workerConfigurationModel, bool confirmed)
+    private async Task GenerateAPICall(WorkerConfiguration workerConfigurationModel, bool confirmed)
     {
         
         GenerateAPICallConfirmation.Content =
-            await RestService.GenerateRequest(workerConfigurationModel, workerConfigurationModel.requestType + workerConfigurationModel.bodyType);
+            await RestService.GenerateRequest(workerConfigurationModel, workerConfigurationModel.RequestType + workerConfigurationModel.LastSavedBody);
         GenerateAPICall_Click(confirmed);
     // switch (workerConfigurationModel.requestType)
        //          {

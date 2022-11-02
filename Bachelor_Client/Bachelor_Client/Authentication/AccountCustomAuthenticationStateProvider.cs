@@ -1,7 +1,7 @@
 ﻿
 using System.Security.Claims;
 using System.Text.Json;
-using Bachelor_Client.Models.Account;
+using Bachelor_Client.Models;
 using Bachelor_Client.Services.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
@@ -14,7 +14,7 @@ namespace Bachelor_Client.Authentication
         private readonly IJSRuntime jsRuntime;
         private readonly IAccountService accountService;
 
-        private AccountModel cachedAccount;
+        private Account cachedAccount;
 
         public AccountCustomAuthenticationStateProvider(IJSRuntime jsRuntime, IAccountService accountService)
         {
@@ -30,7 +30,7 @@ namespace Bachelor_Client.Authentication
                 string accountAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "accountUser");
                 if (!string.IsNullOrEmpty(accountAsJson))
                 {
-                    cachedAccount = JsonSerializer.Deserialize<AccountModel>(accountAsJson);
+                    cachedAccount = JsonSerializer.Deserialize<Account>(accountAsJson);
                     
                     identity = SetupClaimsForAccount(cachedAccount);
                 }
@@ -45,7 +45,7 @@ namespace Bachelor_Client.Authentication
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
 
-        public async Task ValidateLogin(AccountModel accountModel)
+        public async Task ValidateLogin(Account accountModel)
         {
             Console.WriteLine("Validating log in");
             if (string.IsNullOrEmpty(accountModel.Email)) throw new Exception("Enter email");
@@ -53,7 +53,7 @@ namespace Bachelor_Client.Authentication
 
             ClaimsIdentity identity = new ClaimsIdentity();
             try {
-                AccountModel account = await accountService.GetLoggedAccount(accountModel);
+                Account account = await accountService.GetLoggedAccount(accountModel);
                 identity = SetupClaimsForAccount(account);
                 string serialisedData = JsonSerializer.Serialize(account);
                await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentAccount", serialisedData);
@@ -67,7 +67,10 @@ namespace Bachelor_Client.Authentication
                 Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
         }
 
-        
+        public async Task<Account> GetLoggedAccount()
+        {
+            return cachedAccount;
+        }
         public void Logout()
         {
             
@@ -77,12 +80,12 @@ namespace Bachelor_Client.Authentication
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
 
-        private ClaimsIdentity SetupClaimsForAccount(AccountModel accountModel)
+        private ClaimsIdentity SetupClaimsForAccount(Account accountModel)
         {
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("Email", accountModel.Email));
             claims.Add(new Claim("Password", accountModel.Password));
-            claims.Add(new Claim("SecurityLevel", accountModel.SecurityLevel.ToString()));
+            claims.Add(new Claim("Type", accountModel.Type));
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;

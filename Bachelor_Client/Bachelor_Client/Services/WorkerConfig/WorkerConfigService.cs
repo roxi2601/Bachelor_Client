@@ -1,36 +1,25 @@
 ﻿using System.Text;
-using Bachelor_Client.Models.General;
-using Bachelor_Client.Models.WorkerConfiguration;
+using Bachelor_Client.Models;
 using Newtonsoft.Json;
 
 namespace Bachelor_Client.Services.WorkerConfig;
 
 public class WorkerConfigService : IWorkerConfigService
 {
-    private List<WorkerConfigurationModel> workerConfigs = new();
+    private List<WorkerConfiguration> workerConfigs = new();
 
-    public async Task CreateWorkerConfiguration(string url, string requestType, List<ParametersHeaderModel> parameters,
-        List<ParametersHeaderModel> headers, WorkerConfigData data)
+    public async Task CreateWorkerConfiguration(WorkerConfiguration workerConfiguration)
     {
-        WorkerConfigurationModel config = new WorkerConfigurationModel()
-        {
-            url = url,
-            requestType = requestType,
-            parameters = parameters,
-            headers = headers,
-            Data = data
-        };
-
         HttpClient httpClient = new HttpClient();
         StringContent content = new StringContent(
-            JsonConvert.SerializeObject(config),
+            JsonConvert.SerializeObject(workerConfiguration),
             Encoding.UTF8,
             "application/json"
         );
         HttpResponseMessage responseMessage = await httpClient.PostAsync("https://localhost:7261/workerConfig", content);
     }
 
-    public async Task EditWorkerConfiguration(WorkerConfigurationModel workerConfigurationModel)
+    public async Task EditWorkerConfiguration(WorkerConfiguration workerConfigurationModel)
     {
         HttpClient httpClient = new HttpClient();
         StringContent content = new StringContent(
@@ -41,22 +30,18 @@ public class WorkerConfigService : IWorkerConfigService
         HttpResponseMessage responseMessage = await httpClient.PatchAsync("https://localhost:7261/workerConfig/", content);
     }
 
-    public WorkerConfigurationModel GetWorkerConfigurationById(int workerConfigId)
+    public WorkerConfiguration GetWorkerConfigurationById(int workerConfigId)
     {
-        return workerConfigs.Find(w => w.ID == workerConfigId);
+        return workerConfigs.Find(w => w.PkWorkerConfigurationId == workerConfigId);
     }
 
-    public async Task<List<WorkerConfigurationModel>> GetWorkerConfigurationsByURL(string url)
-    {
-        return workerConfigs.FindAll(w => w.url == url);
-    }
-    public async Task<List<WorkerConfigurationModel>> ReadAllWorkerConfigurations()
+    public async Task<List<WorkerConfiguration>> ReadAllWorkerConfigurations()
     {
         HttpClient httpClient = new HttpClient();
         HttpResponseMessage responseMessage =
             await httpClient.GetAsync("https://localhost:7261/workerConfig"); //Change here
-        List<WorkerConfigurationModel> workerConfigsDeSer =
-            JsonConvert.DeserializeObject<List<WorkerConfigurationModel>>(responseMessage.Content.ReadAsStringAsync()
+        List<WorkerConfiguration> workerConfigsDeSer =
+            JsonConvert.DeserializeObject<List<WorkerConfiguration>>(responseMessage.Content.ReadAsStringAsync()
                 .Result);
         return workerConfigs = workerConfigsDeSer;
     }

@@ -1,9 +1,9 @@
 @layout LoginLayout
 @page "/"
-@using Bachelor_Client.Models.Account
 @using Bachelor_Client.Services.Account
 @using Microsoft.AspNetCore.Components.Authorization
 @using Bachelor_Client.Authentication
+@using Bachelor_Client.Models
 @using Bunit.Extensions
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAccountService AccountService
@@ -57,14 +57,14 @@
 		</div>
 	</div>
 @code {
-	public AccountModel _accountModel = new();
+	public Account _accountModel = new();
 	private string errorMessage;
 	private async Task PerformLogin()
 	{
 		errorMessage = "";
 		try
 		{
-			AccountModel accountModel = await AccountService.GetLoggedAccount(_accountModel);
+			Account accountModel = await AccountService.GetLoggedAccount(_accountModel);
 			if (!accountModel.Email.IsNullOrEmpty())
 			{
 				await ((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(_accountModel);
