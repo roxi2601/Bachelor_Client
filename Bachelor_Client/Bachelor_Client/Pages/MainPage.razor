@@ -2,10 +2,10 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @page "/home"
 @using Microsoft.AspNetCore.Components.Authorization
-@*<CascadingAuthenticationState>
+<CascadingAuthenticationState>
   
   <AuthorizeView Policy="loggedAccount">
-    <NotAuthorized>*@
+    <NotAuthorized>
           <body>
                <header class="bgimg-1" id="home">
                  <div class="w3-display-left w3-text-white" style="padding-left: 5%">
@@ -14,8 +14,8 @@
                  </div>
                </header>
                </body>
-      @*</NotAuthorized>
-    <Authorized>*@
+      </NotAuthorized>
+    <Authorized>
       <body>
       <header class="bgimg-1" id="home">
         <div class="w3-display-left w3-text-white" style="padding-left: 5%">
@@ -30,9 +30,9 @@
         </div>
       </header>
       </body>
-    @*</Authorized>
+    </Authorized>
   </AuthorizeView>
-</CascadingAuthenticationState>*@
+</CascadingAuthenticationState>
 @code {
     
 }
