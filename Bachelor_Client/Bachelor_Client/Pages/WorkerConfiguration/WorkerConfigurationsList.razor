@@ -5,6 +5,7 @@
 @using Bachelor_Client.Services.Rest
 @using Bachelor_Client.Services.WorkerConfig
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Rendering
 @inject NavigationManager NavigationManager
 @inject IRestService RestService
 @inject IWorkerConfigService WorkerConfigService
@@ -28,7 +29,9 @@
 
                 <div class="container">
                     <div class="row">
-                        <input class="form-control" type="text" placeholder="Search..." style="width: 15%; height: 5%; background-color: transparent; border: none; margin-left: 82%"/>
+                        <input class="form-control" type="text" 
+                               @bind-value="SearchText"
+                               @bind-value:event="oninput" placeholder="Search..." style="width: 15%; height: 5%; background-color: transparent; border: none; margin-left: 82%"/>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
@@ -61,7 +64,7 @@
                                             </thead>
                                             <tbody>
 
-                                            @foreach (var workerConfig in WorkerConfigList)
+                                            @foreach (var workerConfig in Filtered)
                                             {
                                                 <tr>
                                                     <td>@workerConfig.url</td>
@@ -98,19 +101,46 @@
     private SendRequestBase GenerateAPICallConfirmation { get; set; }
     private DeleteWorkerConfigBase DeleteWorkerConfigConfirmation { get; set; }
     private string errorMessage = "";
-
-   
+    public string SearchText = "";
+    
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(LoadItems);
-    }
-
-    private async void LoadItems()
-    {
-        Thread.Sleep(2000);
         WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
+        WorkerConfigList.Add(new WorkerConfigurationModel
+        {
+            ID = 1,
+            url = "https://ipinfo.io/161.185.160.93/geo",
+            headers = new List<ParametersHeaderModel>(),
+            parameters = new List<ParametersHeaderModel>(),
+            authorizationType = "NoAuth",
+            bodyType = "none",
+            requestType = "get"
+        });
+        WorkerConfigList.Add(new WorkerConfigurationModel
+        {
+            ID = 2,
+            url = "https://caca.io/161.185.160.93/geo",
+            headers = new List<ParametersHeaderModel>(),
+            parameters = new List<ParametersHeaderModel>(),
+            authorizationType = "NoAuth",
+            bodyType = "none",
+            requestType = "get"
+        });
+        WorkerConfigList.Add(new WorkerConfigurationModel
+        {
+            ID = 3,
+            url = "https://pipi.io/161.185.160.93/geo",
+            headers = new List<ParametersHeaderModel>(),
+            parameters = new List<ParametersHeaderModel>(),
+            authorizationType = "NoAuth",
+            bodyType = "none",
+            requestType = "get"
+        });
     }
+    
+    List<WorkerConfigurationModel> Filtered => WorkerConfigList.Where(
+        w => w.url.ToLower().Contains(SearchText.ToLower())).ToList();
 
     private async Task DeleteWorkerConfig(WorkerConfigurationModel workerConfigurationModel, bool confirmed)
     {
