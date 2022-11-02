@@ -10,8 +10,18 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 <CascadingAuthenticationState>
-  <AuthorizeView Policy="loggedAccount">
-    <Authorized>
+<AuthorizeView Policy="loggedAccount">
+  <NotAuthorized>
+                  <body>
+                       <header class="bgimg-1" id="home">
+                         <div class="w3-display-left w3-text-white" style="padding-left: 5%">
+                           <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
+                           <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
+                         </div>
+                       </header>
+                       </body>
+              </NotAuthorized>
+<Authorized>
 <h1 style="color: black;   font-weight: bold; ">
 
 </h1>
@@ -30,7 +40,7 @@
 <input id="tabBody" type="radio" name="tabs">
 <label for="tabBody">Body</label>
 
-<section id="content1" >
+<section id="content1">
     <div class="containerCreate">
         <div class="row">
 
@@ -80,8 +90,8 @@
 
                 </table>
                 <div class="row"> </div>
-                 <a class="add" @onclick="@(() => parameters.Add(new ParametersHeaderModel() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
-                                     
+                <a class="add" @onclick="@(() => parameters.Add(new ParametersHeaderModel() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
+
                 <div class="row">
                     <div class="col-sm">
                         <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldParameter" @oninput="(e) => { keyTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
@@ -401,8 +411,8 @@
 
                 </table>
                 <div class="row"> </div>
-                 <a class="add" @onclick="@(() => headers.Add(new ParametersHeaderModel() { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
-                                   
+                <a class="add" @onclick="@(() => headers.Add(new ParametersHeaderModel() { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
+
                 <div class="row">
                     <div class="col-sm">
                         <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldHeader" @oninput="(e) => { keyTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
@@ -498,8 +508,8 @@
 
                     </table>
                     <div class="row"> </div>
-                   <a class="add" @onclick="@(() => bodies.Add(new FormDataModel() { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
-                                           
+                    <a class="add" @onclick="@(() => bodies.Add(new FormDataModel() { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
+
                     <div class="row">
                         <div class="col-sm">
                             <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldBody" @oninput="(e) => { keyTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
@@ -527,8 +537,8 @@
 </section>
 
 </main>
-   </Authorized>
-      </AuthorizeView>
+</Authorized>
+</AuthorizeView>
     </CascadingAuthenticationState>
 @code {
 
