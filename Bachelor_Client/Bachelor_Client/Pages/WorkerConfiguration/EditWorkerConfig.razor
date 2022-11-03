@@ -3,6 +3,7 @@
 @using Bachelor_Client.Services.WorkerConfig
 @using Microsoft.AspNetCore.Components.Authorization
 @using Bachelor_Client.Models
+@using Bachelor_Client.Authentication
 @inject IWorkerConfigService _WorkerService
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -519,9 +520,12 @@
         NavigationManager.NavigateTo("WorkerConfigurationsList");
     }
 
-    protected override void OnInitialized()
+    protected async override void OnInitialized()
     {
-       _workerConfigurationModel = _WorkerService.GetWorkerConfigurationById(Int32.Parse(workerConfigID));
+        if (await ((AccountCustomAuthenticationStateProvider)AuthenticationStateProvider).GetLoggedAccount() != null)
+        {
+            _workerConfigurationModel = _WorkerService.GetWorkerConfigurationById(Int32.Parse(workerConfigID));
+        }
     }
     
     
