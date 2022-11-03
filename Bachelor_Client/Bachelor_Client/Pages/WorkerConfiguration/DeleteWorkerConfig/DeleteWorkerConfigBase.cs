@@ -11,6 +11,8 @@ namespace Bachelor_Client.Pages.WorkerConfiguration.DeleteWorkerConfig
         public string ConfirmationTitle { get; set; } = "Confirm";
         [Parameter]
         public string URL { get; set; } 
+        [Parameter]
+        public int ID { get; set; } 
 
         [Parameter]
         public string ConfirmationMessage { get; set; }

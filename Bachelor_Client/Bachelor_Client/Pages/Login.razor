@@ -8,8 +8,9 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
-
-<div class="limiter">
+<AuthorizeView>
+	<NotAuthorized>
+	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-form-title" style="background-image: url(css/background/background.jpg);">
@@ -30,7 +31,7 @@
 						<input class="input100" type="password" placeholder="Enter password" @bind="_accountModel.Password">
 						<span class="focus-input100"></span>
 					</div>
-					 <div style="color:red">@errorMessage</div>
+					<div style="color:red">@errorMessage</div>
 
 					<div class="flex-sb-m w-full p-b-30">
 						<div class="contact100-form-checkbox">
@@ -56,6 +57,8 @@
 			</div>
 		</div>
 	</div>
+	</NotAuthorized>
+</AuthorizeView>
 @code {
 	public Account _accountModel = new();
 	private string errorMessage;

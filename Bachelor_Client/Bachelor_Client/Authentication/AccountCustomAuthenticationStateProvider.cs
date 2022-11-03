@@ -27,17 +27,17 @@ namespace Bachelor_Client.Authentication
             var identity = new ClaimsIdentity();
             if (cachedAccount == null )
             {
-                string accountAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "accountUser");
+                string accountAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentAccount");
                 if (!string.IsNullOrEmpty(accountAsJson))
                 {
-                    cachedAccount = JsonSerializer.Deserialize<Account>(accountAsJson);
-                    
-                    identity = SetupClaimsForAccount(cachedAccount);
+                    Account cachedAccount = JsonSerializer.Deserialize<Account>(accountAsJson);
+
+                    await ValidateLogin(cachedAccount);
                 }
             }
             else
             {
-                identity = SetupClaimsForAccount(cachedAccount);
+                identity = SetupClaimsForAccount(cachedAccount);    
                 
             }
          
