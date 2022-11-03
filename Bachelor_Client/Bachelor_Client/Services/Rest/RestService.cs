@@ -23,7 +23,7 @@ public class RestService : IRestService
             );
             HttpResponseMessage responseMessage =
                 await httpClient.PostAsync("https://localhost:7261/requests/" + $"{requestType}", content);
-            return CachedContent = responseMessage.Content.ToString();
+            return CachedContent = await responseMessage.Content.ReadAsStringAsync();
         }
         catch (Exception e)
         {
