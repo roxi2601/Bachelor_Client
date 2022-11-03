@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Rendering
 @using Bachelor_Client.Models
+@using Bachelor_Client.Authentication
 @inject NavigationManager NavigationManager
 @inject IRestService RestService
 @inject IWorkerConfigService WorkerConfigService
@@ -106,7 +107,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
+        if(  await ((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).GetLoggedAccount() != null)
+        {
+             WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
+        }
+       
     }
     
     List<WorkerConfiguration> Filtered => WorkerConfigList.Where(
