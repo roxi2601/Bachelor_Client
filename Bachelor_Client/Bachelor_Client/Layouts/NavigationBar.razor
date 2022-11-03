@@ -1,5 +1,9 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Bachelor_Client.Authentication
+@inherits LayoutComponentBase
 @inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -7,46 +11,75 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<CascadingAuthenticationState>
+<AuthorizeView Policy="loggedAccount">
+  <Authorized>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top" >
+      <div class="w3-bar w3-white w3-card" id="myNavbar">
+        <a href="/home" class="w3-bar-item w3-button w3-wide">SOAK</a>
+        <!-- Right-sided navbar links -->
+        <div class="w3-right w3-hide-small">
+          <a href="WorkerConfigurationsList" class="w3-bar-item w3-button"><i class="fa fa-list"></i> Worker Configurations</a>
+          <a href="CreateWorkerConfig" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Add worker configuration</a>
+          <a href="" class="w3-bar-item w3-button"><i class="fa fa-bar-chart"></i> Statistics</a>
+          <a href="" class="w3-bar-item w3-button"><i class="fa fa-users"></i> Users</a>
+          <a href="" class="w3-bar-item w3-button"><i class="fa fa-user-plus"></i> Add user</a>
+         
+          <a @onclick="PerformLogout" class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i> Log out</a>
+        </div>
+        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
-
-<!-- Navbar (sit on top) -->
-<div class="w3-top" >
-  <div class="w3-bar w3-white w3-card" id="myNavbar">
-    <a href="/home" class="w3-bar-item w3-button w3-wide">SOAK</a>
-    <!-- Right-sided navbar links -->
-    <div class="w3-right w3-hide-small">
-        <a href="WorkerConfigurationsList" class="w3-bar-item w3-button"><i class="fa fa-list"></i> Worker Configurations</a>
-        <a href="CreateWorkerConfig" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Add worker configuration</a>
-        <a href="" class="w3-bar-item w3-button"><i class="fa fa-bar-chart"></i> Statistics</a>
-      <a href="" class="w3-bar-item w3-button"><i class="fa fa-users"></i> Users</a>
-      <a href="" class="w3-bar-item w3-button"><i class="fa fa-user-plus"></i> Add user</a>
-        <a href="/" class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i> Login</a>
+        <a  class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" @onclick="OpenNavBar">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
     </div>
-    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
-    <a  class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" @onclick="OpenNavBar">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
-</div>
-
-@if (collapseNavBar )
-{
+    @if (collapseNavBar )
+    {
+      <!-- Sidebar on small screens when clicking the menu icon -->
+      <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:block"  id="mySidebar">
+        <a  @onclick="CloseNavBar" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+        <a href="WorkerConfigurationsList"class="w3-bar-item w3-button"> Worker Configurations</a>
+        <a href="CreateWorkerConfig" onclick="w3_close()" class="w3-bar-item w3-button"> Add worker configuration</a>
+        <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Statistics</a>
+        <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Users</a>
+        <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Add user</a>
+        <a  @onclick="PerformLogout" class="w3-bar-item w3-button"> Log out</a>
+      </nav>
   
-
-
-<!-- Sidebar on small screens when clicking the menu icon -->
-  <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:block"  id="mySidebar">
-    <a  @onclick="CloseNavBar" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-    <a href="WorkerConfigurationsList"class="w3-bar-item w3-button"> Worker Configurations</a>
-    <a href="CreateWorkerConfig" onclick="w3_close()" class="w3-bar-item w3-button"> Add worker configuration</a>
-    <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Statistics</a>
-    <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Users</a>
-    <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Add user</a>
-    <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Login</a>
-  </nav>
-  
-}
+    }
+  </Authorized>
+  <NotAuthorized>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top" >
+      <div class="w3-bar w3-white w3-card" id="myNavbar">
+        <a href="/home" class="w3-bar-item w3-button w3-wide">SOAK</a>
+        <!-- Right-sided navbar links -->
+        <div class="w3-right w3-hide-small">
+          <a href="/" class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i> Login</a>
+        </div>
+        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+    
+        <a  class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" @onclick="OpenNavBar">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+    </div>
+    
+    @if (collapseNavBar )
+    {
+      <!-- Sidebar on small screens when clicking the menu icon -->
+      <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:block"  id="mySidebar">
+        <a  @onclick="CloseNavBar" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+        <a href="" onclick="w3_close()" class="w3-bar-item w3-button"> Login</a>
+      </nav>
+      
+    }
+  </NotAuthorized>
+</AuthorizeView>
+</CascadingAuthenticationState>
 <section></section>
 
 @code{
@@ -65,6 +98,10 @@
     
     await JsRuntime.InvokeVoidAsync("w3_open");
   }
-  
+  private void PerformLogout()
+  {
+    ((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).Logout();
+    NavigationManager.NavigateTo("/");
+  }
 
 }
