@@ -124,7 +124,7 @@
         if (confirmed)
         {
             await WorkerConfigService.DeleteWorkerConfiguration(DeleteWorkerConfigConfirmation.ID);
-            NavigationManager.NavigateTo("/WorkerConfigurationsList");
+            NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
     }
     private void DeleteWorkerConfig_Click()
