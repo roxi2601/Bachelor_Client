@@ -1,4 +1,4 @@
-﻿@using Bachelor_Client.Layouts
+﻿@*@using Bachelor_Client.Layouts
 
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
@@ -11,4 +11,17 @@
             <p role="alert">Sorry, there's nothing at this address.</p>
         </LayoutView>
     </NotFound>
+</Router>*@
+@using Bachelor_Client.Pages
+<CascadingAuthenticationState>
+<Router AppAssembly="@typeof(Program).Assembly">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="@routeData"  />
+    </Found>
+    <NotFound>
+       
+            <CustomNotFound />
+        
+    </NotFound>
 </Router>
+</CascadingAuthenticationState>

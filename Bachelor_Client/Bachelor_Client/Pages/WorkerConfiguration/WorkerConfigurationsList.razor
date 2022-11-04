@@ -11,6 +11,7 @@
 @inject IRestService RestService
 @inject IWorkerConfigService WorkerConfigService
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@layout WorkerConfigurationsLayout
 <CascadingAuthenticationState>
     <AuthorizeView Policy="loggedAccount">
         <Authorized>

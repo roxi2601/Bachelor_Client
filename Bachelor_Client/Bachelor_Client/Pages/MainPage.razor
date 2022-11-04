@@ -8,7 +8,7 @@
 @layout MainPageLayout
 @page "/home"
 
-<CascadingAuthenticationState>
+
   <AuthorizeView Policy="loggedAccount">
     <Authorized>
     <body>
@@ -37,7 +37,6 @@
       </body>
     </NotAuthorized>
   </AuthorizeView>
-</CascadingAuthenticationState>
 @code
 {
 

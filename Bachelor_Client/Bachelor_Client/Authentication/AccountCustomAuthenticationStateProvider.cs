@@ -23,7 +23,17 @@ namespace Bachelor_Client.Authentication
             this.jsRuntime = jsRuntime;
             this.accountService = accountService;
         }
-        
+        /*public async override Task<AuthenticationState> GetAuthenticationStateAsync()
+        {
+            await Task.Delay(1500);
+            var claims = new List<Claim>
+            {
+              
+                new Claim(ClaimTypes.Role, "admin")
+            };
+            var anonymous = new ClaimsIdentity();
+            return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(anonymous)));
+        }*/
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
