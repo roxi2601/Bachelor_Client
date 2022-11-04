@@ -1,4 +1,6 @@
 ﻿
+
+
 using System.Security.Claims;
 using System.Text.Json;
 using Bachelor_Client.Models;
@@ -14,14 +16,14 @@ namespace Bachelor_Client.Authentication
         private readonly IJSRuntime jsRuntime;
         private readonly IAccountService accountService;
 
-        private Account cachedAccount;
+        public Account cachedAccount { get; private set; }
 
         public AccountCustomAuthenticationStateProvider(IJSRuntime jsRuntime, IAccountService accountService)
         {
             this.jsRuntime = jsRuntime;
             this.accountService = accountService;
         }
-
+        
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
@@ -30,8 +32,8 @@ namespace Bachelor_Client.Authentication
                 string accountAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentAccount");
                 if (!string.IsNullOrEmpty(accountAsJson))
                 {
-                    Account cachedAccount = JsonSerializer.Deserialize<Account>(accountAsJson);
-
+                    cachedAccount = JsonSerializer.Deserialize<Account>(accountAsJson);
+        
                     await ValidateLogin(cachedAccount);
                 }
             }
@@ -56,7 +58,7 @@ namespace Bachelor_Client.Authentication
                 Account account = await accountService.GetLoggedAccount(accountModel);
                 identity = SetupClaimsForAccount(account);
                 string serialisedData = JsonSerializer.Serialize(account);
-               await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentAccount", serialisedData);
+                await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentAccount", serialisedData);
                 cachedAccount = account;
             } catch (Exception e) {
                 Console.WriteLine(e);
@@ -66,15 +68,10 @@ namespace Bachelor_Client.Authentication
             NotifyAuthenticationStateChanged(
                 Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
         }
-
-        public async Task<Account> GetLoggedAccount()
-        {
-            return cachedAccount;
-        }
         public void Logout()
         {
             
-            cachedAccount = null;
+            cachedAccount = new Account();
             var user = new ClaimsPrincipal(new ClaimsIdentity());
             jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentAccount", "");
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
@@ -82,10 +79,12 @@ namespace Bachelor_Client.Authentication
 
         private ClaimsIdentity SetupClaimsForAccount(Account accountModel)
         {
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim("Email", accountModel.Email));
-            claims.Add(new Claim("Password", accountModel.Password));
-            claims.Add(new Claim("Type", accountModel.Type));
+            List<Claim> claims = new List<Claim>
+            {
+                new("Email", accountModel.Email),
+                new("Password", accountModel.Password),
+                new("Type", accountModel.Type)
+            };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;

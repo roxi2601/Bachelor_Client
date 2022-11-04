@@ -5,87 +5,87 @@
 @using Bachelor_Client.Authentication
 @using Bachelor_Client.Models
 @using Bunit.Extensions
+@using System.Security.Claims
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
-<AuthorizeView>
-	<NotAuthorized>
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<div class="login100-form-title" style="background-image: url(css/background/background.jpg);">
-					<span class="login100-form-title-1">
-						Log in
-					</span>
-				</div>
 
-				<div class="login100-form ">
-					<div class="wrap-input100 m-b-26">
-						<span class="label-input100">Email</span>
-						<input class="input100" type="text"placeholder="Enter email" @bind="_accountModel.Email">
-						<span class="focus-input100"></span>
-					</div>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-form-title" style="background-image: url(css/background/background.jpg);">
+                <span class="login100-form-title-1">
+                    Log in
+                </span>
+            </div>
 
-					<div class="wrap-input100 m-b-18">
-						<span class="label-input100">Password</span>
-						<input class="input100" type="password" placeholder="Enter password" @bind="_accountModel.Password">
-						<span class="focus-input100"></span>
-					</div>
-					<div style="color:red">@errorMessage</div>
+            <div class="login100-form ">
+                <div class="wrap-input100 m-b-26">
+                    <span class="label-input100">Email</span>
+                    <input class="input100" type="text"placeholder="Enter email" @bind="_accountModel.Email">
+                    <span class="focus-input100"></span>
+                </div>
 
-					<div class="flex-sb-m w-full p-b-30">
-						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-							<label class="label-checkbox100" for="ckb1">
-								Remember me
-							</label>
-						</div>
+                <div class="wrap-input100 m-b-18">
+                    <span class="label-input100">Password</span>
+                    <input class="input100" type="password" placeholder="Enter password" @bind="_accountModel.Password">
+                    <span class="focus-input100"></span>
+                </div>
+                <div style="color:red">@errorMessage</div>
 
-						<div>
-							<a href="#" class="txt1">
-								Forgot Password?
-							</a>
-						</div>
-					</div>
+                <div class="flex-sb-m w-full p-b-30">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                        <label class="label-checkbox100" for="ckb1">
+                            Remember me
+                        </label>
+                    </div>
 
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" @onclick="PerformLogin">
-							Login
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</NotAuthorized>
-</AuthorizeView>
+                    <div>
+                        <a href="#" class="txt1">
+                            Forgot Password?
+                        </a>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" @onclick="PerformLogin">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @code {
-	public Account _accountModel = new();
-	private string errorMessage;
-	private async Task PerformLogin()
-	{
-		errorMessage = "";
-		try
-		{
-			Account accountModel = await AccountService.GetLoggedAccount(_accountModel);
-			if (!accountModel.Email.IsNullOrEmpty())
-			{
-				await ((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(_accountModel);
-				_accountModel.Email = "";
-				_accountModel.Password = "";
-				NavigationManager.NavigateTo("/home");
-			}
-			else
-			{
-				throw new Exception("Email or password are incorrect");
-			}
-           
+    private Account _accountModel = new();
+    private string errorMessage;
+    
 
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e);
-			errorMessage = e.Message;
-		}
-	}
+    private async Task PerformLogin()
+    {
+        errorMessage = "";
+        try
+        {
+            Account accountModel = await AccountService.GetLoggedAccount(_accountModel);
+            if (!accountModel.Email.IsNullOrEmpty()) //TODO: change this
+            {
+                await ((AccountCustomAuthenticationStateProvider)AuthenticationStateProvider).ValidateLogin(accountModel);
+                _accountModel.Email = "";
+                _accountModel.Password = "";
+                NavigationManager.NavigateTo("/home");
+            }
+            else
+            {
+                throw new Exception("Email or password are incorrect");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorMessage = e.Message;
+        }
+    }
+
 }

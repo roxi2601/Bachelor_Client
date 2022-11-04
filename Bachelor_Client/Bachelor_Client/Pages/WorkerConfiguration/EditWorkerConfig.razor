@@ -520,9 +520,9 @@
         NavigationManager.NavigateTo("WorkerConfigurationsList");
     }
 
-    protected async override void OnInitialized()
+    protected  override void OnInitialized()
     {
-        if (await ((AccountCustomAuthenticationStateProvider)AuthenticationStateProvider).GetLoggedAccount() != null)
+        if (((AccountCustomAuthenticationStateProvider)AuthenticationStateProvider).cachedAccount != null)
         {
             _workerConfigurationModel = _WorkerService.GetWorkerConfigurationById(Int32.Parse(workerConfigID));
         }
