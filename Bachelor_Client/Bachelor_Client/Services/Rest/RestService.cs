@@ -42,7 +42,7 @@ public class RestService : IRestService
         options.ArrayAsTable = true;
         string status;
 
-        if (content != null && !content.Equals("The URL is not valid") || !content.Contains("\"StatusCode\":400\""))
+        if (content != null && !content.Equals("The URL is not valid") && !content.Contains("\"StatusCode\":400\"") && !content.Contains("Invalid URI"))
         {
             JsonUtility.ImportData(content, worksheet.Cells, 0, 0, options);
             workbook.Save("Import-Data-JSON-To-Excel.xlsx");
@@ -62,7 +62,7 @@ public class RestService : IRestService
         options.ArrayAsTable = true;
         string status;
 
-        if (content != null && !content.Equals("The URL is not valid") || !content.Contains("\"StatusCode\":400\""))
+        if (content != null && !content.Equals("The URL is not valid") && !content.Contains("\"StatusCode\":400\"") && !content.Contains("Invalid URI"))
         {
             JsonUtility.ImportData(content, worksheet.Cells, 0, 0, options);
             workbook.Save("Import-Data-JSON-To-CSV.csv");
