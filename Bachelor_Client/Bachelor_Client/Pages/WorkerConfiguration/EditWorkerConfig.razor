@@ -6,6 +6,7 @@
 @using Bachelor_Client.Authentication
 @inject IWorkerConfigService _WorkerService
 @inject NavigationManager NavigationManager
+@layout WorkerConfigurationsLayout
 @inject AuthenticationStateProvider AuthenticationStateProvider
 <CascadingAuthenticationState>
   <AuthorizeView Policy="loggedAccount">
@@ -497,6 +498,7 @@
 
     [Parameter]
     public string workerConfigID { get; set; }
+
     List<Parameter> parameters = new();
     List<Header> headers = new();
     List<FormDatum> bodies = new();
@@ -510,23 +512,25 @@
     string keyTextFieldBody = "";
     string valueTextFieldBody = "";
     string descTextFieldBody = "";
-    private WorkerConfiguration _workerConfigurationModel;
+    private WorkerConfiguration _workerConfigurationModel = new WorkerConfiguration();
 
 
-    
+
     private async Task EditWorkerConfiguration()
     {
         await _WorkerService.EditWorkerConfiguration(_workerConfigurationModel);
         NavigationManager.NavigateTo("WorkerConfigurationsList");
     }
 
-    protected  override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (((AccountCustomAuthenticationStateProvider)AuthenticationStateProvider).cachedAccount != null)
         {
             _workerConfigurationModel = _WorkerService.GetWorkerConfigurationById(Int32.Parse(workerConfigID));
+
         }
+
+
     }
-    
-    
+
 }
