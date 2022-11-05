@@ -66,14 +66,12 @@
 
                                                     <td>
                                                         <button class="btn" @onclick="() => NavigateToEdit(workerConfig.PkWorkerConfigurationId)"><i class="fa fa-edit"></i> </button>
-                                                        <button class="btn" @onclick="DeleteWorkerConfig_Click"><i class="fa fa-trash"></i> </button>
+                                                        <button class="btn" @onclick="()=>DeleteWorkerConfig_Click(workerConfig)"><i class="fa fa-trash"></i> </button>
                                                         <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
                                                     </td>
                                                 </tr>
                                                 
-                                                <DeleteWorkerConfig @ref="DeleteWorkerConfigConfirmation" ConfirmationChanged="DeleteWorkerConfig"
-                                                                    ConfirmationMessage=@($"Are you sure you want to delete \"{workerConfig.Url}\"")  ID = "@workerConfig.PkWorkerConfigurationId">
-                                                </DeleteWorkerConfig>
+                                                
                                             }
                                             </tbody>
                                         </table>
@@ -86,34 +84,29 @@
                 </div>
             </div>
         </Authorized>
-          <NotAuthorized>
-                    <body>
-                    <header class="bgimg-1" id="home">
-                        <div class="w3-display-left w3-text-white" style="padding-left: 5%">
-                            <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
-                            <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
-                        </div>
-                    </header>
-                    </body>
-                </NotAuthorized>
+        <NotAuthorized>
+            <body>
+            <header class="bgimg-1" id="home">
+                <div class="w3-display-left w3-text-white" style="padding-left: 5%">
+                    <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
+                    <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
+                </div>
+            </header>
+            </body>
+        </NotAuthorized>
     </AuthorizeView>
+    <DeleteWorkerConfig @ref="DeleteWorkerConfigConfirmation" ConfirmationChanged="DeleteWorkerConfig"/>
     <SendRequestConfirm @ref="GenerateAPICallConfirmation" ConfirmationChanged="GenerateAPICall_Click" />
 </CascadingAuthenticationState>
 @code {
-    public List<WorkerConfiguration> WorkerConfigList = new();
+    private List<WorkerConfiguration> WorkerConfigList = new();
     private SendRequestBase GenerateAPICallConfirmation { get; set; }
     private DeleteWorkerConfigBase DeleteWorkerConfigConfirmation { get; set; }
     private string errorMessage = "";
-    public string SearchText = "";
-    
-
+    private string SearchText = "";
     protected override async Task OnInitializedAsync()
     {
-        // if(((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).cachedAccount != null)
-        // {
-             WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
-        // }
-       
+        WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
     }
     
     List<WorkerConfiguration> Filtered => WorkerConfigList.Where(
@@ -127,78 +120,18 @@
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
     }
-    private void DeleteWorkerConfig_Click()
+    private void DeleteWorkerConfig_Click(WorkerConfiguration workerConfiguration)
     {
+        DeleteWorkerConfigConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
+        DeleteWorkerConfigConfirmation.ConfirmationMessage = "Are you sure you want to delete "+workerConfiguration.Url+"?";
         DeleteWorkerConfigConfirmation.Show();
     }
     
     private async Task GenerateAPICall(WorkerConfiguration workerConfigurationModel, bool confirmed)
     {
-        
         GenerateAPICallConfirmation.Content =
             await RestService.GenerateRequest(workerConfigurationModel, workerConfigurationModel.RequestType + workerConfigurationModel.LastSavedBody);
         GenerateAPICall_Click(confirmed);
-    // switch (workerConfigurationModel.requestType)
-       //          {
-       //              case "get":
-       //                  GenerateAPICallConfirmation.Content = await RestService.GenerateGetRequest(workerConfigurationModel);
-       //                  GenerateAPICall_Click(confirmed);
-       //                  break;
-       //              case "post":
-       //                  switch (workerConfigurationModel.bodyType)
-       //                  {
-       //                      case "raw":
-       //                          GenerateAPICallConfirmation.Content = await RestService.GeneratePostRequestRaw(workerConfigurationModel,
-       //                              workerConfigurationModel.RawModel.Text);
-       //                          GenerateAPICall_Click(confirmed);
-       //                          break;
-       //                      case "form-data":
-       //                          GenerateAPICallConfirmation.Content = await RestService.GeneratePostRequestFormData(workerConfigurationModel,
-       //                              workerConfigurationModel.FormDataModel);
-       //                          GenerateAPICall_Click(confirmed);
-       //                          break;
-       //                  }
-       //                 
-       //                  break;
-       //              case "put":
-       //                  switch (workerConfigurationModel.bodyType)
-       //                  {
-       //                      case "raw":
-       //                          GenerateAPICallConfirmation.Content = await RestService.GeneratePutRequestRaw(workerConfigurationModel,
-       //                              workerConfigurationModel.RawModel.Text);
-       //                          GenerateAPICall_Click(confirmed);
-       //                          break;
-       //                      case "form-data":
-       //                          GenerateAPICallConfirmation.Content = await RestService.GeneratePutRequestFormdata(workerConfigurationModel,
-       //                              workerConfigurationModel.FormDataModel);
-       //                          GenerateAPICall_Click(confirmed);
-       //                          break;
-       //                  }
-       //                  
-       //                  break;
-       //              case "patch":
-       //                  switch (workerConfigurationModel.bodyType)
-       //                  {
-       //                      case "raw":
-       //                          GenerateAPICallConfirmation.Content = await RestService.GeneratePatchRequestRaw(workerConfigurationModel,
-       //                              workerConfigurationModel.RawModel.Text);
-       //                          GenerateAPICall_Click(confirmed);
-       //                          break;
-       //                      case "form-data":
-       //                          GenerateAPICallConfirmation.Content = await RestService.GeneratePatchRequestFormdata(
-       //                              workerConfigurationModel,
-       //                              workerConfigurationModel.FormDataModel);
-       //                          GenerateAPICall_Click(confirmed);
-       //                          break;
-       //                  }
-       //                  
-       //                  break;
-       //              case "delete":
-       //                  GenerateAPICallConfirmation.Content = await RestService.GenerateDeleteRequest(workerConfigurationModel);
-       //                  GenerateAPICall_Click(confirmed);
-       //                  break; 
-       //          }
-       //  return "";
     }
     private void GenerateAPICall_Click(bool confirmed)
     {
