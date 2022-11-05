@@ -109,10 +109,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if(((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).cachedAccount != null)
-        {
+        // if(((AccountCustomAuthenticationStateProvider) AuthenticationStateProvider).cachedAccount != null)
+        // {
              WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
-        }
+        // }
        
     }
     
