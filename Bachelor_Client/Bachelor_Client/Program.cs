@@ -18,14 +18,8 @@ builder.Services.AddScoped<IRestService, RestService>();
 builder.Services.AddAuthorizationCore(
     options =>
     {
-        options.AddPolicy("loggedAccount", policy => policy.RequireClaim("Type", "admin"));
-            // policy => policy.RequireAuthenticatedUser().RequireAssertion(
-            //     context =>
-            //     {
-            //         return context.User.Claims.FirstOrDefault(claim => claim.Type.Equals("Type")).Value.Equals("admin");
-            //     }
-            // )
-        
+        options.AddPolicy("loggedUser", policy => policy.RequireClaim("Type", "user"));
+        options.AddPolicy("loggedAdmin", policy => policy.RequireClaim("Type", "admin"));
     }
 );
 builder.RootComponents.Add<App>("#app");
