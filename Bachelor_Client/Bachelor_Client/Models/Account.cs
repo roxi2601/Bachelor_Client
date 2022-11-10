@@ -1,4 +1,6 @@
-﻿namespace Bachelor_Client.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Bachelor_Client.Models
 {
     public partial class Account
     {

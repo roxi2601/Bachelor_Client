@@ -22,13 +22,13 @@
             <div class="login100-form ">
                 <div class="wrap-input100 m-b-26">
                     <span class="label-input100">Email</span>
-                    <input class="input100" type="text"placeholder="Enter email" @bind="_accountModel.Email">
+                    <input class="input100" type="text"placeholder="Enter email" @bind="_accountModel.Email" required>
                     <span class="focus-input100"></span>
                 </div>
 
                 <div class="wrap-input100 m-b-18">
                     <span class="label-input100">Password</span>
-                    <input class="input100" type="password" placeholder="Enter password" @bind="_accountModel.Password">
+                    <input class="input100" type="password" placeholder="Enter password" @bind="_accountModel.Password" required>
                     <span class="focus-input100"></span>
                 </div>
                 <div style="color:red">@errorMessage</div>
