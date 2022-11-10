@@ -46,7 +46,7 @@ public class AccountService : IAccountService
     {
         HttpClient httpClient = new HttpClient();
         HttpResponseMessage responseMessage =
-            await httpClient.GetAsync("https://localhost:7261/users"); //Change here
+            await httpClient.GetAsync("https://localhost:7261/accounts"); //Change here
         List<Models.Account> accountDeSer =
             JsonConvert.DeserializeObject<List<Models.Account>>(responseMessage.Content.ReadAsStringAsync()
                 .Result);
