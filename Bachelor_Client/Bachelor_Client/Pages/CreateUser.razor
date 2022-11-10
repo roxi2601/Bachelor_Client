@@ -3,16 +3,15 @@
 @using Bachelor_Client.Services.Account
 @layout CreateUserLayout
 @inject IAccountService AccountService
+@inject NavigationManager NavigationManager
 <CascadingAuthenticationState>
 <AuthorizeView Policy="loggedAdmin">
 	<Authorized >
-		 <EditForm Model="@account" OnValidSubmit="@CreateNewUser" Context = "AuthorizeView">
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
+		
 		 <body class="form-v9">
 		 <div class="page-content">
 			 <div class="form-v9-content" style=" background:  rgba(3,3,3,0.68);">
-				 <form class="form-detail" action="#" method="post">
+				 <form class="form-detail" @onsubmit="CreateNewUser">
 					 <h2>Create User</h2>
 					 <div class="form-row-total">
 						 <div class="form-row">
@@ -40,7 +39,7 @@
 			 </div>
 		 </div>
 		 </body>
-		 </EditForm>
+		
 	</Authorized>
 	<NotAuthorized>
 		<body>
@@ -55,10 +54,11 @@
 </AuthorizeView>
 </CascadingAuthenticationState>
 @code {
-	public Account account = new Account();
+	Account account = new Account();
 	
-	private void CreateNewUser()
+	async Task CreateNewUser()
 	{
-		AccountService.CreateUser(account);
+		await AccountService.CreateUser(account);
+		NavigationManager.NavigateTo("/home");
 	}
 }

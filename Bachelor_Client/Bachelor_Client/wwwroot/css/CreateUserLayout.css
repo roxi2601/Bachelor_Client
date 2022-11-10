@@ -102,7 +102,33 @@ body {
     background: rgba(255, 255, 255, 0.2)
 
 }
-.form-v9-content .form-detail input {
+button
+{
+    margin-inside: 20%;
+    width: 100%;
+    padding: 14.5px 0px 14.5px 30px;
+    border: 2px solid #ccc;
+    appearance: unset;
+    -moz-appearance: unset;
+    -webkit-appearance: unset;
+    -o-appearance: unset;
+    -ms-appearance: unset;
+    outline: none;
+    -moz-outline: none;
+    -webkit-outline: none;
+    -o-outline: none;
+    -ms-outline: none;
+    border-radius: 27.5px;
+    -o-border-radius: 27.5px;
+    -ms-border-radius: 27.5px;
+    -moz-border-radius: 27.5px;
+    -webkit-border-radius: 27.5px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.2)
+}
+.form-v9-content .form-detail input  {
     width: 100%;
     padding: 14.5px 0px 14.5px 30px;
     border: 2px solid #ccc;
