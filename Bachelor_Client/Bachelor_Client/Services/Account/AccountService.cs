@@ -22,4 +22,20 @@ public class AccountService : IAccountService
         return accountModel ;
         
     }
+
+    public async Task CreateUser(Models.Account account)
+    {
+        HttpClient httpClient = new HttpClient();
+        StringContent content = new StringContent(
+            JsonConvert.SerializeObject(account),
+            Encoding.UTF8,
+            "application/json"
+        );
+        HttpResponseMessage responseMessage =
+            await httpClient.PostAsync("https://localhost:7261/account", content); 
+        // account =
+        //     JsonConvert.DeserializeObject<Models.Account>(responseMessage.Content.ReadAsStringAsync()
+        //         .Result);
+        // return accountModel ;
+    }
 }
