@@ -1,10 +1,13 @@
 ﻿using System.Text;
+using Bachelor_Client.Models;
 using Newtonsoft.Json;
 
 namespace Bachelor_Client.Services.Account;
 
 public class AccountService : IAccountService
 {
+    private List<Models.Account> users = new();
+    
     public async Task<Models.Account> GetLoggedAccount(Models.Account accountModel)
     {
         
@@ -37,5 +40,16 @@ public class AccountService : IAccountService
         //     JsonConvert.DeserializeObject<Models.Account>(responseMessage.Content.ReadAsStringAsync()
         //         .Result);
         // return accountModel ;
+    }
+    
+    public async Task<List<Models.Account>> GetAllUsers()
+    {
+        HttpClient httpClient = new HttpClient();
+        HttpResponseMessage responseMessage =
+            await httpClient.GetAsync("https://localhost:7261/users"); //Change here
+        List<Models.Account> accountDeSer =
+            JsonConvert.DeserializeObject<List<Models.Account>>(responseMessage.Content.ReadAsStringAsync()
+                .Result);
+        return users = accountDeSer;
     }
 }
