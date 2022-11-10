@@ -15,7 +15,7 @@ public class AccountService : IAccountService
             "application/json"
         );
         HttpResponseMessage responseMessage =
-            await httpClient.PostAsync("https://localhost:7261/account", content); 
+            await httpClient.PostAsync("https://localhost:7261/getAccount", content); 
         accountModel =
             JsonConvert.DeserializeObject<Models.Account>(responseMessage.Content.ReadAsStringAsync()
                 .Result);
@@ -32,7 +32,7 @@ public class AccountService : IAccountService
             "application/json"
         );
         HttpResponseMessage responseMessage =
-            await httpClient.PostAsync("https://localhost:7261/account", content); 
+            await httpClient.PostAsync("https://localhost:7261/createAccount", content); 
         // account =
         //     JsonConvert.DeserializeObject<Models.Account>(responseMessage.Content.ReadAsStringAsync()
         //         .Result);
