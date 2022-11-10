@@ -1,0 +1,122 @@
+@page "/UsersList"
+@using Bachelor_Client.Services.Account
+@using Bachelor_Client.Models
+@using Bachelor_Client.Pages.Account.DeleteUser
+@inject IAccountService AccountService
+@inject NavigationManager NavigationManager
+@layout UsersListLayout
+<CascadingAuthenticationState>
+    <AuthorizeView Policy="loggedAdmin">
+        <Authorized>
+            <div class="users-list py-4">
+                <div class="container">
+                    <div class="row" >
+                       <h3>  Users      </h3>         
+                                        </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div style="color: black">
+                                <div class="card-header bg-transparent text-center">
+
+                                </div>
+                                <div class="card-body">
+
+
+                                    @if (AccountList.Count == 0)
+                                    {
+                                        <div class="spinner"></div>
+
+                                        <p>
+                                            <em>@errorMessage</em>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <table class='table' style=" color: black">
+                                            <thead>
+                                            <tr>
+                                                <th class="name" style="width: 30%">Name</th>
+                                                <th class="email" style="width: 30%">Email</th>
+                                                <th class="type" style="width: 30%">Type</th>
+                                                <th class="actions" style="width: 30%">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            @foreach (var account in AccountList)
+                                            {
+                                                <tr>
+                                                    <td>@account.DisplayName</td>
+                                                    <td>@account.Email</td>
+                                                    <td>@account.Type</td>
+
+
+                                                    <td>
+                                                        <button class="btn" @onclick="() => NavigateToEdit(account.PkAccountId)"><i class="fa fa-edit"></i> </button>
+                                                        <button class="btn" @onclick="()=>DeleteAccount_Click(account)"><i class="fa fa-trash"></i> </button>
+                                                     
+                                                    </td>
+                                                </tr>
+
+
+                                            }
+                                            </tbody>
+                                        </table>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <body>
+            <header class="bgimg-1" id="home">
+                <div class="w3-display-left w3-text-white" style="padding-left: 5%">
+                    <span class="w3-jumbo w3-hide-small">Only logged administrators have access to this page</span><br>
+                    <span class="w3-xxlarge w3-hide-large w3-hide-medium">Only logged administrators have access to this page</span><br>
+                </div>
+            </header>
+            </body>
+        </NotAuthorized>
+    </AuthorizeView>
+    <DeleteUser @ref="DeleteAccountConfirmation" ConfirmationChanged="DeleteAccount"/>
+   
+</CascadingAuthenticationState>
+@code {
+    private List<Account> AccountList = new();
+    
+    private DeleteUserBase DeleteAccountConfirmation { get; set; }
+    private string errorMessage = "";
+    protected override async Task OnInitializedAsync()
+    {
+        AccountList = await AccountService.ReadAllAccounts();
+    }
+    
+
+    
+    private async Task DeleteAccount(bool confirmed)
+    {
+        if (confirmed)
+        {
+            await AccountService.DeleteAccount(DeleteAccountConfirmation.ID);
+            NavigationManager.NavigateTo("/Users", true);
+        }
+    }
+    private void DeleteAccount_Click(Account account)
+    {
+        DeleteAccountConfirmation.ID = account.PkAccountId;
+        DeleteAccountConfirmation.ConfirmationMessage = "Are you sure you want to delete "+account.DisplayName+"?";
+        DeleteAccountConfirmation.Show();
+    }
+    
+
+
+    private void NavigateToEdit(int workerConfigID)
+    {
+        NavigationManager.NavigateTo($"EditWorkerConfig/{workerConfigID}");
+    }
+
+}

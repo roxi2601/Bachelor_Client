@@ -15,26 +15,29 @@
 					 <h2>Create User</h2>
 					 <div class="form-row-total">
 						 <div class="form-row">
-							 <input @bind="account.DisplayName" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" required>
+							 <input @bind="name" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" required>
 						 </div>
 						 <div class="form-row">
-							 <input @bind="account.Email" type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  required>
+							 <input @bind="email" type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  required>
 						 </div>
 					 </div>
 					 <div class="form-row-total">
 						 <div class="form-row">
-							 <input @bind="account.Password" type="password" name="password" id="password" class="input-text" placeholder="Password" required>
+							 <input @bind="password" type="password" name="password" id="password" class="input-text" placeholder="Password" required>
 						 </div>
 						 <div class="form-row">
-							 <select @bind="account.Type" class="userType" name="userType" placeholder="User Type">
+							 <select @bind="type" class="userType" name="userType" placeholder="User Type">
 								 <option value="admin">Admin</option>
 								 <option value="user">User</option>
 							 </select>
 						 </div>
 					 </div>
 					 <div class="form-row-last">
-						 <input type="submit" name="register" class="register" value="Register">
+						 <input type="submit" name="register" class="register" value="Add user">
 					 </div>
+					  <div class="form-row-last">
+                     					@errorMessage
+                     					 </div>
 				 </form>
 			 </div>
 		 </div>
@@ -45,8 +48,8 @@
 		<body>
 		<header class="bgimg-1" id="home">
 			<div class="w3-display-left w3-text-white" style="padding-left: 5%">
-				<span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
-				<span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
+				<span class="w3-jumbo w3-hide-small">Only logged administrators have access to this page</span><br>
+				<span class="w3-xxlarge w3-hide-large w3-hide-medium">Only logged administrators have access to this page</span><br>
 			</div>
 		</header>
 		</body>
@@ -54,11 +57,26 @@
 </AuthorizeView>
 </CascadingAuthenticationState>
 @code {
-	Account account = new Account();
-	
+	private string errorMessage = "";
+	string type = "user";
+	string name { get; set; }
+	string password { get; set; }
+	string email { get; set; }
 	async Task CreateNewUser()
 	{
-		await AccountService.CreateUser(account);
+		await AccountService.CreateUser(InitData());
 		NavigationManager.NavigateTo("/home");
+	}
+	
+	
+	private Account InitData()
+	{
+		return new Account()
+		{
+			DisplayName = name,
+			Password = password,
+			Email = email,
+			Type = type
+		};
 	}
 }

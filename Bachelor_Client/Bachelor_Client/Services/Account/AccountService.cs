@@ -41,7 +41,18 @@ public class AccountService : IAccountService
         //         .Result);
         // return accountModel ;
     }
-    
+
+    public async Task<List<Models.Account>> ReadAllAccounts()
+    {
+        HttpClient httpClient = new HttpClient();
+        HttpResponseMessage responseMessage =
+            await httpClient.GetAsync("https://localhost:7261/accounts"); 
+        List<Models.Account> accountsDeSer =
+            JsonConvert.DeserializeObject<List<Models.Account>>(responseMessage.Content.ReadAsStringAsync()
+                .Result);
+        return users = accountsDeSer;
+    }
+
     public async Task<List<Models.Account>> GetAllUsers()
     {
         HttpClient httpClient = new HttpClient();
@@ -51,5 +62,11 @@ public class AccountService : IAccountService
             JsonConvert.DeserializeObject<List<Models.Account>>(responseMessage.Content.ReadAsStringAsync()
                 .Result);
         return users = accountDeSer;
+    }
+    public async Task DeleteAccount(int accountId)
+    {
+        HttpClient httpClient = new HttpClient();
+        HttpResponseMessage responseMessage = await httpClient.DeleteAsync("https://localhost:7261/accounts/" + $"{accountId}");
+        // if(responseMessage.Content.)
     }
 }

@@ -20,8 +20,11 @@
 
 
                 <div class="container">
+                     <div class="row" >
+                                           <h3>  Worker Configurations      </h3>         
+                                                            </div>
                     <div class="row">
-                        <input class="form-control" type="text" 
+                        <input class="form-control" type="text"
                                @bind-value="SearchText"
                                @bind-value:event="oninput" placeholder="Search..." style="width: 15%; height: 5%; background-color: transparent; border: none; margin-left: 82%"/>
                     </div>
@@ -66,12 +69,12 @@
 
                                                     <td>
                                                         <button class="btn" @onclick="() => NavigateToEdit(workerConfig.PkWorkerConfigurationId)"><i class="fa fa-edit"></i> </button>
-                                                        <button class="btn" @onclick="()=>DeleteWorkerConfig_Click(workerConfig)"><i class="fa fa-trash"></i> </button>
+                                                        <button class="btn" @onclick="() => DeleteWorkerConfig_Click(workerConfig)"><i class="fa fa-trash"></i> </button>
                                                         <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
                                                     </td>
                                                 </tr>
-                                                
-                                                
+
+
                                             }
                                             </tbody>
                                         </table>
