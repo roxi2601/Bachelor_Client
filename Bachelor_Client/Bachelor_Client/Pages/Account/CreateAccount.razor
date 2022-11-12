@@ -36,7 +36,7 @@
 						 <input type="submit" name="register" class="register" value="Add user">
 					 </div>
 					  <div class="form-row-last">
-                     					@errorMessage
+                     					@displayMessage
                      					 </div>
 				 </form>
 			 </div>
@@ -57,22 +57,16 @@
 </AuthorizeView>
 </CascadingAuthenticationState>
 @code {
-	private string errorMessage = "";
+	private string displayMessage = "";
 	string type = "user";
 	string name { get; set; }
 	string password { get; set; }
 	string email { get; set; }
 	async Task CreateNewAccount()
 	{
-		try
-		{
-			await AccountService.CreateAccount(InitData());
-			NavigationManager.NavigateTo("/AccountsList");
-		}
-		catch (Exception e)
-		{
-			errorMessage = e.Message;
-		}
+		displayMessage = await AccountService.CreateAccount(InitData());
+		if(displayMessage.Equals("Account created successfully"))
+		NavigationManager.NavigateTo("/AccountsList");
 	}
 	
 	

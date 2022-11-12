@@ -18,7 +18,7 @@
 							 <input @bind="account.DisplayName" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" required>
 						 </div>
 						 <div class="form-row">
-							 <input @bind="account.Email" type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  required>
+							 <input @bind="account.Email" readonly type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  required>
 						 </div>
 					 </div>
 					 <div class="form-row-total">
@@ -36,7 +36,7 @@
 						 <input type="submit" name="register" class="register" value="Edit user">
 					 </div>
 					  <div class="form-row-last">
-                     					@errorMessage
+                     					@displayMessage
                      					 </div>
 				 </form>
 			 </div>
@@ -60,19 +60,13 @@
     [Parameter]
     public string accountID { get; set; }
     private Account account = new Account();
-	private string errorMessage = "";
+	private string displayMessage = "";
 	
 	async Task Edit()
 	{
-		try
-		{
-			await AccountService.EditAccount(account);
-			NavigationManager.NavigateTo("/AccountsList");
-		}
-		catch (Exception e)
-		{
-			errorMessage = e.Message;
-		}
+		displayMessage = await AccountService.EditAccount(account);
+		if(displayMessage.Equals("Account edited successfully"))
+		NavigationManager.NavigateTo("/AccountsList");
 	}
 
     protected override async Task OnInitializedAsync()
