@@ -64,8 +64,15 @@
 	string email { get; set; }
 	async Task CreateNewAccount()
 	{
-		await AccountService.CreateAccount(InitData());
-		NavigationManager.NavigateTo("/AccountsList");
+		try
+		{
+			await AccountService.CreateAccount(InitData());
+			NavigationManager.NavigateTo("/AccountsList");
+		}
+		catch (Exception e)
+		{
+			errorMessage = e.Message;
+		}
 	}
 	
 	

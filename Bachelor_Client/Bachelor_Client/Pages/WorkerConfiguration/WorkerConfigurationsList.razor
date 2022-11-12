@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Components.Rendering
 @using Bachelor_Client.Models
 @using Bachelor_Client.Authentication
+@using Bachelor_Client.Pages.WorkerConfiguration.Scheduling
 @inject NavigationManager NavigationManager
 @inject IRestService RestService
 @inject IWorkerConfigService WorkerConfigService
@@ -21,7 +22,7 @@
 
                 <div class="container">
                      <div class="row" >
-                                           <h3>  Worker Configurations      </h3>         
+                                           <h3>  Worker Configurations      </h3> 
                                                             </div>
                     <div class="row">
                         <input class="form-control" type="text"
@@ -70,6 +71,7 @@
                                                     <td>
                                                         <button class="btn" @onclick="() => NavigateToEdit(workerConfig.PkWorkerConfigurationId)"><i class="fa fa-edit"></i> </button>
                                                         <button class="btn" @onclick="() => DeleteWorkerConfig_Click(workerConfig)"><i class="fa fa-trash"></i> </button>
+                                                         <button class="btn" @onclick="() => ScheduleWorker_Click(workerConfig)"><i class="fa fa-clock-o"></i> </button>
                                                         <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
                                                     </td>
                                                 </tr>
@@ -100,11 +102,13 @@
     </AuthorizeView>
     <DeleteWorkerConfig @ref="DeleteWorkerConfigConfirmation" ConfirmationChanged="DeleteWorkerConfig"/>
     <SendRequestConfirm @ref="GenerateAPICallConfirmation" ConfirmationChanged="GenerateAPICall_Click" />
+    <ScheduleWorker @ref="ScheduleWorkerConfirmation" ConfirmationChanged="ScheduleWorker" />
 </CascadingAuthenticationState>
 @code {
     private List<WorkerConfiguration> WorkerConfigList = new();
     private SendRequestBase GenerateAPICallConfirmation { get; set; }
     private DeleteWorkerConfigBase DeleteWorkerConfigConfirmation { get; set; }
+    private ScheduleWorkerBase ScheduleWorkerConfirmation { get; set; }
     private string errorMessage = "";
     private string SearchText = "";
     protected override async Task OnInitializedAsync()
@@ -129,7 +133,19 @@
         DeleteWorkerConfigConfirmation.ConfirmationMessage = "Are you sure you want to delete "+workerConfiguration.Url+"?";
         DeleteWorkerConfigConfirmation.Show();
     }
-    
+    private void ScheduleWorker_Click(WorkerConfiguration workerConfiguration)
+    {
+        ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
+        ScheduleWorkerConfirmation.Show();
+    }
+    private async Task ScheduleWorker(bool confirmed)
+    {
+        if (confirmed)
+        {
+            // add schedule method
+            NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
+        }
+    }
     private async Task GenerateAPICall(WorkerConfiguration workerConfigurationModel, bool confirmed)
     {
         GenerateAPICallConfirmation.Content =

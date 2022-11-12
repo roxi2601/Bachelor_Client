@@ -64,8 +64,15 @@
 	
 	async Task Edit()
 	{
-		await AccountService.EditAccount(account);
-		NavigationManager.NavigateTo("/AccountsList");
+		try
+		{
+			await AccountService.EditAccount(account);
+			NavigationManager.NavigateTo("/AccountsList");
+		}
+		catch (Exception e)
+		{
+			errorMessage = e.Message;
+		}
 	}
 
     protected override async Task OnInitializedAsync()
