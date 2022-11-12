@@ -6,7 +6,7 @@ namespace Bachelor_Client.Services.Account;
 
 public class AccountService : IAccountService
 {
-    private List<Models.Account> users = new();
+    private List<Models.Account> accounts = new();
     
     public async Task<Models.Account> GetLoggedAccount(Models.Account accountModel)
     {
@@ -26,7 +26,7 @@ public class AccountService : IAccountService
         
     }
 
-    public async Task CreateUser(Models.Account account)
+    public async Task CreateAccount(Models.Account account)
     {
         HttpClient httpClient = new HttpClient();
         StringContent content = new StringContent(
@@ -35,11 +35,18 @@ public class AccountService : IAccountService
             "application/json"
         );
         HttpResponseMessage responseMessage =
-            await httpClient.PostAsync("https://localhost:7261/createAccount", content); 
-        // account =
-        //     JsonConvert.DeserializeObject<Models.Account>(responseMessage.Content.ReadAsStringAsync()
-        //         .Result);
-        // return accountModel ;
+            await httpClient.PostAsync("https://localhost:7261/createAccount", content);
+    }
+    public async Task EditAccount(Models.Account account)
+    {
+        HttpClient httpClient = new HttpClient();
+        StringContent content = new StringContent(
+            JsonConvert.SerializeObject(account),
+            Encoding.UTF8,
+            "application/json"
+        );
+        //change url
+        HttpResponseMessage responseMessage = await httpClient.PatchAsync("https://localhost:7261/createAccount", content);
     }
 
     public async Task<List<Models.Account>> ReadAllAccounts()
@@ -50,7 +57,7 @@ public class AccountService : IAccountService
         List<Models.Account> accountsDeSer =
             JsonConvert.DeserializeObject<List<Models.Account>>(responseMessage.Content.ReadAsStringAsync()
                 .Result);
-        return users = accountsDeSer;
+        return accounts = accountsDeSer;
     }
 
     public async Task<List<Models.Account>> GetAllUsers()
@@ -61,8 +68,13 @@ public class AccountService : IAccountService
         List<Models.Account> accountDeSer =
             JsonConvert.DeserializeObject<List<Models.Account>>(responseMessage.Content.ReadAsStringAsync()
                 .Result);
-        return users = accountDeSer;
+        return accounts = accountDeSer;
     }
+    public Models.Account GetAccountById(int accountID)
+    {
+        return accounts.Find(a => a.PkAccountId == accountID);
+    }
+
     public async Task DeleteAccount(int accountId)
     {
         HttpClient httpClient = new HttpClient();

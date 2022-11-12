@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
 
-namespace Bachelor_Client.Pages.Account.DeleteUser;
+namespace Bachelor_Client.Pages.Account.DeleteAccount;
 
-public class DeleteUserBase : ComponentBase
+public class DeleteAccountBase : ComponentBase
 {  protected bool ShowConfirmation { get; set; }
 
     [Parameter]

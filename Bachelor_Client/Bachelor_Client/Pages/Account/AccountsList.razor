@@ -1,10 +1,10 @@
-@page "/UsersList"
+@page "/AccountsList"
 @using Bachelor_Client.Services.Account
 @using Bachelor_Client.Models
-@using Bachelor_Client.Pages.Account.DeleteUser
+@using Bachelor_Client.Pages.Account.DeleteAccount
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
-@layout UsersListLayout
+@layout AccountsListLayout
 <CascadingAuthenticationState>
     <AuthorizeView Policy="loggedAdmin">
         <Authorized>
@@ -82,13 +82,13 @@
             </body>
         </NotAuthorized>
     </AuthorizeView>
-    <DeleteUser @ref="DeleteAccountConfirmation" ConfirmationChanged="DeleteAccount"/>
+    <DeleteAccount @ref="DeleteAccountConfirmation" ConfirmationChanged="DeleteAccount"/>
    
 </CascadingAuthenticationState>
 @code {
     private List<Account> AccountList = new();
     
-    private DeleteUserBase DeleteAccountConfirmation { get; set; }
+    private DeleteAccountBase DeleteAccountConfirmation { get; set; }
     private string errorMessage = "";
     protected override async Task OnInitializedAsync()
     {
@@ -102,7 +102,7 @@
         if (confirmed)
         {
             await AccountService.DeleteAccount(DeleteAccountConfirmation.ID);
-            NavigationManager.NavigateTo("/Users", true);
+            NavigationManager.NavigateTo("/AccountsList", true);
         }
     }
     private void DeleteAccount_Click(Account account)
@@ -114,9 +114,9 @@
     
 
 
-    private void NavigateToEdit(int workerConfigID)
+    private void NavigateToEdit(int accountID)
     {
-        NavigationManager.NavigateTo($"EditWorkerConfig/{workerConfigID}");
+        NavigationManager.NavigateTo($"EditAccount/{accountID}");
     }
 
 }
