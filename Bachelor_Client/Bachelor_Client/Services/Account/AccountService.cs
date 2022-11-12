@@ -45,8 +45,8 @@ public class AccountService : IAccountService
             Encoding.UTF8,
             "application/json"
         );
-        //change url
-        HttpResponseMessage responseMessage = await httpClient.PatchAsync("https://localhost:7261/createAccount", content);
+      
+        HttpResponseMessage responseMessage = await httpClient.PatchAsync("https://localhost:7261/editAccount", content);
     }
 
     public async Task<List<Models.Account>> ReadAllAccounts()
@@ -59,17 +59,7 @@ public class AccountService : IAccountService
                 .Result);
         return accounts = accountsDeSer;
     }
-
-    public async Task<List<Models.Account>> GetAllUsers()
-    {
-        HttpClient httpClient = new HttpClient();
-        HttpResponseMessage responseMessage =
-            await httpClient.GetAsync("https://localhost:7261/accounts"); //Change here
-        List<Models.Account> accountDeSer =
-            JsonConvert.DeserializeObject<List<Models.Account>>(responseMessage.Content.ReadAsStringAsync()
-                .Result);
-        return accounts = accountDeSer;
-    }
+    
     public Models.Account GetAccountById(int accountID)
     {
         return accounts.Find(a => a.PkAccountId == accountID);
@@ -78,7 +68,6 @@ public class AccountService : IAccountService
     public async Task DeleteAccount(int accountId)
     {
         HttpClient httpClient = new HttpClient();
-        HttpResponseMessage responseMessage = await httpClient.DeleteAsync("https://localhost:7261/accounts/" + $"{accountId}");
-        // if(responseMessage.Content.)
+        HttpResponseMessage responseMessage = await httpClient.DeleteAsync("https://localhost:7261/deleteAccount/" + $"{accountId}");
     }
 }
