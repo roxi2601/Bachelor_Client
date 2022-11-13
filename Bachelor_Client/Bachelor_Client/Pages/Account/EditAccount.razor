@@ -1,6 +1,7 @@
 @page "/EditAccount/{accountID}"
 @using Bachelor_Client.Models
 @using Bachelor_Client.Services.Account
+@using Bunit.Extensions
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
 @layout CreateEditAccountLayout
@@ -15,20 +16,20 @@
 					 <h2>Edit User</h2>
 					 <div class="form-row-total">
 						 <div class="form-row">
-							 <input @bind="account.DisplayName" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" required>
+							 <input @bind="account.DisplayName" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name"  style="color: white">
 						 </div>
 						 <div class="form-row">
-							 <input @bind="account.Email" readonly type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  required>
+							 <input @bind="account.Email" readonly type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"   style="color: white">
 						 </div>
 					 </div>
 					 <div class="form-row-total">
 						 <div class="form-row">
-							 <input @bind="account.Password" type="password" name="password" id="password" class="input-text" placeholder="Password" required>
+							 <input @bind="account.Password" type="password" name="password" id="password" class="input-text" placeholder="Password"  style="color: white">
 						 </div>
 						 <div class="form-row">
-							 <select @bind="account.Type" class="userType" name="userType" placeholder="User Type">
-								 <option value="admin">Admin</option>
-								 <option value="user">User</option>
+							 <select @bind="account.Type" class="userType" name="userType" placeholder="User Type" style="color: white">
+								 <option value="admin" style="color: black">Admin</option>
+								 <option value="user" style="color: black">User</option>
 							 </select>
 						 </div>
 					 </div>
@@ -64,9 +65,30 @@
 	
 	async Task Edit()
 	{
-		displayMessage = await AccountService.EditAccount(account);
-		if(displayMessage.Equals("Account edited successfully"))
-		NavigationManager.NavigateTo("/AccountsList");
+		displayMessage = "";
+		try
+		{
+			if (!account.DisplayName.IsNullOrEmpty() && !account.Password.IsNullOrEmpty())
+			{
+				displayMessage = await AccountService.EditAccount(account);
+				Console.WriteLine(displayMessage);
+				if (displayMessage.Equals("Account edited successfully")) 
+				{
+					NavigationManager.NavigateTo("/AccountsList");
+				}
+			}
+			else
+			{
+				throw new Exception("Email and password cannot be empty");
+			}
+			
+			
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine(e);
+			displayMessage = e.Message;
+		}
 	}
 
     protected override async Task OnInitializedAsync()

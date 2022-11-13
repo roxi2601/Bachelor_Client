@@ -10,6 +10,7 @@
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
 
+
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
@@ -51,6 +52,11 @@
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn" @onclick="PerformLogin">
                         Login
+          
+                        @if (showSpinner)
+                        {
+                            <div class="spinner"></div>
+                        }
                     </button>
                 </div>
             </div>
@@ -61,23 +67,28 @@
 @code {
     private Account _accountModel = new();
     private string errorMessage;
-    
+    private bool showSpinner;
+
 
     private async Task PerformLogin()
     {
         errorMessage = "";
         try
         {
+            showSpinner = true;
             Account accountModel = await AccountService.GetLoggedAccount(_accountModel);
             if (!accountModel.Email.IsNullOrEmpty()) //TODO: change this
             {
+               
                 await ((AccountCustomAuthenticationStateProvider)AuthenticationStateProvider).ValidateLogin(accountModel);
                 _accountModel.Email = "";
                 _accountModel.Password = "";
                 NavigationManager.NavigateTo("/home");
+             
             }
             else
             {
+                showSpinner = false;
                 throw new Exception("Email or password are incorrect");
             }
         }
@@ -88,4 +99,4 @@
         }
     }
 
-}
+}}

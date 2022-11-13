@@ -1,6 +1,7 @@
 @page "/CreateAccount"
 @using Bachelor_Client.Models
 @using Bachelor_Client.Services.Account
+@using Bunit.Extensions
 @layout CreateEditAccountLayout
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
@@ -15,15 +16,15 @@
 					 <h2>Create User</h2>
 					 <div class="form-row-total">
 						 <div class="form-row">
-							 <input @bind="name" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" required>
+							 <input @bind="name" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" >
 						 </div>
 						 <div class="form-row">
-							 <input @bind="email" type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  required>
+							 <input @bind="email" type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  >
 						 </div>
 					 </div>
 					 <div class="form-row-total">
 						 <div class="form-row">
-							 <input @bind="password" type="password" name="password" id="password" class="input-text" placeholder="Password" required>
+							 <input @bind="password" type="password" name="password" id="password" class="input-text" placeholder="Password" >
 						 </div>
 						 <div class="form-row">
 							 <select @bind="type" class="userType" name="userType" placeholder="User Type">
@@ -62,14 +63,32 @@
 	string name { get; set; }
 	string password { get; set; }
 	string email { get; set; }
+	
 	async Task CreateNewAccount()
 	{
-		displayMessage = await AccountService.CreateAccount(InitData());
-		if(displayMessage.Equals("Account created successfully"))
-		NavigationManager.NavigateTo("/AccountsList");
+		displayMessage = "";
+		try
+		{
+			if (!name.IsNullOrEmpty() && !password.IsNullOrEmpty() && !email.IsNullOrEmpty())
+			{
+				displayMessage = await AccountService.EditAccount(InitData());
+				Console.WriteLine(displayMessage);
+				if (displayMessage.Equals("Account created successfully")) 
+				{
+					NavigationManager.NavigateTo("/AccountsList");
+				}
+			}
+			else
+			{
+				throw new Exception("Email and password cannot be empty");
+			}
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine(e);
+			displayMessage = e.Message;
+		}
 	}
-	
-	
 	private Account InitData()
 	{
 		return new Account()
