@@ -11,6 +11,10 @@ public class ScheduleWorkerBase: ComponentBase
    
     [Parameter]
     public int ID { get; set; } 
+    [Parameter]
+    public DateTime DateTime { get; set; } 
+    [Parameter]
+    public string Frequency { get; set; } 
 
     [Parameter]
     public string ConfirmationMessage { get; set; }

@@ -14,26 +14,19 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm">
-                            <label for="start">Start date:</label>
+                            <label for="start">Start Date/Time:</label>
                         </div>
                         <div class="col-sm">
-                          <input class="form-control" type="date"/>        
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <label for="time">Time:</label>
-                        </div>
-                        <div class="col-sm">
-                              <input class="form-control" type="time"/> 
+                            <input class="form-control" type="datetime-local" id = "datetime" @bind="DateTime" style="width: 100%; padding:0; padding-top: 5%"/>        
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm">
-                            <label for="occurancy">Occurancy:</label>
+                            <label for="frequency">Frequency:</label>
                         </div>
                         <div class="col-sm">
-                            <select id="occurancy" name="occurancy" style="height: 50px">
+                            <select id="frequency" name="frequency" @bind="Frequency" style="height: 50px; width: 100%;  ">
+                                 <option value="hour">Every hour</option>
                                 <option value="day">Every day</option>
                                 <option value="week">Every week</option>
                                 <option value="month">Every month</option>

@@ -7,9 +7,12 @@ namespace Bachelor_Client.Models{
         public int PkWorkerId { get; set; }
         public int FkWorkerConfigurationId { get; set; }
         public int FkWorkerStatisticsId { get; set; }
-        public string? Name { get; set; }
-        public string? ScheduleRate { get; set; }
+        public string Name { get; set; }
+        public string ScheduleRate { get; set; }
         public bool? IsActive { get; set; }
+        public DateTime StartDateTime { get; set; }
+        
+        
 
         public virtual WorkerConfiguration FkWorkerConfiguration { get; set; } = null!;
         public virtual WorkerStatistic FkWorkerStatistics { get; set; } = null!;

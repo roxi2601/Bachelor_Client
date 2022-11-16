@@ -109,6 +109,7 @@
     private SendRequestBase GenerateAPICallConfirmation { get; set; }
     private DeleteWorkerConfigBase DeleteWorkerConfigConfirmation { get; set; }
     private ScheduleWorkerBase ScheduleWorkerConfirmation { get; set; }
+    private Worker _worker = new Worker();
     private string errorMessage = "";
     private string SearchText = "";
     protected override async Task OnInitializedAsync()
@@ -136,13 +137,17 @@
     private void ScheduleWorker_Click(WorkerConfiguration workerConfiguration)
     {
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
+        workerConfiguration.PkWorkerConfigurationId = _worker.FkWorkerConfigurationId;
+        workerConfiguration.Url = _worker.Name;
+        ScheduleWorkerConfirmation.Frequency = _worker.ScheduleRate;
+        ScheduleWorkerConfirmation.DateTime = _worker.StartDateTime;
+        _worker.IsActive = true;
         ScheduleWorkerConfirmation.Show();
     }
     private async Task ScheduleWorker(bool confirmed)
     {
         if (confirmed)
         {
-            // add schedule method
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
     }
