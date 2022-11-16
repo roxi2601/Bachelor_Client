@@ -220,122 +220,6 @@
         </div>
     </div>
 }
-@if (authorizationType == "OAuth1.0")
-{
-    <div class="row">
-        <div class="col-sm">
-            Signature method:
-        </div>
-        <div class="col-sm">
-            <select id="signatureMethod" name="signatureMethod" style="width: 200px; height: 40px; font-size: 12px;" @bind="OAuth1_SignatureMethod">
-                <option value="1">HMAC-SHA1</option>
-                <option value="2">HMAC-SHA256</option>
-                <option value="3">HMAC-SHA512</option>
-                <option value="4">RSA-SHA1</option>
-                <option value="5">RSA-SHA256</option>
-                <option value="6">RSA-SHA512</option>
-                <option value="7">PLAINTEXT</option>
-            </select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Consumer Key:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Consumer Key" style="width: 200px; height: 30px" @bind="OAuth1_CusKey"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Consumer Secret:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Consumer Secret" style="width: 200px; height: 30px" @bind="OAuth1_CusSecret"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Access Token:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Access Token" style="width: 200px; height: 30px" @bind="OAuth1_AccessToken"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Token Secret:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Token Secret" style="width: 200px; height: 30px" @bind="OAuth1_TokenSecret"/>
-        </div>
-    </div>
-    <div class="row">
-        <p style="font-weight: bold">ADVANCED:</p>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Callback URL:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Callback URL" style="width: 200px; height: 30px" @bind="OAuth1_CallbackURL"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Timestamp:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Timestamp" style="width: 200px; height: 30px" @bind="OAuth1_Timestamp"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Nonce:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Nonce" style="width: 200px; height: 30px" @bind="OAuth1_Nonce"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Version:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="1" style="width: 200px; height: 30px" @bind="OAuth1_Version"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Realm:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Realm" style="width: 200px; height: 30px" @bind="OAuth1_Realm"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Include body hash:</p>
-        </div>
-        <div class="col-sm">
-            <select id="bodyHash" name="bodyHash" style="width: 200px;height: 40px; font-size: 12px;" @bind="OAuth1_BodyHash">
-                <option value="yes2">YES</option>
-                <option value="no2">NO</option>
-            </select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Add empty parameters to signature:</p>
-        </div>
-        <div class="col-sm">
-            <select id="paramSig" name="paramSig" style="width: 200px;height: 40px; font-size: 12px;" @bind="OAuth1_ParamSig">
-                <option value="yes1">YES</option>
-                <option value="no1">NO</option>
-            </select>
-        </div>
-    </div>
-}
 @if (authorizationType == "OAuth2.0")
 {
     <div class="row">
@@ -558,18 +442,6 @@
     string Body_Raw { get; set; }
     string OAuth2_HeaderPrefix { get; set; }
     string OAuth2_AccessToken { get; set; }
-    string OAuth1_ParamSig { get; set; }
-    string OAuth1_BodyHash { get; set; }
-    string OAuth1_Realm { get; set; }
-    string OAuth1_Version { get; set; }
-    string OAuth1_Nonce { get; set; }
-    string OAuth1_Timestamp { get; set; }
-    string OAuth1_CallbackURL { get; set; }
-    string OAuth1_TokenSecret { get; set; }
-    string OAuth1_AccessToken { get; set; }
-    string OAuth1_CusSecret { get; set; }
-    string OAuth1_CusKey { get; set; }
-    string OAuth1_SignatureMethod { get; set; }
     string BasicAuth_Password { get; set; }
     string BasicAuth_Username { get; set; }
     string BearerToken_Token { get; set; }
@@ -596,18 +468,6 @@
                 Body_Raw = "";
                 OAuth2_HeaderPrefix = "";
                 OAuth2_AccessToken = "";
-                OAuth1_ParamSig = "";
-                OAuth1_BodyHash = "";
-                OAuth1_Realm = "";
-                OAuth1_Version = "";
-                OAuth1_Nonce = "";
-                OAuth1_Timestamp = "";
-                OAuth1_CallbackURL = "";
-                OAuth1_TokenSecret = "";
-                OAuth1_AccessToken = "";
-                OAuth1_CusSecret = "";
-                OAuth1_CusKey = "";
-                OAuth1_SignatureMethod = "";
                 BasicAuth_Password = "";
                 BasicAuth_Username = "";
                 BearerToken_Token = "";
