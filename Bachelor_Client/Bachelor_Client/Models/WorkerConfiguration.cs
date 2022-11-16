@@ -1,5 +1,7 @@
-﻿namespace Bachelor_Client.Models
-{
+﻿using System;
+using System.Collections.Generic;
+
+namespace Bachelor_Client.Models{
     public partial class WorkerConfiguration
     {
         public WorkerConfiguration()
@@ -19,13 +21,11 @@
         public int? FkBasicAuthId { get; set; }
         public int? FkBearerTokenId { get; set; }
         public int? FkApikeyId { get; set; }
-        public int? FkOauth10id { get; set; }
         public int? FkOauth20id { get; set; }
 
         public virtual Apikey? FkApikey { get; set; }
         public virtual BasicAuth? FkBasicAuth { get; set; }
         public virtual BearerToken? FkBearerToken { get; set; }
-        public virtual Oauth10? FkOauth10 { get; set; }
         public virtual Oauth20? FkOauth20 { get; set; }
         public virtual Raw? FkRaw { get; set; }
         public virtual ICollection<FormDatum> FormData { get; set; }

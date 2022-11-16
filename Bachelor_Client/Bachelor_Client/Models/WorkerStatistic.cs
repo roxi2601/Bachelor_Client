@@ -1,5 +1,7 @@
-﻿namespace Bachelor_Client.Models
-{
+﻿using System;
+using System.Collections.Generic;
+
+namespace Bachelor_Client.Models{
     public partial class WorkerStatistic
     {
         public WorkerStatistic()

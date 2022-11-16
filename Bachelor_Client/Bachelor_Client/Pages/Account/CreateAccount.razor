@@ -71,7 +71,7 @@
 		{
 			if (!name.IsNullOrEmpty() && !password.IsNullOrEmpty() && !email.IsNullOrEmpty())
 			{
-				displayMessage = await AccountService.EditAccount(InitData());
+				displayMessage = await AccountService.CreateAccount(InitData());
 				Console.WriteLine(displayMessage);
 				if (displayMessage.Equals("Account created successfully")) 
 				{
