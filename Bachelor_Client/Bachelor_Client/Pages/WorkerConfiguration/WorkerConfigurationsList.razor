@@ -138,10 +138,10 @@
     private void ScheduleWorker_Click(WorkerConfiguration workerConfiguration)
     {
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
-        workerConfiguration.PkWorkerConfigurationId = _worker.FkWorkerConfigurationId;
-        workerConfiguration.Url = _worker.Name;
-        ScheduleWorkerConfirmation.Frequency = _worker.ScheduleRate;
-        ScheduleWorkerConfirmation.DateTime = _worker.StartDateTime;
+        _worker.FkWorkerConfigurationId = workerConfiguration.PkWorkerConfigurationId;
+        _worker.Name = workerConfiguration.Url;
+        _worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency;
+        _worker.StartDateTime = ScheduleWorkerConfirmation.DateTime;
         _worker.IsActive = true;
         ScheduleWorkerConfirmation.Show();
     }
