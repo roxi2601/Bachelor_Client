@@ -8,10 +8,11 @@
 @using Bachelor_Client.Models
 @using Bachelor_Client.Authentication
 @using Bachelor_Client.Pages.WorkerConfiguration.Scheduling
+@using Bachelor_Client.Services.Scheduling
 @inject NavigationManager NavigationManager
 @inject IRestService RestService
 @inject IWorkerConfigService WorkerConfigService
-@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IScheduleService ScheduleService
 @layout WorkerConfigurationsLayout
 <CascadingAuthenticationState>
     <AuthorizeView>
@@ -148,6 +149,7 @@
     {
         if (confirmed)
         {
+            await ScheduleService.CreateWorker(_worker);
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
     }
@@ -157,6 +159,8 @@
             await RestService.GenerateRequest(workerConfigurationModel, workerConfigurationModel.RequestType + workerConfigurationModel.LastSavedBody);
         GenerateAPICall_Click(confirmed);
     }
+
+
     private void GenerateAPICall_Click(bool confirmed)
     {
         if (confirmed)
@@ -171,5 +175,8 @@
     {
         NavigationManager.NavigateTo($"EditWorkerConfig/{workerConfigID}");
     }
+    
+    
+    
 
 }

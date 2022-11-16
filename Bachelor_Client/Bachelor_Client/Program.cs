@@ -3,6 +3,7 @@ using Bachelor_Client;
 using Bachelor_Client.Authentication;
 using Bachelor_Client.Services.Account;
 using Bachelor_Client.Services.Rest;
+using Bachelor_Client.Services.Scheduling;
 using Bachelor_Client.Services.WorkerConfig;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddScoped<IAccountService, AccountService>();
-
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IWorkerConfigService, WorkerConfigService>();
 builder.Services.AddScoped<IRestService, RestService>();
 
