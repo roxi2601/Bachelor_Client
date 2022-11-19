@@ -475,5 +475,9 @@ a.active,a:hover{
 */
 
 
-
+.containerStatistics {
+    position: absolute;
+    margin-left: 10%; margin-top: 10%;
+    background-color: rgba(242, 242, 242, 0.90);
+}
 

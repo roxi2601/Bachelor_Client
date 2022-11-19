@@ -11,8 +11,9 @@ namespace Bachelor_Client.Models{
         public string ScheduleRate { get; set; }
         public bool? IsActive { get; set; }
         public DateTime StartDateTime { get; set; }
-        
-        
+        public int NumberOfFailedJobs { get; set; }
+
+
 
         public virtual WorkerConfiguration FkWorkerConfiguration { get; set; } = null!;
         public virtual WorkerStatistic FkWorkerStatistics { get; set; } = null!;
