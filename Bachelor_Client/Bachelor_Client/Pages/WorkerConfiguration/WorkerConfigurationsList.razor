@@ -140,7 +140,7 @@
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
         _worker.FkWorkerConfigurationId = workerConfiguration.PkWorkerConfigurationId;
         _worker.Name = workerConfiguration.Url;
-        _worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency;
+        _worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + ScheduleWorkerConfirmation.Frequency2;
         _worker.StartDateTime = ScheduleWorkerConfirmation.DateTime;
         _worker.IsActive = true;
         ScheduleWorkerConfirmation.Show();
