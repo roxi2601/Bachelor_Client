@@ -1,8 +1,5 @@
 @page "/Statistics"
-@using Syncfusion.Blazor.Charts
-@using Bachelor_Client.Models
 @using Bachelor_Client.Services.WorkerConfig
-@using Syncfusion.Blazor.Charts.Chart.Internal
 @inject IWorkerConfigService WorkerConfigService
 @layout WorkerConfigurationsLayout
 
@@ -20,7 +17,7 @@
                                                                 <th class="url" style="width: 35%">Worker</th>
                                                                 <th class="isActive" style="width: 15%">Is Active</th>
                                                                 <th class="authType" style="width: 15%">Status</th>
-                                                                <th class="duration" style="width: 15%">Duration</th>
+                                                                <th class="duration" style="width: 15%">Duration (s)</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -112,8 +109,6 @@
     {
         public string URL { get; set; }
         public int numberOfFailedRuns { get; set; }
-        public int numberOfSuccessRuns { get; set; }
-        public int numberOfRuns { get; set; }
         public double duration { get; set; }
         public bool isActive { get; set; }
         public string status { get; set; }
@@ -133,12 +128,12 @@
         
         WorkerDetails = new List<ModelTest>
     {
-        new ModelTest(){ URL = "Caca", numberOfFailedRuns = 12, numberOfSuccessRuns = 20, duration = 80, numberOfRuns = 32, isActive = true, status = "Running"},
-        new ModelTest(){ URL = "Caca1", numberOfFailedRuns = 20, numberOfSuccessRuns = 40, duration = 180, numberOfRuns = 60, isActive = false, status = "Failed"},
-        new ModelTest(){ URL = "Caca2", numberOfFailedRuns = 40, numberOfSuccessRuns = 210, duration = 280, numberOfRuns = 332, isActive = true, status = "Success"},
-        new ModelTest(){ URL = "Caca3", numberOfFailedRuns = 60, numberOfSuccessRuns = 250, duration = 77, numberOfRuns = 111, isActive = true, status = "Success"},
-        new ModelTest(){ URL = "Caca4", numberOfFailedRuns = 40, numberOfSuccessRuns = 270, duration = 66, numberOfRuns = 222, isActive = false, status = "Failed"},
-        new ModelTest(){ URL = "Caca5", numberOfFailedRuns = 100, numberOfSuccessRuns = 280, duration = 55, numberOfRuns = 333, isActive = false, status = "Running"},
+        new ModelTest(){ URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running"},
+        new ModelTest(){ URL = "Caca1", numberOfFailedRuns = 20, isActive = false, status = "Failed"},
+        new ModelTest(){ URL = "Caca2", numberOfFailedRuns = 40, isActive = true, status = "Success"},
+        new ModelTest(){ URL = "Caca3", numberOfFailedRuns = 60, isActive = true, status = "Success"},
+        new ModelTest(){ URL = "Caca4", numberOfFailedRuns = 40, isActive = false, status = "Failed"},
+        new ModelTest(){ URL = "Caca5", numberOfFailedRuns = 100, isActive = false, status = "Running"},
        
     };
     }
