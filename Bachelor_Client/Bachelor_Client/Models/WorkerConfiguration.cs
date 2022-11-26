@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bachelor_Client.Models{
+namespace Bachelor_Client.Models
+{
     public partial class WorkerConfiguration
     {
         public WorkerConfiguration()
@@ -9,7 +10,7 @@ namespace Bachelor_Client.Models{
             FormData = new HashSet<FormDatum>();
             Headers = new HashSet<Header>();
             Parameters = new HashSet<Parameter>();
-        //    Workers = new HashSet<Worker>();
+            //    Workers = new HashSet<Worker>();
         }
 
         public int PkWorkerConfigurationId { get; set; }
@@ -31,6 +32,10 @@ namespace Bachelor_Client.Models{
         public virtual ICollection<FormDatum> FormData { get; set; }
         public virtual ICollection<Header> Headers { get; set; }
         public virtual ICollection<Parameter> Parameters { get; set; }
- //       public virtual ICollection<Worker> Workers { get; set; }
+
+        public string ScheduleRate { get; set; } = null!;
+
+        public bool IsActive { get; set; }
+        //       public virtual ICollection<Worker> Workers { get; set; }
     }
 }
