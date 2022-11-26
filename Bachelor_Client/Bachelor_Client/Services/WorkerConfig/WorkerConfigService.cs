@@ -7,6 +7,7 @@ namespace Bachelor_Client.Services.WorkerConfig;
 public class WorkerConfigService : IWorkerConfigService
 {
     private List<WorkerConfiguration> workerConfigs = new();
+    private List<WorkerStatistic> workerStats = new();
 
     public async Task CreateWorkerConfiguration(WorkerConfiguration workerConfiguration)
     {
@@ -45,7 +46,16 @@ public class WorkerConfigService : IWorkerConfigService
                 .Result);
         return workerConfigs = workerConfigsDeSer;
     }
-
+    public async Task<List<WorkerStatistic>> ReadAllWorkerStatistics()
+    {
+        HttpClient httpClient = new HttpClient();
+        HttpResponseMessage responseMessage =
+            await httpClient.GetAsync("https://localhost:7261/workerStats"); 
+        List<WorkerStatistic> workerStatsDeSer =
+            JsonConvert.DeserializeObject<List<WorkerStatistic>>(responseMessage.Content.ReadAsStringAsync()
+                .Result);
+        return workerStats = workerStatsDeSer;
+    }
     public async Task DeleteWorkerConfiguration(int workerConfigId)
     {
         HttpClient httpClient = new HttpClient();

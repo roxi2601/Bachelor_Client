@@ -151,7 +151,7 @@
     {
         if (confirmed)
         {
-            worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + ScheduleWorkerConfirmation.Frequency2;
+            worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + "/"+ ScheduleWorkerConfirmation.Frequency2;
             worker.StartDate = ScheduleWorkerConfirmation.DateTime;
             worker.IsActive = ScheduleWorkerConfirmation.IsActive;
             

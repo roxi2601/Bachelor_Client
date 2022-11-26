@@ -1,33 +1,88 @@
 @page "/Statistics"
-@*@using Syncfusion.Blazor.Charts
+@using Syncfusion.Blazor.Charts
 @using Bachelor_Client.Models
 @using Bachelor_Client.Services.WorkerConfig
 @inject IWorkerConfigService WorkerConfigService
-<SfChart>
-    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+@layout WorkerConfigurationsLayout
+ <div class="container">
+ <SfChart>
+     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
 
-    <ChartSeriesCollection>
-        <ChartSeries DataSource="@WorkerDetails" Name="NumberOfFailedRuns" XName="Country" Width="2" Opacity="1" YName="NumberOfFailedRuns" Type="ChartSeriesType.Column">
-        </ChartSeries>
-        <ChartSeries DataSource="@WorkerDetails" Name="NumberOSuccessRuns" XName="Country" Width="2" Opacity="1" YName="NumberOSuccessRuns" Type="ChartSeriesType.Column">
-        </ChartSeries>
-    </ChartSeriesCollection>
-</SfChart>
-
+     <ChartSeriesCollection>
+         <ChartSeries DataSource="@WorkerDetails" Name="numberOfFailedRuns" XName="numberOfRuns" Width="2" Opacity="1" YName="numberOfFailedRuns" Type="ChartSeriesType.Column">
+         </ChartSeries>
+         <ChartSeries DataSource="@WorkerDetails" Name="numberOfSuccessRuns" XName="numberOfRuns" Width="2" Opacity="1" YName="numberOfSuccessRuns" Type="ChartSeriesType.Column">
+         </ChartSeries>
+     </ChartSeriesCollection>
+ </SfChart>
+ </div>
+<div class="container">
+ <SfChart Title="Analysis of the duration of the workers">
+     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
+                        LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
+                        LabelIntersectAction="LabelIntersectAction.Rotate90"
+                        EnableTrim="true" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
+         <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
+         <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+         <ChartMultiLevelLabels>
+           
+             <ChartMultiLevelLabel>
+                 <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
+                 <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
+                 </ChartAxisMultiLevelLabelBorder>
+                 <ChartCategories>
+                     <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
+                 </ChartCategories>
+             </ChartMultiLevelLabel>
+         </ChartMultiLevelLabels>
+     </ChartPrimaryXAxis>
+     <ChartPrimaryYAxis Title="Average Duration (in seconds)" Minimum="0" Maximum="500" Interval="50">
+         <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
+         <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+     </ChartPrimaryYAxis>
+     <ChartSeriesCollection>
+         <ChartSeries DataSource="@WorkerDetails" XName="URL" YName="duration" Type="ChartSeriesType.Column">
+         </ChartSeries>
+     </ChartSeriesCollection>
+ </SfChart>
+ </div>
 @code{
+    public class ModelTest
+    {
+        public string URL { get; set; }
+        public int numberOfFailedRuns { get; set; }
+        public int numberOfSuccessRuns { get; set; }
+        public int numberOfRuns { get; set; }
+        public double duration { get; set; }
+        
+    }
     
     private List<Models.WorkerConfiguration> WorkerConfigList = new();
+    private List<Models.WorkerStatistic> WorkerStatisticsList = new();
     
-    public List<Models.WorkerStatistic> WorkerDetails = new List<Models.WorkerStatistic>
+    public List<ModelTest> WorkerDetails = new List<ModelTest>
     {
-        new Models.WorkerStatistic(){ Url= "Cata", NumberOfFailedRuns= 50 },
+        new ModelTest(){ URL = "Caca", numberOfFailedRuns = 12, numberOfSuccessRuns = 20, duration = 80, numberOfRuns = 32},
+        new ModelTest(){ URL = "Caca1", numberOfFailedRuns = 20, numberOfSuccessRuns = 40, duration = 180, numberOfRuns = 60},
+        new ModelTest(){ URL = "Caca2", numberOfFailedRuns = 112, numberOfSuccessRuns = 210, duration = 280, numberOfRuns = 332},
+        new ModelTest(){ URL = "Caca3", numberOfFailedRuns = 60, numberOfSuccessRuns = 250, duration = 77, numberOfRuns = 111},
+        new ModelTest(){ URL = "Caca4", numberOfFailedRuns = 40, numberOfSuccessRuns = 270, duration = 66, numberOfRuns = 222},
+        new ModelTest(){ URL = "Caca5", numberOfFailedRuns = 100, numberOfSuccessRuns = 280, duration = 55, numberOfRuns = 333},
        
     };
+    
+    /*public List<ModelTest> WorkerDurations = new List<ModelTest >
+    {
+        new ModelTest() { URL = "Caca", duration = 31 },
+        new ModelTest() { URL = "Caca2", duration = 41 },
+        new ModelTest() { URL = "Caca3", duration = 51 },
+    };*/
     protected override async Task OnInitializedAsync()
     {
         WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
+        WorkerStatisticsList = await WorkerConfigService.ReadAllWorkerStatistics();
     }
-}*@
+}
 @*
 
 <SfChart Title="Analysis of Failed Runs">
