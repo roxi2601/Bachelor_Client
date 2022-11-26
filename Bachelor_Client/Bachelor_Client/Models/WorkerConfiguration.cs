@@ -36,6 +36,7 @@ namespace Bachelor_Client.Models
         public string ScheduleRate { get; set; } = null!;
 
         public bool IsActive { get; set; }
+        public DateTime? StartDate { get; set; }
         //       public virtual ICollection<Worker> Workers { get; set; }
     }
 }
