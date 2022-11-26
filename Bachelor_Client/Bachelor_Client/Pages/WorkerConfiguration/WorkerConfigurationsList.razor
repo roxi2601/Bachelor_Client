@@ -138,9 +138,10 @@
     private void ScheduleWorker_Click(WorkerConfiguration workerConfiguration)
     {
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
-     
+        worker = WorkerConfigService.GetWorkerConfigurationById(workerConfiguration.PkWorkerConfigurationId);
         
-        // to show if the current worker is active
+
+    // to show if the current worker is active
         //Worker worker2 =  ScheduleService.GetWorkerByWorkerConfigId(workerConfiguration.PkWorkerConfigurationId);
         //ScheduleWorkerConfirmation.IsActive = worker2.IsActive;
         
