@@ -1,5 +1,4 @@
-﻿
-@inherits Bachelor_Client.Pages.WorkerConfiguration.DeleteWorkerConfig.DeleteWorkerConfigBase
+﻿@inherits Bachelor_Client.Pages.WorkerConfiguration.DeleteWorkerConfig.DeleteWorkerConfigBase
 @if (ShowConfirmation)
 {
     <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
@@ -17,15 +16,19 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            @onclick="() => OnConfirmationChange(false)">Cancel</button>
+                            @onclick="() => OnConfirmationChange(false)">
+                        Cancel
+                    </button>
                     <button type="button" class="btn btn-danger"
-                            @onclick="() => OnConfirmationChange(true)">Delete</button>
+                            @onclick="() => OnConfirmationChange(true)">
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
 }
+
 @code {
-    
+
 }

@@ -1,6 +1,4 @@
-﻿
-
-using Bachelor_Client.Models;
+﻿using Bachelor_Client.Models;
 
 namespace Bachelor_Client.Services.WorkerConfig;
 

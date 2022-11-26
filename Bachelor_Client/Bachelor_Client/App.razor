@@ -1,13 +1,13 @@
 ﻿@using Bachelor_Client.Pages
 <CascadingAuthenticationState>
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData"  />
-    </Found>
-    <NotFound>
-       
-            <CustomNotFound />
-        
-    </NotFound>
-</Router>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData"/>
+        </Found>
+        <NotFound>
+
+            <CustomNotFound/>
+
+        </NotFound>
+    </Router>
 </CascadingAuthenticationState>

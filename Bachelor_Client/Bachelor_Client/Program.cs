@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Syncfusion.Blazor;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzY0MDk4QDMyMzAyZTMzMmUzMFVtR05UKzhxRS9pRlpJM29XZFZTRDlCTTAzdm0xNG9FaHZUMXNrcFVsSlk9");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
+    "NzY0MDk4QDMyMzAyZTMzMmUzMFVtR05UKzhxRS9pRlpJM29XZFZTRDlCTTAzdm0xNG9FaHZUMXNrcFVsSlk9");
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IWorkerConfigService, WorkerConfigService>();

@@ -22,9 +22,9 @@
 
 
                 <div class="container">
-                     <div class="row" >
-                                           <h3>  Worker Configurations      </h3> 
-                                                            </div>
+                    <div class="row">
+                        <h3> Worker Configurations </h3>
+                    </div>
                     <div class="row">
                         <input class="form-control" type="text"
                                @bind-value="SearchText"
@@ -70,14 +70,18 @@
                                                     <td>@workerConfig.LastSavedBody</td>
 
                                                     <td>
-                                                        <button class="btn" @onclick="() => NavigateToEdit(workerConfig.PkWorkerConfigurationId)"><i class="fa fa-edit"></i> </button>
-                                                        <button class="btn" @onclick="() => DeleteWorkerConfig_Click(workerConfig)"><i class="fa fa-trash"></i> </button>
-                                                        <button class="btn" @onclick="() => ScheduleWorker_Click(workerConfig)"><i class="fa fa-clock-o"></i> </button>
+                                                        <button class="btn" @onclick="() => NavigateToEdit(workerConfig.PkWorkerConfigurationId)">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn" @onclick="() => DeleteWorkerConfig_Click(workerConfig)">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <button class="btn" @onclick="() => ScheduleWorker_Click(workerConfig)">
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </button>
                                                         <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
                                                     </td>
                                                 </tr>
-
-
                                             }
                                             </tbody>
                                         </table>
@@ -94,17 +98,20 @@
             <body>
             <header class="bgimg-1" id="home">
                 <div class="w3-display-left w3-text-white" style="padding-left: 5%">
-                    <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
-                    <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
+                    <div class="container" style="background: none">
+                        <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
+                        <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
+                    </div>
                 </div>
             </header>
             </body>
         </NotAuthorized>
     </AuthorizeView>
     <DeleteWorkerConfig @ref="DeleteWorkerConfigConfirmation" ConfirmationChanged="DeleteWorkerConfig"/>
-    <SendRequestConfirm @ref="GenerateAPICallConfirmation" ConfirmationChanged="GenerateAPICall_Click" />
-    <ScheduleWorker @ref="ScheduleWorkerConfirmation" ConfirmationChanged="ScheduleWorker" />
+    <SendRequestConfirm @ref="GenerateAPICallConfirmation" ConfirmationChanged="GenerateAPICall_Click"/>
+    <ScheduleWorker @ref="ScheduleWorkerConfirmation" ConfirmationChanged="ScheduleWorker"/>
 </CascadingAuthenticationState>
+
 @code {
     private List<WorkerConfiguration> WorkerConfigList = new();
     WorkerConfiguration worker = new WorkerConfiguration();
@@ -113,11 +120,12 @@
     private ScheduleWorkerBase ScheduleWorkerConfirmation { get; set; }
     private string errorMessage = "There is no worker configurations";
     private string SearchText = "";
+
     protected override async Task OnInitializedAsync()
     {
         WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
     }
-    
+
     List<WorkerConfiguration> Filtered => WorkerConfigList.Where(
         w => w.Url.ToLower().Contains(SearchText.ToLower())).ToList();
 
@@ -129,36 +137,40 @@
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
     }
+
     private void DeleteWorkerConfig_Click(WorkerConfiguration workerConfiguration)
     {
         DeleteWorkerConfigConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
-        DeleteWorkerConfigConfirmation.ConfirmationMessage = "Are you sure you want to delete "+workerConfiguration.Url+"?";
+        DeleteWorkerConfigConfirmation.ConfirmationMessage = "Are you sure you want to delete " + workerConfiguration.Url + "?";
         DeleteWorkerConfigConfirmation.Show();
     }
+
     private void ScheduleWorker_Click(WorkerConfiguration workerConfiguration)
     {
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
         worker = WorkerConfigService.GetWorkerConfigurationById(workerConfiguration.PkWorkerConfigurationId);
-        
+
 
     // to show if the current worker is active
-        //Worker worker2 =  ScheduleService.GetWorkerByWorkerConfigId(workerConfiguration.PkWorkerConfigurationId);
-        //ScheduleWorkerConfirmation.IsActive = worker2.IsActive;
-        
+    //Worker worker2 =  ScheduleService.GetWorkerByWorkerConfigId(workerConfiguration.PkWorkerConfigurationId);
+    //ScheduleWorkerConfirmation.IsActive = worker2.IsActive;
+
         ScheduleWorkerConfirmation.Show();
     }
+
     private async Task ScheduleWorker(bool confirmed)
     {
         if (confirmed)
         {
-            worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + "/"+ ScheduleWorkerConfirmation.Frequency2;
+            worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + "/" + ScheduleWorkerConfirmation.Frequency2;
             worker.StartDate = ScheduleWorkerConfirmation.DateTime;
             worker.IsActive = ScheduleWorkerConfirmation.IsActive;
-            
+
             await ScheduleService.CreateWorker(worker);
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
     }
+
     private async Task GenerateAPICall(WorkerConfiguration workerConfigurationModel, bool confirmed)
     {
         GenerateAPICallConfirmation.Content =
@@ -173,7 +185,6 @@
         {
             GenerateAPICallConfirmation.Show();
         }
-        
     }
 
 
@@ -181,8 +192,8 @@
     {
         NavigationManager.NavigateTo($"EditWorkerConfig/{workerConfigID}");
     }
-    
-    
-    
+
+
+
 
 }

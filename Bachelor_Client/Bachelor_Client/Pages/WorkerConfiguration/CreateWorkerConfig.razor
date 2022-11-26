@@ -9,16 +9,18 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 <CascadingAuthenticationState>
 <AuthorizeView >
-  <NotAuthorized>
-                  <body>
-                       <header class="bgimg-1" id="home">
-                         <div class="w3-display-left w3-text-white" style="padding-left: 5%">
-                           <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
-                           <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
-                         </div>
-                       </header>
-                       </body>
-              </NotAuthorized>
+<NotAuthorized>
+    <body>
+    <header class="bgimg-1" id="home">
+        <div class="w3-display-left w3-text-white" style="padding-left: 5%">
+            <div class="container" style="background: none">
+                <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
+                <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
+            </div>
+        </div>
+    </header>
+    </body>
+</NotAuthorized>
 <Authorized>
 <h1 style="color: black;   font-weight: bold; ">
 
@@ -107,139 +109,139 @@
 </section>
 
 <section id="content2">
-<div class="containerCreate">
-<div class="row">
+    <div class="containerCreate">
+        <div class="row">
 
-    <div class="col-sm">
-        <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="requestType">
-            <option value="get">GET</option>
-            <option value="post">POST</option>
-            <option value="put">PUT</option>
-            <option value="delete">DELETE</option>
-        </select>
-    </div>
-    <div class="col-sm">
-        <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="url"/>
-        <div class="errorLabel">@errorMessage</div>
-    </div>
-    <div class="col-sm">
-        <button class="button-5" style="width: 50px; height: 50px" @onclick="CreateWorker">Store</button>
-    </div>
-</div>
-<div class="row"> </div>
-<div class="row">
-    <div class="col-sm">
-        <p>Authorization</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm">
-        <p>Type:</p>
-    </div>
-    <div class="col-sm">
-        <select id="authType" name="authType" style="width: 100px;height: 40px; font-size: 12px;" @bind="authorizationType">
-            <option value="noAuth">No Auth</option>
-            <option value="APIKey">API Key</option>
-            <option value="BearerToken">Bearer Token</option>
-            <option value="BasicAuth">Basic Auth</option>
-            <option value="OAuth1.0">OAuth 1.0</option>
-            <option value="OAuth2.0">OAuth 2.0</option>
-        </select>
-    </div>
-    <div class="col-sm"></div>
-    <div class="col-sm"></div>
-    <div class="col-sm"></div>
-    <div class="col-sm"></div>
-</div>
-@if (authorizationType == "noAuth")
-{
-    <div class="row">
-        <div class="col-sm">
-            <p>This request does not use any authorization. </p>
+            <div class="col-sm">
+                <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="requestType">
+                    <option value="get">GET</option>
+                    <option value="post">POST</option>
+                    <option value="put">PUT</option>
+                    <option value="delete">DELETE</option>
+                </select>
+            </div>
+            <div class="col-sm">
+                <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="url"/>
+                <div class="errorLabel">@errorMessage</div>
+            </div>
+            <div class="col-sm">
+                <button class="button-5" style="width: 50px; height: 50px" @onclick="CreateWorker">Store</button>
+            </div>
         </div>
-    </div>
-}
-@if (authorizationType == "APIKey")
-{
-    <div class="row">
-        <div class="col-sm">
-            <p>Key:</p>
+        <div class="row"> </div>
+        <div class="row">
+            <div class="col-sm">
+                <p>Authorization</p>
+            </div>
         </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="APIKey_KEY"/>
+        <div class="row">
+            <div class="col-sm">
+                <p>Type:</p>
+            </div>
+            <div class="col-sm">
+                <select id="authType" name="authType" style="width: 100px;height: 40px; font-size: 12px;" @bind="authorizationType">
+                    <option value="noAuth">No Auth</option>
+                    <option value="APIKey">API Key</option>
+                    <option value="BearerToken">Bearer Token</option>
+                    <option value="BasicAuth">Basic Auth</option>
+                    <option value="OAuth1.0">OAuth 1.0</option>
+                    <option value="OAuth2.0">OAuth 2.0</option>
+                </select>
+            </div>
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Value:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="APIKey_Value"/>
-        </div>
-    </div>
+        @if (authorizationType == "noAuth")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <p>This request does not use any authorization. </p>
+                </div>
+            </div>
+        }
+        @if (authorizationType == "APIKey")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <p>Key:</p>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="APIKey_KEY"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Value:</p>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="APIKey_Value"/>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-sm">
-            Add to:
-        </div>
-        <div class="col-sm">
-            <select id="addTo" name="addTo" style="width: 200px; height: 40px; font-size: 12px;" @bind="APIKEY_AddTo">
-                <option value="Header">Header</option>
-                <option value="QueryParameters">Query Parameters</option>
-            </select>
-        </div>
+            <div class="row">
+                <div class="col-sm">
+                    Add to:
+                </div>
+                <div class="col-sm">
+                    <select id="addTo" name="addTo" style="width: 200px; height: 40px; font-size: 12px;" @bind="APIKEY_AddTo">
+                        <option value="Header">Header</option>
+                        <option value="QueryParameters">Query Parameters</option>
+                    </select>
+                </div>
+            </div>
+        }
+        @if (authorizationType == "BearerToken")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <p>Token:</p>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Token" style="width: 200px; height: 30px" @bind="BearerToken_Token"/>
+                </div>
+            </div>
+        }
+        @if (authorizationType == "BasicAuth")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <p>Username:</p>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Username" style="width: 200px; height: 30px" @bind="BasicAuth_Username"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Password:</p>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Password" style="width: 200px; height: 30px" @bind="BasicAuth_Password"/>
+                </div>
+            </div>
+        }
+        @if (authorizationType == "OAuth2.0")
+        {
+            <div class="row">
+                <div class="col-sm">
+                    <p>Access Token:</p>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Access Token" style="width: 200px; height: 30px" @bind="OAuth2_AccessToken"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Header Prefix:</p>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Header Prefix" style="width: 200px; height: 30px" @bind="OAuth2_HeaderPrefix"/>
+                </div>
+            </div>
+        }
     </div>
-}
-@if (authorizationType == "BearerToken")
-{
-    <div class="row">
-        <div class="col-sm">
-            <p>Token:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Token" style="width: 200px; height: 30px" @bind="BearerToken_Token"/>
-        </div>
-    </div>
-}
-@if (authorizationType == "BasicAuth")
-{
-    <div class="row">
-        <div class="col-sm">
-            <p>Username:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Username" style="width: 200px; height: 30px" @bind="BasicAuth_Username"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Password:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Password" style="width: 200px; height: 30px" @bind="BasicAuth_Password"/>
-        </div>
-    </div>
-}
-@if (authorizationType == "OAuth2.0")
-{
-    <div class="row">
-        <div class="col-sm">
-            <p>Access Token:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Access Token" style="width: 200px; height: 30px" @bind="OAuth2_AccessToken"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <p>Header Prefix:</p>
-        </div>
-        <div class="col-sm">
-            <input class="form-control" type="text" placeholder="Header Prefix" style="width: 200px; height: 30px" @bind="OAuth2_HeaderPrefix"/>
-        </div>
-    </div>
-}
-</div>
 
 </section>
 
@@ -421,10 +423,12 @@
 </main>
 </Authorized>
 </AuthorizeView>
-    </CascadingAuthenticationState>
+</CascadingAuthenticationState>
+
 @code {
 
     #region bindings
+
     string requestType = "get";
     string authorizationType = "noAuth";
     string bodyType = "none";
@@ -451,6 +455,7 @@
     List<Parameter> parameters = new();
     List<Header> headers = new();
     List<FormDatum> bodies = new();
+
     #endregion
 
     private async Task CreateWorker()
@@ -461,6 +466,7 @@
             {
                 await _WorkerService.CreateWorkerConfiguration(InitData());
                 NavigationManager.NavigateTo("WorkerConfigurationsList");
+
     #region empty fields after pressing the button
 
                 errorMessage = "";
@@ -490,14 +496,12 @@
             {
                 throw new Exception("Please, specify the URL");
             }
-           
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             errorMessage = e.Message;
         }
-       
     }
 
     private WorkerConfiguration InitData()
@@ -537,5 +541,5 @@
             Headers = headers
         };
     }
-    
+
 }

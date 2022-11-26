@@ -6,97 +6,102 @@
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
 <CascadingAuthenticationState>
-<AuthorizeView Policy="loggedAdmin">
-	<Authorized >
-		
-		 <body class="form-v9">
-		 <div class="page-content">
-			 <div class="form-v9-content" style=" background:  rgba(3,3,3,0.68);">
-				 <form class="form-detail" @onsubmit="CreateNewAccount">
-					 <h2>Create User</h2>
-					 <div class="form-row-total">
-						 <div class="form-row">
-							 <input @bind="name" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" style="color: white">
-						 </div>
-						 <div class="form-row">
-							 <input @bind="email" type="email" name="your-email" id="your-email" class="input-text" placeholder="Email"  style="color: white">
-						 </div>
-					 </div>
-					 <div class="form-row-total">
-						 <div class="form-row">
-							 <input @bind="password" type="password" name="password" id="password" class="input-text" placeholder="Password" style="color: white">
-						 </div>
-						 <div class="form-row">
-							 <select @bind="type" class="userType" name="userType" placeholder="User Type" style="color: white">
-								 <option value="admin" style="color: black">Admin</option>
-								 <option value="user" style="color: black">User</option>
-							 </select>
-						 </div>
-					 </div>
-					 <div class="form-row-last">
-						 <input type="submit" name="register" class="register" value="Add user">
-					 </div>
-					  <div class="form-row-last">
-                     					@displayMessage
-                     					 </div>
-				 </form>
-			 </div>
-		 </div>
-		 </body>
-	
-	</Authorized>
-	<NotAuthorized>
-		<body>
-		<header class="bgimg-1" id="home">
-			<div class="w3-display-left w3-text-white" style="padding-left: 5%">
-				<span class="w3-jumbo w3-hide-small" style="color: red">Only logged administrators have access to this page</span><br>
-				<span class="w3-xxlarge w3-hide-large w3-hide-medium" style="color: red">Only logged administrators have access to this page</span><br>
-			</div>
-		</header>
-		</body>
-	</NotAuthorized>
-</AuthorizeView>
+    <AuthorizeView Policy="loggedAdmin">
+        <Authorized >
+
+            <body class="form-v9">
+            <div class="page-content">
+                <div class="form-v9-content" style=" background:  rgba(3,3,3,0.68);">
+                    <form class="form-detail" @onsubmit="CreateNewAccount">
+                        <h2>Create User</h2>
+                        <div class="form-row-total">
+                            <div class="form-row">
+                                <input @bind="name" type="text" name="full-name" id="full-name" class="input-text" placeholder="Name" style="color: white">
+                            </div>
+                            <div class="form-row">
+                                <input @bind="email" type="email" name="your-email" id="your-email" class="input-text" placeholder="Email" style="color: white">
+                            </div>
+                        </div>
+                        <div class="form-row-total">
+                            <div class="form-row">
+                                <input @bind="password" type="password" name="password" id="password" class="input-text" placeholder="Password" style="color: white">
+                            </div>
+                            <div class="form-row">
+                                <select @bind="type" class="userType" name="userType" placeholder="User Type" style="color: white">
+                                    <option value="admin" style="color: black">Admin</option>
+                                    <option value="user" style="color: black">User</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row-last">
+                            <input type="submit" name="register" class="register" value="Add user">
+                        </div>
+                        <div class="form-row-last">
+                            @displayMessage
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </body>
+
+        </Authorized>
+        <NotAuthorized>
+            <body>
+            <header class="bgimg-1" id="home">
+                <div class="w3-display-left w3-text-white" style="padding-left: 5%">
+                    <div class="container" style="background: none">
+                        <span class="w3-jumbo w3-hide-small">Only logged administrators have access to this page</span><br>
+                        <span class="w3-xxlarge w3-hide-large w3-hide-medium">Only logged administrators have access to this page</span><br>
+                    </div>
+                </div>
+            </header>
+            </body>
+        </NotAuthorized>
+    </AuthorizeView>
 </CascadingAuthenticationState>
+
 @code {
-	private string displayMessage = "";
-	string type = "user";
-	string name { get; set; }
-	string password { get; set; }
-	string email { get; set; }
-	
-	async Task CreateNewAccount()
-	{
-		displayMessage = "";
-		try
-		{
-			if (!name.IsNullOrEmpty() && !password.IsNullOrEmpty() && !email.IsNullOrEmpty())
-			{
-				displayMessage = await AccountService.CreateAccount(InitData());
-				Console.WriteLine(displayMessage);
-				if (displayMessage.Equals("Account created successfully")) 
-				{
-					NavigationManager.NavigateTo("/AccountsList");
-				}
-			}
-			else
-			{
-				throw new Exception("Name, email and password cannot be empty");
-			}
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e);
-			displayMessage = e.Message;
-		}
-	}
-	private Account InitData()
-	{
-		return new Account()
-		{
-			DisplayName = name,
-			Password = password,
-			Email = email,
-			Type = type
-		};
-	}
+    private string displayMessage = "";
+    string type = "user";
+    string name { get; set; }
+    string password { get; set; }
+    string email { get; set; }
+
+    async Task CreateNewAccount()
+    {
+        displayMessage = "";
+        try
+        {
+            if (!name.IsNullOrEmpty() && !password.IsNullOrEmpty() && !email.IsNullOrEmpty())
+            {
+                displayMessage = await AccountService.CreateAccount(InitData());
+                Console.WriteLine(displayMessage);
+                if (displayMessage.Equals("Account created successfully"))
+                {
+                    NavigationManager.NavigateTo("/AccountsList");
+                }
+            }
+            else
+            {
+                throw new Exception("Name, email and password cannot be empty");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            displayMessage = e.Message;
+        }
+    }
+
+    private Account InitData()
+    {
+        return new Account()
+        {
+            DisplayName = name,
+            Password = password,
+            Email = email,
+            Type = type
+        };
+    }
+
 }

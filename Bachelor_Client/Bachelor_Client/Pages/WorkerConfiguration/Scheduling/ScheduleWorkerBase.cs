@@ -2,16 +2,14 @@ using Microsoft.AspNetCore.Components;
 
 namespace Bachelor_Client.Pages.WorkerConfiguration.Scheduling;
 
-public class ScheduleWorkerBase: ComponentBase
+public class ScheduleWorkerBase : ComponentBase
 {
     protected bool ShowConfirmation { get; set; }
 
-    [Parameter]
-    public string ConfirmationTitle { get; set; } = "Schedule Worker";
-   
-    [Parameter]
-    public int ID { get; set; } 
-   
+    [Parameter] public string ConfirmationTitle { get; set; } = "Schedule Worker";
+
+    [Parameter] public int ID { get; set; }
+
     public DateTime DateTime = DateTime.Now;
 
     public string Frequency1 = "1";
@@ -19,18 +17,18 @@ public class ScheduleWorkerBase: ComponentBase
     public string Frequency2 = "sec";
     public bool IsActive = true;
 
-   public void OnActiveChanged(object args)
+    public void OnActiveChanged(object args)
     {
-        if(string.IsNullOrEmpty(args.ToString()))
+        if (string.IsNullOrEmpty(args.ToString()))
         {
             return;
         }
-        
-        bool.TryParse(args.ToString(),out var result);        
+
+        bool.TryParse(args.ToString(), out var result);
         IsActive = result;
     }
-    [Parameter]
-    public string ConfirmationMessage { get; set; }
+
+    [Parameter] public string ConfirmationMessage { get; set; }
 
     public void Show()
     {
@@ -38,8 +36,7 @@ public class ScheduleWorkerBase: ComponentBase
         StateHasChanged();
     }
 
-    [Parameter]
-    public EventCallback<bool> ConfirmationChanged { get; set; }
+    [Parameter] public EventCallback<bool> ConfirmationChanged { get; set; }
 
     protected async Task OnConfirmationChange(bool value)
     {

@@ -17,7 +17,7 @@
                             <label for="start">Start Date/Time:</label>
                         </div>
                         <div class="col-sm">
-                            <input class="form-control" type="datetime-local"  min="2023-01-01T00:00" id = "datetime" @bind="DateTime" style="width: 100%; padding:0; padding-top: 5%"/>        
+                            <input class="form-control" type="datetime-local" min="2023-01-01T00:00" id="datetime" @bind="DateTime" style="width: 100%; padding:0; padding-top: 5%"/>
                         </div>
                     </div>
                     <div class="row">
@@ -86,8 +86,8 @@
                                 <option value="58">58</option>
                                 <option value="59">59</option>
                             </select>
-                        
-                      
+
+
                             <select id="frequency" name="frequency" @bind="Frequency2" style=" width: 78%; padding-top: 5%">
                                 <option value="sec">seconds</option>
                                 <option value="min">minutes</option>
@@ -97,25 +97,27 @@
                     </div>
                     <div class="row">
                         <div class="col-sm">
-                              <label for="isActive">Is Active?</label>
+                            <label for="isActive">Is Active?</label>
                         </div>
-                            <div class="col-sm">
-                                <select class="form-control" @onchange="(e) => OnActiveChanged(e.Value)">
-                                    <option value="True" selected>Yes</option>
-                                    <option value="False">No</option>
-                                </select>
-                            </div>
+                        <div class="col-sm">
+                            <select class="form-control" @onchange="(e) => OnActiveChanged(e.Value)">
+                                <option value="True" selected>Yes</option>
+                                <option value="False">No</option>
+                            </select>
                         </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger"
-                            @onclick="() => OnConfirmationChange(true)">Schedule</button>
+                            @onclick="() => OnConfirmationChange(true)">
+                        Schedule
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
 }
+
 @code {
-    
+
 }

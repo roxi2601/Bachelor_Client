@@ -1,4 +1,3 @@
-
 @inherits Bachelor_Client.Pages.Account.DeleteAccount.DeleteAccountBase
 @if (ShowConfirmation)
 {
@@ -17,15 +16,19 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            @onclick="() => OnConfirmationChange(false)">Cancel</button>
+                            @onclick="() => OnConfirmationChange(false)">
+                        Cancel
+                    </button>
                     <button type="button" class="btn btn-danger"
-                            @onclick="() => OnConfirmationChange(true)">Delete</button>
+                            @onclick="() => OnConfirmationChange(true)">
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
 }
+
 @code {
-    
+
 }

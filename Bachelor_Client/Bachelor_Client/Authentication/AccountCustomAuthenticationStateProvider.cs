@@ -1,7 +1,4 @@
-﻿
-
-
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Text.Json;
 using Bachelor_Client.Models;
 using Bachelor_Client.Services.Account;
@@ -23,6 +20,7 @@ namespace Bachelor_Client.Authentication
             this.jsRuntime = jsRuntime;
             this.accountService = accountService;
         }
+
         /*public async override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             await Task.Delay(1500);
@@ -37,22 +35,21 @@ namespace Bachelor_Client.Authentication
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
-            if (cachedAccount == null )
+            if (cachedAccount == null)
             {
                 string accountAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentAccount");
                 if (!string.IsNullOrEmpty(accountAsJson))
                 {
                     cachedAccount = JsonSerializer.Deserialize<Account>(accountAsJson);
-        
+
                     await ValidateLogin(cachedAccount);
                 }
             }
             else
             {
-                identity = SetupClaimsForAccount(cachedAccount);    
-                
+                identity = SetupClaimsForAccount(cachedAccount);
             }
-         
+
             ClaimsPrincipal cachedClaimsPrincipal = new ClaimsPrincipal(identity);
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
@@ -64,13 +61,16 @@ namespace Bachelor_Client.Authentication
             if (string.IsNullOrEmpty(accountModel.Password)) throw new Exception("Enter password");
 
             ClaimsIdentity identity = new ClaimsIdentity();
-            try {
+            try
+            {
                 Account account = await accountService.GetLoggedAccount(accountModel);
                 identity = SetupClaimsForAccount(account);
                 string serialisedData = JsonSerializer.Serialize(account);
                 await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentAccount", serialisedData);
                 cachedAccount = account;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
                 throw e;
             }
@@ -78,9 +78,9 @@ namespace Bachelor_Client.Authentication
             NotifyAuthenticationStateChanged(
                 Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
         }
+
         public void Logout()
         {
-            
             cachedAccount = new Account();
             var user = new ClaimsPrincipal(new ClaimsIdentity());
             jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentAccount", "");
@@ -99,7 +99,5 @@ namespace Bachelor_Client.Authentication
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }
-        
-       
     }
 }

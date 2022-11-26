@@ -7,6 +7,7 @@ namespace Bachelor_Client.Services.Scheduling;
 public class ScheduleService : IScheduleService
 {
     private List<WorkerConfiguration> workers = new();
+
     public async Task CreateWorker(WorkerConfiguration worker)
     {
         HttpClient httpClient = new HttpClient();
@@ -15,8 +16,7 @@ public class ScheduleService : IScheduleService
             Encoding.UTF8,
             "application/json"
         );
-        HttpResponseMessage responseMessage = await httpClient.PostAsync("https://localhost:7261/scheduleWorker", content);
+        HttpResponseMessage responseMessage =
+            await httpClient.PostAsync("https://localhost:7261/scheduleWorker", content);
     }
-
-   
 }

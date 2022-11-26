@@ -17,7 +17,8 @@ public class WorkerConfigService : IWorkerConfigService
             Encoding.UTF8,
             "application/json"
         );
-        HttpResponseMessage responseMessage = await httpClient.PostAsync("https://localhost:7261/workerConfig", content);
+        HttpResponseMessage responseMessage =
+            await httpClient.PostAsync("https://localhost:7261/workerConfig", content);
     }
 
     public async Task EditWorkerConfiguration(WorkerConfiguration workerConfigurationModel)
@@ -28,7 +29,8 @@ public class WorkerConfigService : IWorkerConfigService
             Encoding.UTF8,
             "application/json"
         );
-        HttpResponseMessage responseMessage = await httpClient.PatchAsync("https://localhost:7261/workerConfig/", content);
+        HttpResponseMessage responseMessage =
+            await httpClient.PatchAsync("https://localhost:7261/workerConfig/", content);
     }
 
     public WorkerConfiguration GetWorkerConfigurationById(int workerConfigId)
@@ -46,20 +48,23 @@ public class WorkerConfigService : IWorkerConfigService
                 .Result);
         return workerConfigs = workerConfigsDeSer;
     }
+
     public async Task<List<WorkerStatistic>> ReadAllWorkerStatistics()
     {
         HttpClient httpClient = new HttpClient();
         HttpResponseMessage responseMessage =
-            await httpClient.GetAsync("https://localhost:7261/workerStats"); 
+            await httpClient.GetAsync("https://localhost:7261/workerStats");
         List<WorkerStatistic> workerStatsDeSer =
             JsonConvert.DeserializeObject<List<WorkerStatistic>>(responseMessage.Content.ReadAsStringAsync()
                 .Result);
         return workerStats = workerStatsDeSer;
     }
+
     public async Task DeleteWorkerConfiguration(int workerConfigId)
     {
         HttpClient httpClient = new HttpClient();
-        HttpResponseMessage responseMessage = await httpClient.DeleteAsync("https://localhost:7261/workerConfig/" + $"{workerConfigId}");
-       // if(responseMessage.Content.)
+        HttpResponseMessage responseMessage =
+            await httpClient.DeleteAsync("https://localhost:7261/workerConfig/" + $"{workerConfigId}");
+        // if(responseMessage.Content.)
     }
 }

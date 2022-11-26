@@ -7,15 +7,11 @@ namespace Bachelor_Client.Pages.WorkerConfiguration.DeleteWorkerConfig
     {
         protected bool ShowConfirmation { get; set; }
 
-        [Parameter]
-        public string ConfirmationTitle { get; set; } = "Confirm";
-        [Parameter]
-        public string URL { get; set; } 
-        [Parameter]
-        public int ID { get; set; } 
+        [Parameter] public string ConfirmationTitle { get; set; } = "Confirm";
+        [Parameter] public string URL { get; set; }
+        [Parameter] public int ID { get; set; }
 
-        [Parameter]
-        public string ConfirmationMessage { get; set; }
+        [Parameter] public string ConfirmationMessage { get; set; }
 
         public void Show()
         {
@@ -23,8 +19,7 @@ namespace Bachelor_Client.Pages.WorkerConfiguration.DeleteWorkerConfig
             StateHasChanged();
         }
 
-        [Parameter]
-        public EventCallback<bool> ConfirmationChanged { get; set; }
+        [Parameter] public EventCallback<bool> ConfirmationChanged { get; set; }
 
         protected async Task OnConfirmationChange(bool value)
         {

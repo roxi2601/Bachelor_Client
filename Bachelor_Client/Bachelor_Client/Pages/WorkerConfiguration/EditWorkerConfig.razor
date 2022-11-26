@@ -9,18 +9,20 @@
 @layout WorkerConfigurationsLayout
 @inject AuthenticationStateProvider AuthenticationStateProvider
 <CascadingAuthenticationState>
-  <AuthorizeView>
-    <NotAuthorized>
-                    <body>
-                         <header class="bgimg-1" id="home">
-                           <div class="w3-display-left w3-text-white" style="padding-left: 5%">
-                             <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
-                             <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
-                           </div>
-                         </header>
-                         </body>
-                </NotAuthorized>
-    <Authorized>
+<AuthorizeView>
+<NotAuthorized>
+    <body>
+    <header class="bgimg-1" id="home">
+        <div class="w3-display-left w3-text-white" style="padding-left: 5%">
+            <div class="container" style="background: none">
+                <span class="w3-jumbo w3-hide-small">Log in to see the content</span><br>
+                <span class="w3-xxlarge w3-hide-large w3-hide-medium">Log in to see the content</span><br>
+            </div>
+        </div>
+    </header>
+    </body>
+</NotAuthorized>
+<Authorized>
 <h1 style="color: black;   font-weight: bold; ">
 
 </h1>
@@ -43,79 +45,79 @@
 
 <div class="containerEdit">
     <h3 style="color: black;   font-weight: bold; ">
-                Edit worker configuration for @_workerConfigurationModel.Url
-            </h3>
-            
-            <div class="row">
-    
-                <div class="col-sm">
-                    <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="_workerConfigurationModel.RequestType">
-                        <option value="get">GET</option>
-                        <option value="post">POST</option>
-                        <option value="put">PUT</option>
-                        <option value="delete">DELETE</option>
-                    </select>
-                </div>
-                <div class="col-sm">
-                    <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="_workerConfigurationModel.Url"/>
-                    <div style="color:red">@errorMessage</div>
-                </div>
-                <div class="col-sm">
-                    <button class="button-5" style="width: 50px; height: 50px" @onclick="EditWorkerConfiguration">Store</button>
-                </div>
-            </div>
+        Edit worker configuration for @_workerConfigurationModel.Url
+    </h3>
+
+    <div class="row">
+
+        <div class="col-sm">
+            <select id="requestType" name="requestType" style="width: 100px; height: 50px" @bind="_workerConfigurationModel.RequestType">
+                <option value="get">GET</option>
+                <option value="post">POST</option>
+                <option value="put">PUT</option>
+                <option value="delete">DELETE</option>
+            </select>
+        </div>
+        <div class="col-sm">
+            <input id="url" class="form-control" type="text" placeholder="Enter request URL" style="width: 450px; height: 50px" @bind="_workerConfigurationModel.Url"/>
+            <div style="color:red">@errorMessage</div>
+        </div>
+        <div class="col-sm">
+            <button class="button-5" style="width: 50px; height: 50px" @onclick="EditWorkerConfiguration">Store</button>
+        </div>
+    </div>
 </div>
-        
+
 <div class="row"> </div>
 <div class="containerEdit">
     <div class="row">
-                <div class="col-sm">
-                    <h5 style="font-weight: bold">Query Parameters</h5>
-                </div>
-            </div>
+        <div class="col-sm">
+            <h5 style="font-weight: bold">Query Parameters</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <table style="width:100%">
+                <tr>
+                    <th>KEY</th>
+                    <th>VALUE</th>
+                    <th>DESCRIPTION</th>
+                </tr>
+                @foreach (var model in _workerConfigurationModel.Parameters)
+                {
+                    <tr>
+                        <td>@model.Key</td>
+                        <td>@model.Value</td>
+                        <td>@model.Description</td>
+                        <td>
+                            <button style="border: none;" @onclick="() => _workerConfigurationModel.Parameters.Remove(model)">
+                                X
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <div class="row"> </div>
+            <a class="add" @onclick="@(() => _workerConfigurationModel.Parameters.Add(new Parameter() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
+
+
             <div class="row">
                 <div class="col-sm">
-                    <table style="width:100%">
-                        <tr>
-                            <th>KEY</th>
-                            <th>VALUE</th>
-                            <th>DESCRIPTION</th>
-                        </tr>
-                        @foreach (var model in _workerConfigurationModel.Parameters)
-                        {
-                            <tr>
-                                <td>@model.Key</td>
-                                <td>@model.Value</td>
-                                <td>@model.Description</td>
-                                <td>
-                                    <button style="border: none;" @onclick="() => _workerConfigurationModel.Parameters.Remove(model)">
-                                        X
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-    
-                    </table>
-                    <div class="row"> </div>
-                    <a class="add" @onclick="@(() => _workerConfigurationModel.Parameters.Add(new Parameter() { Key = keyTextFieldParameter, Value = valueTextFieldParameter, Description = descTextFieldParameter }))"><i class="fa fa-plus"></i> Add</a>
-                                        
-                    
-                    <div class="row">
-                        <div class="col-sm">
-                            <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldParameter" @oninput="(e) => { keyTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                        </div>
-                        <div class="col-sm">
-                            <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldParameter" @oninput="(e) => { valueTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                        </div>
-                        <div class="col-sm">
-                            <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldParameter" @oninput="(e) => { descTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                        </div>
-                    </div>
+                    <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldParameter" @oninput="(e) => { keyTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldParameter" @oninput="(e) => { valueTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldParameter" @oninput="(e) => { descTextFieldParameter = e.Value == null ? string.Empty : (string)e.Value; }"/>
                 </div>
             </div>
+        </div>
+    </div>
 
 </div>
-        
+
 
 <div class="row"> </div>
 <div class="containerEdit">
@@ -169,7 +171,7 @@
                 <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="_workerConfigurationModel.FkApikey.Value"/>
             </div>
         </div>
-    
+
         <div class="row">
             <div class="col-sm">
                 Add to:
@@ -212,7 +214,7 @@
             </div>
         </div>
     }
-   
+
     @if (_workerConfigurationModel.LastSavedAuth == "OAuth2.0")
     {
         <div class="row">
@@ -236,149 +238,147 @@
 
 <div class="row"> </div>
 <div class="containerEdit">
-     <div class="row">
-                <div class="col-sm">
-                    <h5 style="font-weight: bold">Headers</h5>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-sm">
+            <h5 style="font-weight: bold">Headers</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <table style="width:100%">
+                <tr>
+                    <th>KEY</th>
+                    <th>VALUE</th>
+                    <th>DESCRIPTION</th>
+                </tr>
+                @foreach (var model in _workerConfigurationModel.Headers)
+                {
+                    <tr>
+                        <td>@model.Key</td>
+                        <td>@model.Value</td>
+                        <td>@model.Description</td>
+                        <td>
+                            <button style="border: none" @onclick="() => _workerConfigurationModel.Headers.Remove(model)">
+                                X
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <div class="row"> </div>
+            <a class="add" @onclick="@(() => _workerConfigurationModel.Headers.Add(new Header { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
+
             <div class="row">
                 <div class="col-sm">
-                    <table style="width:100%">
-                        <tr>
-                            <th>KEY</th>
-                            <th>VALUE</th>
-                            <th>DESCRIPTION</th>
-                        </tr>
-                        @foreach (var model in _workerConfigurationModel.Headers)
-                        {
-                            <tr>
-                                <td>@model.Key</td>
-                                <td>@model.Value</td>
-                                <td>@model.Description</td>
-                                <td>
-                                    <button style="border: none" @onclick="() => _workerConfigurationModel.Headers.Remove(model)">
-                                        X
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-    
-                    </table>
-                    <div class="row"> </div>
-                    <a class="add"  @onclick="@(() => _workerConfigurationModel.Headers.Add(new Header { Key = keyTextFieldHeader, Value = valueTextFieldHeader, Description = descTextFieldHeader }))"><i class="fa fa-plus"></i> Add</a>
-                    
-                    <div class="row">
-                        <div class="col-sm">
-                            <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldHeader" @oninput="(e) => { keyTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                        </div>
-                        <div class="col-sm">
-                            <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldHeader" @oninput="(e) => { valueTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                        </div>
-                        <div class="col-sm">
-                            <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldHeader" @oninput="(e) => { descTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                        </div>
-                    </div>
-    
-    
+                    <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldHeader" @oninput="(e) => { keyTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldHeader" @oninput="(e) => { valueTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                </div>
+                <div class="col-sm">
+                    <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldHeader" @oninput="(e) => { descTextFieldHeader = e.Value == null ? string.Empty : (string)e.Value; }"/>
                 </div>
             </div>
+
+
+        </div>
+    </div>
 </div>
-       
 
 
 <div class="row"> </div>
 <div class="containerEdit">
-     <div class="row">
-                <div class="col-sm">
-                    <h5 style="font-weight: bold">Body</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <p>Type:</p>
-                </div>
-                <div class="col-sm">
-                    <select id="bodyType" name="bodyType" style="width: 100px; height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.LastSavedBody">
-                        <option value="none">none</option>
-                        <option value="form-data">form-data</option>
-                        <option value="raw">raw</option>
-                    </select>
-                </div>
-                <div class="col-sm"></div>
-                <div class="col-sm"></div>
-                <div class="col-sm"></div>
-                <div class="col-sm"></div>
-            </div>
-    
-            @if (_workerConfigurationModel.LastSavedBody == "none")
-            {
-                <div class="row">
-                    <div class="col-sm">
-                        <p>This request does not have a body. </p>
-                    </div>
-                </div>
-            }
-            @if (_workerConfigurationModel.LastSavedBody == "form-data")
-            {
-                <div class="row">
-                    <div class="col-sm">
-                        <table style="width:100%">
-                            <tr>
-                                <th>KEY</th>
-                                <th>VALUE</th>
-                                <th>DESCRIPTION</th>
-                            </tr>
-                            @foreach (var model in bodies)
-                            {
-                                <tr>
-                                    <td>@model.Key</td>
-                                    <td>@model.Value</td>
-                                    <td>@model.Description</td>
-                                    <td>
-                                        <button style="border: none" @onclick="() => bodies.Remove(model)">
-                                            X
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-    
-                        </table>
-                        <div class="row"> </div>
-                        <a class="add" @onclick="@(() => bodies.Add(new FormDatum { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
-                        
-                        <div class="row"></div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldBody" @oninput="(e) => { keyTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                            </div>
-                            <div class="col-sm">
-                                <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldBody" @oninput="(e) => { valueTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                            </div>
-                            <div class="col-sm">
-                                <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldBody" @oninput="(e) => { descTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-            @if (_workerConfigurationModel.LastSavedBody == "raw")
-            {
-                <div class="row">
-                    <div class="col-sm">
-                        <textarea  id="raw" name="raw" rows="4" cols="50" @bind="_workerConfigurationModel.FkRaw.Text">
-                         </textarea>
-                    </div>
-                </div>
-            }
-</div>
-       
+    <div class="row">
+        <div class="col-sm">
+            <h5 style="font-weight: bold">Body</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <p>Type:</p>
+        </div>
+        <div class="col-sm">
+            <select id="bodyType" name="bodyType" style="width: 100px; height: 40px; font-size: 12px;" @bind="_workerConfigurationModel.LastSavedBody">
+                <option value="none">none</option>
+                <option value="form-data">form-data</option>
+                <option value="raw">raw</option>
+            </select>
+        </div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+    </div>
 
+    @if (_workerConfigurationModel.LastSavedBody == "none")
+    {
+        <div class="row">
+            <div class="col-sm">
+                <p>This request does not have a body. </p>
+            </div>
+        </div>
+    }
+    @if (_workerConfigurationModel.LastSavedBody == "form-data")
+    {
+        <div class="row">
+            <div class="col-sm">
+                <table style="width:100%">
+                    <tr>
+                        <th>KEY</th>
+                        <th>VALUE</th>
+                        <th>DESCRIPTION</th>
+                    </tr>
+                    @foreach (var model in bodies)
+                    {
+                        <tr>
+                            <td>@model.Key</td>
+                            <td>@model.Value</td>
+                            <td>@model.Description</td>
+                            <td>
+                                <button style="border: none" @onclick="() => bodies.Remove(model)">
+                                    X
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <div class="row"> </div>
+                <a class="add" @onclick="@(() => bodies.Add(new FormDatum { Key = keyTextFieldBody, Value = valueTextFieldBody, Description = descTextFieldBody }))"><i class="fa fa-plus"></i> Add</a>
+
+                <div class="row"></div>
+                <div class="row">
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Key" style="width: 200px; height: 30px" @bind="@keyTextFieldBody" @oninput="(e) => { keyTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Value" style="width: 200px; height: 30px" @bind="@valueTextFieldBody" @oninput="(e) => { valueTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                    <div class="col-sm">
+                        <input class="form-control" type="text" placeholder="Description" style="width: 200px; height: 30px" @bind="@descTextFieldBody" @oninput="(e) => { descTextFieldBody = e.Value == null ? string.Empty : (string)e.Value; }"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (_workerConfigurationModel.LastSavedBody == "raw")
+    {
+        <div class="row">
+            <div class="col-sm">
+                <textarea  id="raw" name="raw" rows="4" cols="50" @bind="_workerConfigurationModel.FkRaw.Text">
+                         </textarea>
+            </div>
+        </div>
+    }
+</div>
 
 
 </main>
 </Authorized>
-      </AuthorizeView>
-    </CascadingAuthenticationState>
+</AuthorizeView>
+</CascadingAuthenticationState>
+
 @code {
 
     [Parameter]
@@ -398,7 +398,6 @@
     string valueTextFieldBody = "";
     string descTextFieldBody = "";
     private WorkerConfiguration _workerConfigurationModel = new WorkerConfiguration();
-
 
 
     private async Task EditWorkerConfiguration()

@@ -1,6 +1,4 @@
-﻿
-
-namespace Bachelor_Client.Services.Account;
+﻿namespace Bachelor_Client.Services.Account;
 
 public interface IAccountService
 {

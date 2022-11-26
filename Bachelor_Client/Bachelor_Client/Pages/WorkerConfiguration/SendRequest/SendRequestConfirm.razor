@@ -15,44 +15,46 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                                <div class="col-sm">
-                                    <textarea   readonly id="response" name="response" rows="10" cols="50">
+                        <div class="col-sm">
+                            <textarea   readonly id="response" name="response" rows="10" cols="50">
                     @Content    
                                          
                     </textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <p style=" font-weight: bold;">Export file:</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                    
-                    
-                                <div class="col-sm"></div>
-                                <div class="col-sm"></div>
-                                <div class="col-sm"></div>
-                                <div class="col-sm"></div>
-                                <div class="col-sm"> 
-                                    <button type="button" class="btn btn-secondary"   style="background-color:black; font-size: small; width: 130px" @onclick="ExportCSVFile">Export CSV file</button> 
-                                 </div> 
-                                 <div class="col-sm"> 
-                                     <button ype="button" class="btn btn-secondary"   style="background-color:black; font-size: small; width: 130px" @onclick="ExportExcelFile">Export XLS file</button> 
-                                 </div> 
-                    
-                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <p style=" font-weight: bold;">Export file:</p>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm"></div>
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-secondary" style="background-color:black; font-size: small; width: 130px" @onclick="ExportCSVFile">Export CSV file</button>
+                        </div>
+                        <div class="col-sm">
+                            <button ype="button" class="btn btn-secondary" style="background-color:black; font-size: small; width: 130px" @onclick="ExportExcelFile">Export XLS file</button>
+                        </div>
+
+                    </div>
                     <div style="color:red">@messageExport</div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            @onclick="() => OnConfirmationChange(false)">Close</button>
+                            @onclick="() => OnConfirmationChange(false)">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
 }
+
 @code {
 
     private string response;
@@ -61,11 +63,11 @@
     {
         return messageExport = await Rest.ExportExcel(Content);
     }
-    
+
     public async Task<string> ExportCSVFile()
     {
         return messageExport = await Rest.ExportCSV(Content);
     }
-    
+
 
 }
