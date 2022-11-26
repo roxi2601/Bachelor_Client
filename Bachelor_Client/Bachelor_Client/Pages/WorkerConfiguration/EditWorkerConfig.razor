@@ -409,13 +409,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // if (((AccountCustomAuthenticationStateProvider)AuthenticationStateProvider).cachedAccount != null)
-        // {
-            _workerConfigurationModel = _WorkerService.GetWorkerConfigurationById(Int32.Parse(workerConfigID));
-
-        // }
-
-
+        _workerConfigurationModel = _WorkerService.GetWorkerConfigurationById(Int32.Parse(workerConfigID));
     }
 
 }

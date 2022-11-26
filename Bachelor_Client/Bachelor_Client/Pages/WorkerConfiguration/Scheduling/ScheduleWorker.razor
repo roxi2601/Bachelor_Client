@@ -25,7 +25,7 @@
                             <label for="frequency">Every</label>
                         </div>
                         <div class="col-sm">
-                            <select id="frequency" name="frequency" @bind="Frequency1" style="height: 50px; width: 100%;  ">
+                            <select id="frequency" name="frequency" @bind="Frequency1" style="width: 20%; padding-top: 5% ">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -86,15 +86,26 @@
                                 <option value="58">58</option>
                                 <option value="59">59</option>
                             </select>
-                            </div>
-                        <div class="col-sm">
-                            <select id="frequency" name="frequency" @bind="Frequency2" style="height: 50px; width: 100%;  ">
-                                 <option value="sec">seconds</option>
+                        
+                      
+                            <select id="frequency" name="frequency" @bind="Frequency2" style=" width: 78%; padding-top: 5%">
+                                <option value="sec">seconds</option>
                                 <option value="min">minutes</option>
-                                <option value="hour">hours</option>
+                                <option value="hours">hours</option>
                             </select>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm">
+                              <label for="isActive">Is Active?</label>
+                        </div>
+                            <div class="col-sm">
+                                <select class="form-control" @onchange="(e) => OnActiveChanged(e.Value)">
+                                    <option value="True" selected>Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger"

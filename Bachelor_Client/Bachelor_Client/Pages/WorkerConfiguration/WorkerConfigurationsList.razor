@@ -72,7 +72,7 @@
                                                     <td>
                                                         <button class="btn" @onclick="() => NavigateToEdit(workerConfig.PkWorkerConfigurationId)"><i class="fa fa-edit"></i> </button>
                                                         <button class="btn" @onclick="() => DeleteWorkerConfig_Click(workerConfig)"><i class="fa fa-trash"></i> </button>
-                                                         <button class="btn" @onclick="() => ScheduleWorker_Click(workerConfig)"><i class="fa fa-clock-o"></i> </button>
+                                                        <button class="btn" @onclick="() => ScheduleWorker_Click(workerConfig)"><i class="fa fa-clock-o"></i> </button>
                                                         <button class="btn" @onclick="() => GenerateAPICall(workerConfig, true)">Send</button>
                                                     </td>
                                                 </tr>
@@ -140,15 +140,21 @@
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
         _worker.FkWorkerConfigurationId = workerConfiguration.PkWorkerConfigurationId;
         _worker.Name = workerConfiguration.Url;
-        _worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + ScheduleWorkerConfirmation.Frequency2;
-        _worker.StartDateTime = ScheduleWorkerConfirmation.DateTime;
-        _worker.IsActive = true;
+        
+        // to show if the current worker is active
+        //Worker worker2 =  ScheduleService.GetWorkerByWorkerConfigId(workerConfiguration.PkWorkerConfigurationId);
+        //ScheduleWorkerConfirmation.IsActive = worker2.IsActive;
+        
         ScheduleWorkerConfirmation.Show();
     }
     private async Task ScheduleWorker(bool confirmed)
     {
         if (confirmed)
         {
+            _worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + ScheduleWorkerConfirmation.Frequency2;
+            _worker.StartDateTime = ScheduleWorkerConfirmation.DateTime;
+            _worker.IsActive = ScheduleWorkerConfirmation.IsActive;
+            
             await ScheduleService.CreateWorker(_worker);
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }

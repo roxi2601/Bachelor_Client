@@ -11,13 +11,25 @@ public class ScheduleWorkerBase: ComponentBase
    
     [Parameter]
     public int ID { get; set; } 
-    [Parameter]
-    public DateTime DateTime { get; set; } 
-    [Parameter]
-    public string Frequency1 { get; set; } 
-    [Parameter]
-    public string Frequency2 { get; set; } 
+   
+    public DateTime DateTime = DateTime.Now;
 
+    public string Frequency1 = "1";
+
+    public string Frequency2 = "sec";
+    public bool? IsActive = true;
+
+   public void OnActiveChanged(object args)
+    {
+        if(string.IsNullOrEmpty(args.ToString()))
+        {
+            IsActive = null;    
+            return;
+        }
+        
+        bool.TryParse(args.ToString(),out var result);        
+        IsActive = result;
+    }
     [Parameter]
     public string ConfirmationMessage { get; set; }
 
