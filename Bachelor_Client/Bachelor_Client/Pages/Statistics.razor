@@ -2,51 +2,112 @@
 @using Syncfusion.Blazor.Charts
 @using Bachelor_Client.Models
 @using Bachelor_Client.Services.WorkerConfig
+@using Syncfusion.Blazor.Charts.Chart.Internal
 @inject IWorkerConfigService WorkerConfigService
 @layout WorkerConfigurationsLayout
- <div class="container">
- <SfChart>
-     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
 
-     <ChartSeriesCollection>
-         <ChartSeries DataSource="@WorkerDetails" Name="numberOfFailedRuns" XName="numberOfRuns" Width="2" Opacity="1" YName="numberOfFailedRuns" Type="ChartSeriesType.Column">
-         </ChartSeries>
-         <ChartSeries DataSource="@WorkerDetails" Name="numberOfSuccessRuns" XName="numberOfRuns" Width="2" Opacity="1" YName="numberOfSuccessRuns" Type="ChartSeriesType.Column">
-         </ChartSeries>
-     </ChartSeriesCollection>
- </SfChart>
- </div>
-<div class="container">
- <SfChart Title="Analysis of the duration of the workers">
-     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
-                        LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
-                        LabelIntersectAction="LabelIntersectAction.Rotate90"
-                        EnableTrim="true" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
-         <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
-         <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
-         <ChartMultiLevelLabels>
-           
-             <ChartMultiLevelLabel>
-                 <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
-                 <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
-                 </ChartAxisMultiLevelLabelBorder>
-                 <ChartCategories>
-                     <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
-                 </ChartCategories>
-             </ChartMultiLevelLabel>
-         </ChartMultiLevelLabels>
-     </ChartPrimaryXAxis>
-     <ChartPrimaryYAxis Title="Average Duration (in seconds)" Minimum="0" Maximum="500" Interval="50">
-         <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
-         <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
-     </ChartPrimaryYAxis>
-     <ChartSeriesCollection>
-         <ChartSeries DataSource="@WorkerDetails" XName="URL" YName="duration" Type="ChartSeriesType.Column">
-         </ChartSeries>
-     </ChartSeriesCollection>
- </SfChart>
- </div>
+<div class="container2">
+    <div class="row">
+        <div class="col-sm" style="margin-left: 10%; margin-top: 5%; align-content: center;">
+              <div class="containerStat" style="width: 100%; align-content: center; margin-left: 10%">
+         
+                                      
+                                         
+                                                    
+                                                        <table class='table' style=" color: black">
+                                                            <thead>
+                                                            <tr>
+                                                                <th class="url" style="width: 35%">Worker</th>
+                                                                <th class="isActive" style="width: 15%">Is Active</th>
+                                                                <th class="authType" style="width: 15%">Status</th>
+                                                                <th class="duration" style="width: 15%">Duration</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                
+                                                            @foreach (var workerStatistic in WorkerDetails)
+                                                            {
+                                                                <tr>
+                                                                    <td>@workerStatistic.URL</td>
+                                                                    <td>@workerStatistic.isActive</td>
+                                                                    <td>@workerStatistic.status</td>
+                                                                    <td>@workerStatistic.duration</td>
+                                                                </tr>
+                                                            }
+                                                            </tbody>
+                                                        </table>
+                                 
+                
+                                    </div>
+        
+            </div>
+        <div class="col-sm" style="margin-right: 10%; margin-top: 5%; align-content: center;">
+                   <div class="containerStat" style="width: 100%; align-content: center; margin-left: 10%">
+                                       <SfChart EnableAnimation="true" Title="Analysis Of Failed Runs" Width="100%">
+                                                           <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
+                                                                              LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
+                                                                              LabelIntersectAction="LabelIntersectAction.Rotate90"
+                                                                              EnableTrim="true" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
+                                                               <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
+                                                               <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+                                                               <ChartMultiLevelLabels>
+                                                                 
+                                                                   <ChartMultiLevelLabel>
+                                                                       <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
+                                                                       <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
+                                                                       </ChartAxisMultiLevelLabelBorder>
+                                                                       <ChartCategories>
+                                                                           <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
+                                                                       </ChartCategories>
+                                                                   </ChartMultiLevelLabel>
+                                                               </ChartMultiLevelLabels>
+                                                           </ChartPrimaryXAxis>
+                                                           <ChartPrimaryYAxis Title="Number Of Failed Runs" Minimum="0" Maximum="100" Interval="10">
+                                                               <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
+                                                               <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+                                                           </ChartPrimaryYAxis>
+                                                           <ChartSeriesCollection>
+                                                               <ChartSeries DataSource="@WorkerDetails" XName="URL" YName="numberOfFailedRuns" Type="ChartSeriesType.Column">
+                                                               </ChartSeries>
+                                                           </ChartSeriesCollection>
+                                                       </SfChart>
+                                       </div> 
+                   <div class="containerStat" style="width: 100%; align-content: center; margin-left: 10%">
+                    <SfChart EnableAnimation="true" Title="Analysis Of The Duration Time Of The Workers" Width="100%">
+                        <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
+                                           LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
+                                           LabelIntersectAction="LabelIntersectAction.Rotate90"
+                                           EnableTrim="true" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
+                            <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
+                            <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+                            <ChartMultiLevelLabels>
+                              
+                                <ChartMultiLevelLabel>
+                                    <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
+                                    <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
+                                    </ChartAxisMultiLevelLabelBorder>
+                                    <ChartCategories>
+                                        <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
+                                    </ChartCategories>
+                                </ChartMultiLevelLabel>
+                            </ChartMultiLevelLabels>
+                        </ChartPrimaryXAxis>
+                        <ChartPrimaryYAxis Title="Average Duration (in seconds)" Minimum="0" Maximum="500" Interval="50">
+                            <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
+                            <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+                        </ChartPrimaryYAxis>
+                        <ChartSeriesCollection>
+                            <ChartSeries DataSource="@WorkerDetails" XName="URL" YName="duration" Type="ChartSeriesType.Line">
+                            </ChartSeries>
+                        </ChartSeriesCollection>
+                    </SfChart>
+                    </div> 
+                </div>
+    </div>
+</div>
+
 @code{
+  
     public class ModelTest
     {
         public string URL { get; set; }
@@ -54,100 +115,31 @@
         public int numberOfSuccessRuns { get; set; }
         public int numberOfRuns { get; set; }
         public double duration { get; set; }
+        public bool isActive { get; set; }
+        public string status { get; set; }
         
     }
     
     private List<Models.WorkerConfiguration> WorkerConfigList = new();
     private List<Models.WorkerStatistic> WorkerStatisticsList = new();
     
-    public List<ModelTest> WorkerDetails = new List<ModelTest>
-    {
-        new ModelTest(){ URL = "Caca", numberOfFailedRuns = 12, numberOfSuccessRuns = 20, duration = 80, numberOfRuns = 32},
-        new ModelTest(){ URL = "Caca1", numberOfFailedRuns = 20, numberOfSuccessRuns = 40, duration = 180, numberOfRuns = 60},
-        new ModelTest(){ URL = "Caca2", numberOfFailedRuns = 112, numberOfSuccessRuns = 210, duration = 280, numberOfRuns = 332},
-        new ModelTest(){ URL = "Caca3", numberOfFailedRuns = 60, numberOfSuccessRuns = 250, duration = 77, numberOfRuns = 111},
-        new ModelTest(){ URL = "Caca4", numberOfFailedRuns = 40, numberOfSuccessRuns = 270, duration = 66, numberOfRuns = 222},
-        new ModelTest(){ URL = "Caca5", numberOfFailedRuns = 100, numberOfSuccessRuns = 280, duration = 55, numberOfRuns = 333},
-       
-    };
+    public List<ModelTest> WorkerDetails; 
     
-    /*public List<ModelTest> WorkerDurations = new List<ModelTest >
-    {
-        new ModelTest() { URL = "Caca", duration = 31 },
-        new ModelTest() { URL = "Caca2", duration = 41 },
-        new ModelTest() { URL = "Caca3", duration = 51 },
-    };*/
+    
     protected override async Task OnInitializedAsync()
     {
         WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
         WorkerStatisticsList = await WorkerConfigService.ReadAllWorkerStatistics();
-    }
-}
-@*
-
-<SfChart Title="Analysis of Failed Runs">
-    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
-                       LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
-                       LabelIntersectAction="LabelIntersectAction.Rotate90"
-                       EnableTrim="true" MaximumLabelWidth="38" LabelPosition="AxisPosition.Outside">
-        <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
-        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
-        <ChartMultiLevelLabels>
-           
-            <ChartMultiLevelLabel>
-                <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
-                <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
-                </ChartAxisMultiLevelLabelBorder>
-                <ChartCategories>
-                    <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
-                </ChartCategories>
-            </ChartMultiLevelLabel>
-        </ChartMultiLevelLabels>
-    </ChartPrimaryXAxis>
-    <ChartPrimaryYAxis Title="Number Of Failed Runs" Minimum="0" Maximum="100" Interval="10">
-        <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
-        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
-    </ChartPrimaryYAxis>
-    <ChartSeriesCollection>
-        <ChartSeries DataSource="@ChartData" XName="Name" YName="Value" Type="ChartSeriesType.Column">
-        </ChartSeries>
-    </ChartSeriesCollection>
-</SfChart>
-
-@code {
-
-    public class ChartDataModel
+        
+        WorkerDetails = new List<ModelTest>
     {
-        public string Name { get; set; }
-        public double Value { get; set; }
-    }
-
-    public List<ChartDataModel> ChartData = new List<ChartDataModel>
-{
-        new ChartDataModel { Name = "Beetroot", Value = 31 },
-        new ChartDataModel { Name = "Tomato" , Value = 89 },
-        new ChartDataModel { Name = "Cucumber",  Value = 62 },
-        new ChartDataModel { Name = "Cabbage",  Value = 48 },
-        new ChartDataModel { Name = "Potato" , Value = 96 },
-        new ChartDataModel { Name = "Turnip", Value = 60 },
-        new ChartDataModel { Name = "Radish", Value = 52 },
-        new ChartDataModel { Name = "Pumpkin", Value = 20 },
-        new ChartDataModel { Name = "Peas", Value = 40 },
-        new ChartDataModel { Name = "Onion", Value = 79 },
-        new ChartDataModel { Name = "Carrot", Value = 53 },
-        new ChartDataModel { Name = "PineApple", Value = 28 },
-        new ChartDataModel { Name = "Jackfruit", Value = 50 },
-        new ChartDataModel { Name = "Strawberry" , Value = 12 },
-        new ChartDataModel { Name = "Pomogranate",  Value = 43 },
-        new ChartDataModel { Name = "Watermelon", Value = 35 },
-        new ChartDataModel { Name = "Lemon", Value = 27 },
-        new ChartDataModel { Name = "Grape", Value = 35 },
-        new ChartDataModel { Name = "Guava", Value = 72 },
-        new ChartDataModel { Name = "Apple", Value = 30 },
-        new ChartDataModel { Name = "Banana", Value = 50 },
-        new ChartDataModel { Name = "Raspberries", Value = 10 }
+        new ModelTest(){ URL = "Caca", numberOfFailedRuns = 12, numberOfSuccessRuns = 20, duration = 80, numberOfRuns = 32, isActive = true, status = "Running"},
+        new ModelTest(){ URL = "Caca1", numberOfFailedRuns = 20, numberOfSuccessRuns = 40, duration = 180, numberOfRuns = 60, isActive = false, status = "Failed"},
+        new ModelTest(){ URL = "Caca2", numberOfFailedRuns = 40, numberOfSuccessRuns = 210, duration = 280, numberOfRuns = 332, isActive = true, status = "Success"},
+        new ModelTest(){ URL = "Caca3", numberOfFailedRuns = 60, numberOfSuccessRuns = 250, duration = 77, numberOfRuns = 111, isActive = true, status = "Success"},
+        new ModelTest(){ URL = "Caca4", numberOfFailedRuns = 40, numberOfSuccessRuns = 270, duration = 66, numberOfRuns = 222, isActive = false, status = "Failed"},
+        new ModelTest(){ URL = "Caca5", numberOfFailedRuns = 100, numberOfSuccessRuns = 280, duration = 55, numberOfRuns = 333, isActive = false, status = "Running"},
+       
     };
-
-
+    }
 }
-*@

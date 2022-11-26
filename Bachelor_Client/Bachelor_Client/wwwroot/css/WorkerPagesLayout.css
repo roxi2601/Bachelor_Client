@@ -474,10 +474,10 @@ a.active,a:hover{
 }
 */
 
-
-.containerStatistics {
-    position: absolute;
-    margin-left: 10%; margin-top: 10%;
+.containerStat {
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 5px;
     background-color: rgba(242, 242, 242, 0.90);
 }
 .input-checkbox100 {

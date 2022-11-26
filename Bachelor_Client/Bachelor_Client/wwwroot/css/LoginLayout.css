@@ -30,7 +30,7 @@
 body, html {
 	height: 100%;
 	font-family: Poppins-Regular, sans-serif;
-  background: url("background/background.jpg") no-repeat fixed center;
+    background:   #ebeeef no-repeat fixed center;
 }
 
 a {
@@ -155,7 +155,7 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #ebeeef;
+ 
 }
 
 
