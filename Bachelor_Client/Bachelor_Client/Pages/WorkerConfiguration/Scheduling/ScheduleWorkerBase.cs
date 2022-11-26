@@ -17,13 +17,12 @@ public class ScheduleWorkerBase: ComponentBase
     public string Frequency1 = "1";
 
     public string Frequency2 = "sec";
-    public bool? IsActive = true;
+    public bool IsActive = true;
 
    public void OnActiveChanged(object args)
     {
         if(string.IsNullOrEmpty(args.ToString()))
         {
-            IsActive = null;    
             return;
         }
         

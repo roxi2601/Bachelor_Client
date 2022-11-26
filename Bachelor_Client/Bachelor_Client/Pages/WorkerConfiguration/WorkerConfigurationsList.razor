@@ -107,10 +107,10 @@
 </CascadingAuthenticationState>
 @code {
     private List<WorkerConfiguration> WorkerConfigList = new();
+    WorkerConfiguration worker = new WorkerConfiguration();
     private SendRequestBase GenerateAPICallConfirmation { get; set; }
     private DeleteWorkerConfigBase DeleteWorkerConfigConfirmation { get; set; }
     private ScheduleWorkerBase ScheduleWorkerConfirmation { get; set; }
-    private Worker _worker = new Worker();
     private string errorMessage = "";
     private string SearchText = "";
     protected override async Task OnInitializedAsync()
@@ -138,8 +138,7 @@
     private void ScheduleWorker_Click(WorkerConfiguration workerConfiguration)
     {
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
-        _worker.FkWorkerConfigurationId = workerConfiguration.PkWorkerConfigurationId;
-        _worker.Name = workerConfiguration.Url;
+     
         
         // to show if the current worker is active
         //Worker worker2 =  ScheduleService.GetWorkerByWorkerConfigId(workerConfiguration.PkWorkerConfigurationId);
@@ -151,11 +150,11 @@
     {
         if (confirmed)
         {
-            _worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + ScheduleWorkerConfirmation.Frequency2;
-            _worker.StartDateTime = ScheduleWorkerConfirmation.DateTime;
-            _worker.IsActive = ScheduleWorkerConfirmation.IsActive;
+            worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + ScheduleWorkerConfirmation.Frequency2;
+            worker.StartDate = ScheduleWorkerConfirmation.DateTime;
+            worker.IsActive = ScheduleWorkerConfirmation.IsActive;
             
-            await ScheduleService.CreateWorker(_worker);
+            await ScheduleService.CreateWorker(worker);
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
     }

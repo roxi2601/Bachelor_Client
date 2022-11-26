@@ -6,8 +6,8 @@ namespace Bachelor_Client.Services.Scheduling;
 
 public class ScheduleService : IScheduleService
 {
-    private List<Worker> workers = new();
-    public async Task CreateWorker(Worker worker)
+    private List<WorkerConfiguration> workers = new();
+    public async Task CreateWorker(WorkerConfiguration worker)
     {
         HttpClient httpClient = new HttpClient();
         StringContent content = new StringContent(
@@ -18,8 +18,5 @@ public class ScheduleService : IScheduleService
         HttpResponseMessage responseMessage = await httpClient.PostAsync("https://localhost:7261/scheduleWorker", content);
     }
 
-    public Worker GetWorkerByWorkerConfigId(int id)
-    {
-        return workers.Find(w => w.FkWorkerConfigurationId == id);
-    }
+   
 }

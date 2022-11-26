@@ -1,65 +1,98 @@
 @page "/Statistics"
+@using Syncfusion.Blazor.Charts
 @using Bachelor_Client.Models
+@using Bachelor_Client.Services.WorkerConfig
+@inject IWorkerConfigService WorkerConfigService
 <SfChart>
     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+
     <ChartSeriesCollection>
-        <ChartSeries DataSource="@Sales" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column">
+        <ChartSeries DataSource="@WorkerDetails" Name="NumberOfFailedRuns" XName="Country" Width="2" Opacity="1" YName="NumberOfFailedRuns" Type="ChartSeriesType.Column">
+        </ChartSeries>
+        <ChartSeries DataSource="@WorkerDetails" Name="NumberOSuccessRuns" XName="Country" Width="2" Opacity="1" YName="NumberOSuccessRuns" Type="ChartSeriesType.Column">
+        </ChartSeries>
+    </ChartSeriesCollection>
+</SfChart>
+
+@code{
+    
+    private List<Models.WorkerConfiguration> WorkerConfigList = new();
+    
+    public List<Models.WorkerStatistic> WorkerDetails = new List<Models.WorkerStatistic>
+    {
+        new Models.WorkerStatistic(){ Url= "Cata", NumberOfFailedRuns= 50 },
+       
+    };
+    protected override async Task OnInitializedAsync()
+    {
+        WorkerConfigList = await WorkerConfigService.ReadAllWorkerConfigurations();
+    }
+}
+@*
+
+<SfChart Title="Analysis of Failed Runs">
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
+                       LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
+                       LabelIntersectAction="LabelIntersectAction.Rotate90"
+                       EnableTrim="true" MaximumLabelWidth="38" LabelPosition="AxisPosition.Outside">
+        <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
+        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+        <ChartMultiLevelLabels>
+           
+            <ChartMultiLevelLabel>
+                <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
+                <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
+                </ChartAxisMultiLevelLabelBorder>
+                <ChartCategories>
+                    <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
+                </ChartCategories>
+            </ChartMultiLevelLabel>
+        </ChartMultiLevelLabels>
+    </ChartPrimaryXAxis>
+    <ChartPrimaryYAxis Title="Number Of Failed Runs" Minimum="0" Maximum="100" Interval="10">
+        <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
+        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+    </ChartPrimaryYAxis>
+    <ChartSeriesCollection>
+        <ChartSeries DataSource="@ChartData" XName="Name" YName="Value" Type="ChartSeriesType.Column">
         </ChartSeries>
     </ChartSeriesCollection>
 </SfChart>
 
 @code {
-    public class SalesInfo
+
+    public class ChartDataModel
     {
-        public string Month { get; set;}
-        public double SalesValue { get; set;}
+        public string Name { get; set; }
+        public double Value { get; set; }
     }
-    
-    public List<SalesInfo> Sales = new List<SalesInfo>
-    {
-        new SalesInfo { Month = "Jan", SalesValue = 35 },
-        new SalesInfo { Month = "Feb", SalesValue = 28 },
-        new SalesInfo { Month = "Mar", SalesValue = 34 },
-        new SalesInfo { Month = "Apr", SalesValue = 32 },
-        new SalesInfo { Month = "May", SalesValue = 40 },
-        new SalesInfo { Month = "Jun", SalesValue = 32 },
-        new SalesInfo { Month = "Jul", SalesValue = 35 }
-    };
-}
-@*
-@page "/Statistics"
-@using Bachelor_Client.Models
-@layout WorkerConfigurationsLayout
-@using Syncfusion.Blazor.Charts
- 
-<SfChart>
-    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"/>
-    <ChartSeriesCollection>
-        <ChartSeries DataSource="@MedalDetails" XName="X" YName="Y" Type="ChartSeriesType.Column">
-        </ChartSeries>
-    </ChartSeriesCollection>
-</SfChart>
- 
-@code
+
+    public List<ChartDataModel> ChartData = new List<ChartDataModel>
 {
-    public class ChartData
-    {
-        public string X { get; set; }
-        public double Y { get; set; }
-    }
-    public List<ChartData> MedalDetails = new List<ChartData>
-    {
-        new ChartData { X= "South Korea", Y= 39.4 },
-        new ChartData { X= "India", Y= 61.3 },
-        new ChartData { X= "Pakistan", Y= 20.4 },
-        new ChartData { X= "Germany", Y= 65.1 },
-        new ChartData { X= "Australia", Y= 15.8 },
-        new ChartData { X= "Italy", Y= 29.2 },
-        new ChartData { X= "United Kingdom", Y= 44.6 },
-        new ChartData { X= "Saudi Arabia", Y= 9.7 },
-        new ChartData { X= "Russia", Y= 40.8 },
-        new ChartData { X= "Mexico", Y= 31 },
-        new ChartData { X= "Brazil", Y= 75.9 },
-        new ChartData { X= "China", Y= 51.4 }
+        new ChartDataModel { Name = "Beetroot", Value = 31 },
+        new ChartDataModel { Name = "Tomato" , Value = 89 },
+        new ChartDataModel { Name = "Cucumber",  Value = 62 },
+        new ChartDataModel { Name = "Cabbage",  Value = 48 },
+        new ChartDataModel { Name = "Potato" , Value = 96 },
+        new ChartDataModel { Name = "Turnip", Value = 60 },
+        new ChartDataModel { Name = "Radish", Value = 52 },
+        new ChartDataModel { Name = "Pumpkin", Value = 20 },
+        new ChartDataModel { Name = "Peas", Value = 40 },
+        new ChartDataModel { Name = "Onion", Value = 79 },
+        new ChartDataModel { Name = "Carrot", Value = 53 },
+        new ChartDataModel { Name = "PineApple", Value = 28 },
+        new ChartDataModel { Name = "Jackfruit", Value = 50 },
+        new ChartDataModel { Name = "Strawberry" , Value = 12 },
+        new ChartDataModel { Name = "Pomogranate",  Value = 43 },
+        new ChartDataModel { Name = "Watermelon", Value = 35 },
+        new ChartDataModel { Name = "Lemon", Value = 27 },
+        new ChartDataModel { Name = "Grape", Value = 35 },
+        new ChartDataModel { Name = "Guava", Value = 72 },
+        new ChartDataModel { Name = "Apple", Value = 30 },
+        new ChartDataModel { Name = "Banana", Value = 50 },
+        new ChartDataModel { Name = "Raspberries", Value = 10 }
     };
-}*@
+
+
+}
+*@

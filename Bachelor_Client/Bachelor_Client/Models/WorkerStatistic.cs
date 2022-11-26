@@ -4,15 +4,12 @@ using System.Collections.Generic;
 namespace Bachelor_Client.Models{
     public partial class WorkerStatistic
     {
-        public WorkerStatistic()
-        {
-  //          Workers = new HashSet<Worker>();
-        }
-
         public int PkWorkerStatisticsId { get; set; }
-        public int? NumberOfFailedRuns { get; set; }
-        public string? LastTimeRun { get; set; }
+        public int FkWorkerConfigurationId { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
+        public string? Status { get; set; }
 
-    //    public virtual ICollection<Worker> Workers { get; set; }
+        public virtual WorkerConfiguration FkWorkerConfiguration { get; set; } = null!;
     }
 }
