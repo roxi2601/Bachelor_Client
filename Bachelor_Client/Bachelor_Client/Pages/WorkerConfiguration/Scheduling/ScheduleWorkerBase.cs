@@ -14,7 +14,7 @@ public class ScheduleWorkerBase : ComponentBase
 
     public string Frequency1 = "1";
 
-    public string Frequency2 = "sec";
+    public string Frequency2 = "min";
     public bool IsActive = true;
 
     public void OnActiveChanged(object args)
