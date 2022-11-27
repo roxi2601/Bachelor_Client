@@ -6,8 +6,8 @@ namespace Bachelor_Client.Models{
     {
         public int PkWorkerStatisticsId { get; set; }
         public int FkWorkerConfigurationId { get; set; }
-        public string? StartTime { get; set; }
-        public string? EndTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public string? Status { get; set; }
 
         public virtual WorkerConfiguration FkWorkerConfiguration { get; set; } = null!;
