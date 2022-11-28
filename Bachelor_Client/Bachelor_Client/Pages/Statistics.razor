@@ -65,7 +65,7 @@
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
                                                        LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
                                                        LabelIntersectAction="LabelIntersectAction.Rotate90"
-                                                       EnableTrim="true" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
+                                                       EnableTrim="false" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
                                         <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
                                         <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
                                         <ChartMultiLevelLabels>
@@ -142,7 +142,7 @@
     private List<Models.WorkerConfiguration> WorkerConfigList = new();
     private List<Models.WorkerStatistic> WorkerStatisticsList = new();
 
-    /*public List<ModelTest> WorkerDetails = new List<ModelTest>()
+    public List<ModelTest> WorkerDetails = new List<ModelTest>()
     {
         new ModelTest() { URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running", duration = 20},
         new ModelTest() { URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running", duration = 20},
@@ -164,7 +164,7 @@
         new ModelTest() { URL = "Caca5", numberOfFailedRuns = 100, isActive = false, status = "Running", duration = 5},
         new ModelTest() { URL = "Caca5", numberOfFailedRuns = 100, isActive = false, status = "Running", duration = 5},
         new ModelTest() { URL = "Caca5", numberOfFailedRuns = 100, isActive = false, status = "Running", duration = 5},
-    };*/
+    };
 
     private List<ModelTest> StatisticsToDisplay = new();
     protected override async Task OnInitializedAsync()
@@ -190,8 +190,12 @@
                 {
                     countNumberOfFailedRuns++;
                 }
-                statistics.Add(new ModelTest(){URL = workerConfiguration.Url, duration = calculateDuration.Value.TotalMinutes , isActive = workerConfiguration.IsActive, numberOfFailedRuns = countNumberOfFailedRuns, status = workerStatistic.Status});
-            }
+            statistics.Add(new ModelTest() { URL = workerConfiguration.Url, duration = calculateDuration.Value.TotalMinutes, isActive = workerConfiguration.IsActive, numberOfFailedRuns = countNumberOfFailedRuns, status = workerStatistic.Status });
+            statistics.Add(new ModelTest() { URL = workerConfiguration.Url + "1", duration = calculateDuration.Value.TotalMinutes, isActive = workerConfiguration.IsActive, numberOfFailedRuns = countNumberOfFailedRuns, status = workerStatistic.Status });
+            statistics.Add(new ModelTest() { URL = workerConfiguration.Url + "2", duration = calculateDuration.Value.TotalMinutes, isActive = workerConfiguration.IsActive, numberOfFailedRuns = countNumberOfFailedRuns, status = workerStatistic.Status });
+            statistics.Add(new ModelTest() { URL = workerConfiguration.Url + "3", duration = calculateDuration.Value.TotalMinutes, isActive = workerConfiguration.IsActive, numberOfFailedRuns = countNumberOfFailedRuns, status = workerStatistic.Status });
+            statistics.Add(new ModelTest() { URL = workerConfiguration.Url + "4", duration = calculateDuration.Value.TotalMinutes, isActive = workerConfiguration.IsActive, numberOfFailedRuns = countNumberOfFailedRuns, status = workerStatistic.Status });
+        }
         return statistics;
     }
     
