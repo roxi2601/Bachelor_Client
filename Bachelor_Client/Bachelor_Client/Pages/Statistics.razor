@@ -22,9 +22,9 @@
         </NotAuthorized>
         <Authorized>
             @if (WorkerStatisticsList.Count == 0)
-                                                {
-                                                    <div class="spinner"></div>
-                                                }
+            {
+                <div class="spinner"></div>
+            }
             else
             {
                 <div class="container2">
@@ -44,7 +44,7 @@
                                     </thead>
                                     <tbody>
 
-                                    @foreach (Models.WorkerStatistic workerStatistic in WorkerStatisticsList)
+                                    @foreach (WorkerStatistic workerStatistic in WorkerStatisticsList)
                                     {
                                         <tr>
                                             <td>@workerStatistic.PkWorkerStatisticsId</td>
@@ -93,33 +93,33 @@
                             </div>
                             <div class="containerStat" style="width: 100%; align-content: center; margin-left: 10%">
                                 <SfChart EnableAnimation="true" Title="Analysis Of Successful Runs" Width="100%">
-                                                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
-                                                                                       LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
-                                                                                       LabelIntersectAction="LabelIntersectAction.Rotate90"
-                                                                                       EnableTrim="false" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
-                                                                        <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
-                                                                        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
-                                                                        <ChartMultiLevelLabels>
-                                
-                                                                            <ChartMultiLevelLabel>
-                                                                                <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
-                                                                                <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
-                                                                                </ChartAxisMultiLevelLabelBorder>
-                                                                                <ChartCategories>
-                                                                                    <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
-                                                                                </ChartCategories>
-                                                                            </ChartMultiLevelLabel>
-                                                                        </ChartMultiLevelLabels>
-                                                                    </ChartPrimaryXAxis>
-                                                                    <ChartPrimaryYAxis Title="Number Of Successful Runs" Minimum="0" Maximum="100" Interval="10">
-                                                                        <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
-                                                                        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
-                                                                    </ChartPrimaryYAxis>
-                                                                    <ChartSeriesCollection>
-                                                                        <ChartSeries DataSource="@WorkerStatisticsList" XName="PkWorkerStatisticsId" YName="NumberOfSuccesfulRuns" Type="ChartSeriesType.Column">
-                                                                        </ChartSeries>
-                                                                    </ChartSeriesCollection>
-                                                                </SfChart>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Workers"
+                                                       LabelPlacement="LabelPlacement.OnTicks" EdgeLabelPlacement="EdgeLabelPlacement.Shift"
+                                                       LabelIntersectAction="LabelIntersectAction.Rotate90"
+                                                       EnableTrim="false" MaximumLabelWidth="50" LabelPosition="AxisPosition.Outside">
+                                        <ChartAxisLabelStyle Color="red" FontWeight="bold"></ChartAxisLabelStyle>
+                                        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+                                        <ChartMultiLevelLabels>
+
+                                            <ChartMultiLevelLabel>
+                                                <ChartAxisMultiLevelLabelTextStyle FontWeight="bold"></ChartAxisMultiLevelLabelTextStyle>
+                                                <ChartAxisMultiLevelLabelBorder Type="BorderType.Brace" Color="blue" Width=2>
+                                                </ChartAxisMultiLevelLabelBorder>
+                                                <ChartCategories>
+                                                    <ChartCategory Start="-0.5" End="21.5" Text="Worker Name"></ChartCategory>
+                                                </ChartCategories>
+                                            </ChartMultiLevelLabel>
+                                        </ChartMultiLevelLabels>
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis Title="Number Of Successful Runs" Minimum="0" Maximum="100" Interval="10">
+                                        <ChartAxisLabelStyle Color="blue" FontWeight="bold"></ChartAxisLabelStyle>
+                                        <ChartAxisTitleStyle Color="#ed7d31" FontWeight="bold"></ChartAxisTitleStyle>
+                                    </ChartPrimaryYAxis>
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@WorkerStatisticsList" XName="PkWorkerStatisticsId" YName="NumberOfSuccesfulRuns" Type="ChartSeriesType.Column">
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
                             </div>
                         </div>
                     </div>
@@ -132,46 +132,22 @@
 @code{
     private List<Models.WorkerStatistic> WorkerStatisticsList = new();
     private List<Models.WorkerConfiguration> workerConfigurations = new();
-    
+
     protected override async Task OnInitializedAsync()
     {
         workerConfigurations = await WorkerConfigService.ReadAllWorkerConfigurations();
         WorkerStatisticsList = await WorkerStatisticsService.ReadAllWorkerStatistics();
+        foreach (var VARIABLE in WorkerStatisticsList)
+        {
+            foreach (var VARIABLE1 in workerConfigurations)
+            {
+                if (VARIABLE.FkWorkerConfigurationId.Equals(VARIABLE1.PkWorkerConfigurationId))
+                    VARIABLE.FkWorkerConfiguration = VARIABLE1;
+            }
+            
+        }
     }
- 
-    /*public class ModelTest
-    {
-        public int ID { get; set; }
-        public string URL { get; set; }
-        public double duration { get; set; }
-        public bool isActive { get; set; }
-        public int numberOfFailedRuns { get; set; }
-        public string status { get; set; }
-    }*/
-  /*
-    public List<ModelTest> WorkerDetails = new List<ModelTest>()
-    {
-        new ModelTest() { URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running", duration = 20},
-        new ModelTest() { URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running", duration = 20},
-        new ModelTest() { URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running", duration = 20},
-        new ModelTest() { URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running", duration = 20},
-        new ModelTest() { URL = "Caca", numberOfFailedRuns = 12, isActive = true, status = "Running", duration = 20},
-        new ModelTest() { URL = "Caca1", numberOfFailedRuns = 20, isActive = false, status = "Failed", duration = 50},
-        new ModelTest() { URL = "Caca1", numberOfFailedRuns = 20, isActive = false, status = "Failed", duration = 50},
-        new ModelTest() { URL = "Caca1", numberOfFailedRuns = 20, isActive = false, status = "Failed", duration = 50},
-        new ModelTest() { URL = "Caca2", numberOfFailedRuns = 40, isActive = true, status = "Success", duration = 70},
-        new ModelTest() { URL = "Caca2", numberOfFailedRuns = 40, isActive = true, status = "Success", duration = 70},
-        new ModelTest() { URL = "Caca2", numberOfFailedRuns = 40, isActive = true, status = "Success", duration = 70},
-        new ModelTest() { URL = "Caca3", numberOfFailedRuns = 60, isActive = true, status = "Success", duration = 90},
-        new ModelTest() { URL = "Caca3", numberOfFailedRuns = 60, isActive = true, status = "Success", duration = 90},
-        new ModelTest() { URL = "Caca3", numberOfFailedRuns = 60, isActive = true, status = "Success", duration = 90},
-        new ModelTest() { URL = "Caca4", numberOfFailedRuns = 40, isActive = false, status = "Failed", duration = 10},
-        new ModelTest() { URL = "Caca4", numberOfFailedRuns = 40, isActive = false, status = "Failed", duration = 10},
-        new ModelTest() { URL = "Caca4", numberOfFailedRuns = 40, isActive = false, status = "Failed", duration = 10},
-        new ModelTest() { URL = "Caca5", numberOfFailedRuns = 100, isActive = false, status = "Running", duration = 5},
-        new ModelTest() { URL = "Caca5", numberOfFailedRuns = 100, isActive = false, status = "Running", duration = 5},
-        new ModelTest() { URL = "Caca5", numberOfFailedRuns = 100, isActive = false, status = "Running", duration = 5},
-    };
-    */
+
+
 
 }
