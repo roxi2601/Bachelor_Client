@@ -50,6 +50,7 @@
       <_ContentIncludedByDefault Remove="Shared\MainLayout.razor" />
       <_ContentIncludedByDefault Remove="Shared\NavMenu.razor" />
       <_ContentIncludedByDefault Remove="Shared\SurveyPrompt.razor" />
+      <_ContentIncludedByDefault Remove="Pages\StatisticsCharts\StatisticsCharts.razor" />
     </ItemGroup>
 
     <ItemGroup>
