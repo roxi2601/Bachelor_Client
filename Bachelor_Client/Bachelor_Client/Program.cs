@@ -6,6 +6,7 @@ using Bachelor_Client.Services.Rest;
 using Bachelor_Client.Services.Scheduling;
 using Bachelor_Client.Services.Statistics;
 using Bachelor_Client.Services.WorkerConfig;
+using Blazorise;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -28,9 +29,10 @@ builder.Services.AddAuthorizationCore(
         options.AddPolicy("loggedAdmin", policy => policy.RequireClaim("Type", "admin"));
     }
 );
+
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-
+builder.Services.AddIgniteUIBlazor();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddAuthorizationCore();

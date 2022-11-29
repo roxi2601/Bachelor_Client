@@ -16,4 +16,9 @@ public class WorkerStatistics: IWorkerStatistics
                 .Result);
         return workerStats = workerStatsDeSer;
     }
+
+    public WorkerStatistic GetWorkerStatisticById(int id)
+    {
+        return workerStats.Find(w => w.PkWorkerStatisticsId == id);
+    }
 }
