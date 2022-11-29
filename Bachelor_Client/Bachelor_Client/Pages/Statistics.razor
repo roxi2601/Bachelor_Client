@@ -131,15 +131,15 @@
 
 @code{
     private List<Models.WorkerStatistic> WorkerStatisticsList = new();
-    private List<Models.WorkerConfiguration> workerConfigurations = new();
+    private List<Models.WorkerConfiguration> WorkerConfigurationsList = new();
 
     protected override async Task OnInitializedAsync()
     {
-        workerConfigurations = await WorkerConfigService.ReadAllWorkerConfigurations();
+        WorkerConfigurationsList = await WorkerConfigService.ReadAllWorkerConfigurations();
         WorkerStatisticsList = await WorkerStatisticsService.ReadAllWorkerStatistics();
         foreach (var VARIABLE in WorkerStatisticsList)
         {
-            foreach (var VARIABLE1 in workerConfigurations)
+            foreach (var VARIABLE1 in WorkerConfigurationsList)
             {
                 if (VARIABLE.FkWorkerConfigurationId.Equals(VARIABLE1.PkWorkerConfigurationId))
                     VARIABLE.FkWorkerConfiguration = VARIABLE1;
