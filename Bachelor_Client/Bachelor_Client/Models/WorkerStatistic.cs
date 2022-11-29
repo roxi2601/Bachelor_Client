@@ -10,9 +10,7 @@ namespace Bachelor_Client.Models{
         public int? NumberOfFailedRuns { get; set; }
         public DateTime? LastRunTime { get; set; }
         public decimal? LastRunTimeLengthSec { get; set; }
-
-        public bool IsRowExpanded { get; set; } = false;
-
+        
         public virtual WorkerConfiguration FkWorkerConfiguration { get; set; } = null!;
     }
 }
