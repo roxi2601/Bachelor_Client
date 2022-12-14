@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bachelor_Client", "Bachelor_Client\Bachelor_Client.csproj", "{D83192C0-AE05-4E27-8BCD-FDBB3E5D22F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientTest", "ClientTest\ClientTest.csproj", "{BDBA15D3-C684-4244-BFAB-3621B606094D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{D83192C0-AE05-4E27-8BCD-FDBB3E5D22F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D83192C0-AE05-4E27-8BCD-FDBB3E5D22F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D83192C0-AE05-4E27-8BCD-FDBB3E5D22F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDBA15D3-C684-4244-BFAB-3621B606094D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDBA15D3-C684-4244-BFAB-3621B606094D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDBA15D3-C684-4244-BFAB-3621B606094D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDBA15D3-C684-4244-BFAB-3621B606094D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

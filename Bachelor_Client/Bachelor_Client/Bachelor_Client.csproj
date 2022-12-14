@@ -7,54 +7,54 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AntDesign" Version="0.13.0" />
-        <PackageReference Include="Aspose.Cells" Version="22.10.1" />
-        <PackageReference Include="Blazorise.Charts" Version="1.1.4.1" />
-        <PackageReference Include="bunit" Version="1.12.4-preview" />
-        <PackageReference Include="Chart.js" Version="3.7.1" />
-        <PackageReference Include="ChartJs.Blazor" Version="2.0.0-preview1" />
-       
+        <PackageReference Include="AntDesign" Version="0.13.0"/>
+        <PackageReference Include="Aspose.Cells" Version="22.10.1"/>
+        <PackageReference Include="Blazorise.Charts" Version="1.1.4.1"/>
+        <PackageReference Include="bunit" Version="1.12.4-preview"/>
+        <PackageReference Include="Chart.js" Version="3.7.1"/>
+        <PackageReference Include="ChartJs.Blazor" Version="2.0.0-preview1"/>
+
         <PackageReference Include="coverlet.collector" Version="3.1.2">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-       
-        <PackageReference Include="IgniteUI.Blazor" Version="22.2.24" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
-        <PackageReference Include="RestSharp" Version="108.0.3-alpha.0.5" />
-        <PackageReference Include="Syncfusion.Blazor" Version="20.3.0.58" />
+
+        <PackageReference Include="IgniteUI.Blazor" Version="22.2.24"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2"/>
+        <PackageReference Include="RestSharp" Version="108.0.3-alpha.0.5"/>
+        <PackageReference Include="Syncfusion.Blazor" Version="20.3.0.58"/>
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\Counter.razor" />
-      <_ContentIncludedByDefault Remove="Pages\FetchData.razor" />
-      <_ContentIncludedByDefault Remove="Pages\Index.razor" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\app.css" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\FONT-LICENSE" />
+        <_ContentIncludedByDefault Remove="Pages\Counter.razor"/>
+        <_ContentIncludedByDefault Remove="Pages\FetchData.razor"/>
+        <_ContentIncludedByDefault Remove="Pages\Index.razor"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\app.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\FONT-LICENSE"/>
 
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.eot" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.otf" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.ttf" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.woff" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\ICON-LICENSE" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\README.md" />
-   
-      <_ContentIncludedByDefault Remove="wwwroot\icon-192.png" />
-      <_ContentIncludedByDefault Remove="wwwroot\index.html" />
-      <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
-      <_ContentIncludedByDefault Remove="Shared\MainLayout.razor" />
-      <_ContentIncludedByDefault Remove="Shared\NavMenu.razor" />
-      <_ContentIncludedByDefault Remove="Shared\SurveyPrompt.razor" />
-      <_ContentIncludedByDefault Remove="Pages\StatisticsCharts\StatisticsCharts.razor" />
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.eot"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.otf"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.svg"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.ttf"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\font\fonts\open-iconic.woff"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\ICON-LICENSE"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\README.md"/>
+
+        <_ContentIncludedByDefault Remove="wwwroot\icon-192.png"/>
+        <_ContentIncludedByDefault Remove="wwwroot\index.html"/>
+        <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json"/>
+        <_ContentIncludedByDefault Remove="Shared\MainLayout.razor"/>
+        <_ContentIncludedByDefault Remove="Shared\NavMenu.razor"/>
+        <_ContentIncludedByDefault Remove="Shared\SurveyPrompt.razor"/>
+        <_ContentIncludedByDefault Remove="Pages\StatisticsCharts\StatisticsCharts.razor"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\open-iconic\font\css" />
+        <Folder Include="wwwroot\open-iconic\font\css"/>
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Bachelor_Client;
 using Bachelor_Client.Authentication;
 using Bachelor_Client.Services.Account;
@@ -6,7 +5,6 @@ using Bachelor_Client.Services.Rest;
 using Bachelor_Client.Services.Scheduling;
 using Bachelor_Client.Services.Statistics;
 using Bachelor_Client.Services.WorkerConfig;
-using Blazorise;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.Authorization;

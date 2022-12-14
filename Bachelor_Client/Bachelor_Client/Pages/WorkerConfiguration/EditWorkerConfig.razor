@@ -28,21 +28,6 @@
 </h1>
 
 <main>
-
-@*
-<input id="tabParam" type="radio" name="tabs" checked>
-<label for="tabParam">Parameters</label>
-
-<input id="tabAuth" type="radio" name="tabs">
-<label for="tabAuth">Authorization</label>
-
-<input id="tabHeader" type="radio" name="tabs">
-<label for="tabHeader">Headers</label>
-
-<input id="tabBody" type="radio" name="tabs">
-<label for="tabBody">Body</label>
-*@
-
 <div class="containerEdit">
     <h3 style="color: black;   font-weight: bold; ">
         Edit worker configuration for @_workerConfigurationModel.Url
@@ -383,7 +368,6 @@
 
     [Parameter]
     public string workerConfigID { get; set; }
-
     List<Parameter> parameters = new();
     List<Header> headers = new();
     List<FormDatum> bodies = new();

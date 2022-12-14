@@ -3,14 +3,11 @@ using Aspose.Cells;
 using Aspose.Cells.Utility;
 using Bachelor_Client.Models;
 using Newtonsoft.Json;
-
-
 namespace Bachelor_Client.Services.Rest;
 
 public class RestService : IRestService
 {
     private string CachedContent { get; set; } = "";
-
     public async Task<string> GenerateRequest(WorkerConfiguration workerConfigurationModel, string requestType)
     {
         try
@@ -30,8 +27,6 @@ public class RestService : IRestService
             return e.Message;
         }
     }
-
-
     public Task<string> ExportExcel(string content)
     {
         content = CachedContent;
@@ -70,45 +65,6 @@ public class RestService : IRestService
             status = "File Exported";
         }
         else status = "Cannot export the file";
-
         return Task.FromResult(status);
     }
-
-    // public Task<string> GeneratePostRequestRaw(WorkerConfigurationModel workerConfigurationModel, string rawModelText)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<string> GeneratePostRequestFormData(WorkerConfigurationModel workerConfigurationModel,
-    //     List<FormDataModel> formDataModel)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<string> GeneratePutRequestRaw(WorkerConfigurationModel workerConfigurationModel, string rawModelText)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<string> GeneratePutRequestFormdata(WorkerConfigurationModel workerConfigurationModel,
-    //     List<FormDataModel> formDataModel)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<string> GeneratePatchRequestRaw(WorkerConfigurationModel workerConfigurationModel, string rawModelText)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<string> GeneratePatchRequestFormdata(WorkerConfigurationModel workerConfigurationModel,
-    //     List<FormDataModel> formDataModel)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<string> GenerateDeleteRequest(WorkerConfigurationModel workerConfigurationModel)
-    // {
-    //     throw new NotImplementedException();
-    // }
 }

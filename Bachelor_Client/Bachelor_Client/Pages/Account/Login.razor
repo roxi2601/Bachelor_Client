@@ -1,16 +1,12 @@
 @layout LoginLayout
 @page "/"
 @using Bachelor_Client.Services.Account
-@using Microsoft.AspNetCore.Components.Authorization
 @using Bachelor_Client.Authentication
 @using Bachelor_Client.Models
 @using Bunit.Extensions
-@using System.Security.Claims
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
-
-
 
     <div class="container-login100">
         <div class="wrap-login100">
@@ -33,22 +29,6 @@
                     <span class="focus-input100"></span>
                 </div>
                 <div style="color:red">@errorMessage</div>
-
-                @*<div class="flex-sb-m w-full p-b-30">
-                    <div class="contact100-form-checkbox">
-                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                        <label class="label-checkbox100" for="ckb1">
-                            Remember me
-                        </label>
-                    </div>
-
-                    <div>
-                        <a href="#" class="txt1">
-                            Forgot Password?
-                        </a>
-                    </div>
-                </div>*@
-
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn" @onclick="PerformLogin">
                         Login

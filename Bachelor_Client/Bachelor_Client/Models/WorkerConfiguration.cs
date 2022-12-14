@@ -10,7 +10,6 @@ namespace Bachelor_Client.Models
             FormData = new HashSet<FormDatum>();
             Headers = new HashSet<Header>();
             Parameters = new HashSet<Parameter>();
-            //    Workers = new HashSet<Worker>();
         }
 
         public int PkWorkerConfigurationId { get; set; }
@@ -37,6 +36,5 @@ namespace Bachelor_Client.Models
 
         public bool IsActive { get; set; }
         public DateTime? StartDate { get; set; }
-        //       public virtual ICollection<Worker> Workers { get; set; }
     }
 }

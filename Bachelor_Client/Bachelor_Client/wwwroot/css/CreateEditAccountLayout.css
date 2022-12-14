@@ -1,11 +1,12 @@
 body {
-    margin:  0;
+    margin: 0;
     background: url("background/background.jpg") no-repeat fixed center;
     background-size: cover;
 }
+
 .page-content {
     width: 100%;
-    margin:  0 auto;
+    margin: 0 auto;
     display: flex;
     display: -webkit-flex;
     justify-content: center;
@@ -19,7 +20,8 @@ body {
     -moz-align-items: center;
     -webkit-align-items: center;
 }
-.form-v9-content  {
+
+.form-v9-content {
     width: 975px;
     border-radius: 15px;
     -o-border-radius: 15px;
@@ -33,10 +35,12 @@ body {
     font-size: 16px;
     position: relative;
 }
+
 .form-v9-content .form-detail {
     padding: 30px 135px 30px 100px;
     position: relative;
 }
+
 .form-v9-content .form-detail h2 {
     font-size: 35px;
     text-align: center;
@@ -44,6 +48,7 @@ body {
     padding: 16px 0 13px;
     margin-bottom: 55px;
 }
+
 .form-v9-content .form-detail h2::after {
     background: #fff;
     width: 73px;
@@ -58,6 +63,7 @@ body {
     -moz-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
 }
+
 .form-v9-content .form-row-total {
     display: flex;
     display: -webkit-flex;
@@ -67,16 +73,20 @@ body {
     -moz-justify-content: space-between;
     -webkit-justify-content: space-between;
 }
+
 .form-v9-content .form-row {
     width: 45%;
 }
+
 .form-v9-content .form-detail .form-row-last {
     text-align: center;
 }
+
 .form-v9-content .form-detail .input-text {
     margin-bottom: 45px;
 }
-.userType{
+
+.userType {
 
     width: 100%;
     padding: 14.5px 0px 14.5px 30px;
@@ -102,8 +112,8 @@ body {
     background: rgba(255, 255, 255, 0.2)
 
 }
-button
-{
+
+button {
     margin-inside: 20%;
     width: 100%;
     padding: 14.5px 0px 14.5px 30px;
@@ -128,7 +138,8 @@ button
     font-weight: 700;
     background: rgba(255, 255, 255, 0.2)
 }
-.form-v9-content .form-detail input  {
+
+.form-v9-content .form-detail input {
     width: 100%;
     padding: 14.5px 0px 14.5px 30px;
     border: 2px solid #ccc;
@@ -152,9 +163,11 @@ button
     font-weight: 700;
     background: rgba(255, 255, 255, 0.2)
 }
+
 .form-v9-content .form-detail input:focus {
     border: 2px solid #999;
 }
+
 .form-v9-content .form-detail .register {
     background: #f25d5d;
     border-radius: 25px;
@@ -176,35 +189,41 @@ button
     font-weight: 700;
     font-size: 16px;
 }
+
 .form-v9-content .form-detail .register:hover {
     background: #d95252;
 }
+
 .form-v9-content .form-detail .form-row-last input {
     padding: 14px;
 }
-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #e5e5e5;
-    font-size: 16px;
-}
-input::-moz-placeholder { /* Firefox 19+ */
-    color: #e5e5e5;
-    font-size: 16px;
-}
-input:-ms-input-placeholder { /* IE 10+ */
-    color: #e5e5e5;
-    font-size: 16px;
-}
-input:-moz-placeholder { /* Firefox 18- */
+
+input::-webkit-input-placeholder { 
     color: #e5e5e5;
     font-size: 16px;
 }
 
-/* Responsive */
+input::-moz-placeholder {
+    color: #e5e5e5;
+    font-size: 16px;
+}
+
+input:-ms-input-placeholder {
+    color: #e5e5e5;
+    font-size: 16px;
+}
+
+input:-moz-placeholder { 
+    color: #e5e5e5;
+    font-size: 16px;
+}
+
 @media screen and (max-width: 1199px) {
     .form-v9-content {
         margin: 185px 20px;
     }
 }
+
 @media screen and (max-width: 767px) {
     .form-v9-content .form-row-total {
         flex-direction: column;
@@ -213,10 +232,12 @@ input:-moz-placeholder { /* Firefox 18- */
         -moz-flex-direction: column;
         -webkit-flex-direction: column;
     }
+
     .form-v9-content .form-row {
         width: 100%;
     }
 }
+
 @media screen and (max-width: 575px) {
     .form-v9-content .form-detail {
         padding: 30px 45px 30px 10px;

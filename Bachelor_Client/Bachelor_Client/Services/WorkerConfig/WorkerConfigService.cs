@@ -7,8 +7,6 @@ namespace Bachelor_Client.Services.WorkerConfig;
 public class WorkerConfigService : IWorkerConfigService
 {
     private List<WorkerConfiguration> workerConfigs = new();
-
-
     public async Task CreateWorkerConfiguration(WorkerConfiguration workerConfiguration)
     {
         HttpClient httpClient = new HttpClient();
@@ -20,7 +18,6 @@ public class WorkerConfigService : IWorkerConfigService
         HttpResponseMessage responseMessage =
             await httpClient.PostAsync("https://localhost:7261/workerConfig", content);
     }
-
     public async Task EditWorkerConfiguration(WorkerConfiguration workerConfigurationModel)
     {
         HttpClient httpClient = new HttpClient();
@@ -32,12 +29,10 @@ public class WorkerConfigService : IWorkerConfigService
         HttpResponseMessage responseMessage =
             await httpClient.PatchAsync("https://localhost:7261/workerConfig/", content);
     }
-
     public WorkerConfiguration GetWorkerConfigurationById(int workerConfigId)
     {
         return workerConfigs.Find(w => w.PkWorkerConfigurationId == workerConfigId);
     }
-
     public async Task<List<WorkerConfiguration>> ReadAllWorkerConfigurations()
     {
         HttpClient httpClient = new HttpClient();
@@ -48,14 +43,10 @@ public class WorkerConfigService : IWorkerConfigService
                 .Result);
         return workerConfigs = workerConfigsDeSer;
     }
-
-    
-
     public async Task DeleteWorkerConfiguration(int workerConfigId)
     {
         HttpClient httpClient = new HttpClient();
         HttpResponseMessage responseMessage =
             await httpClient.DeleteAsync("https://localhost:7261/workerConfig/" + $"{workerConfigId}");
-        // if(responseMessage.Content.)
     }
 }

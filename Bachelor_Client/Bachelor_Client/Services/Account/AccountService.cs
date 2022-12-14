@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Bachelor_Client.Models;
 using Newtonsoft.Json;
 
 namespace Bachelor_Client.Services.Account;

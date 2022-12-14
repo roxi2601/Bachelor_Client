@@ -2,11 +2,9 @@
 @layout WorkerConfigurationsLayout
 @using Bunit.Extensions
 @using Bachelor_Client.Services.WorkerConfig
-@using Microsoft.AspNetCore.Components.Authorization
 @using Bachelor_Client.Models
 @inject IWorkerConfigService _WorkerService
 @inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthenticationStateProvider
 <CascadingAuthenticationState>
 <AuthorizeView >
 <NotAuthorized>
@@ -510,33 +508,19 @@
         {
             Url = url,
             FkRaw = new Raw
-            {
-                Text = Body_Raw
-            },
+            {Text = Body_Raw },
             FormData = bodies,
             LastSavedAuth = authorizationType,
             LastSavedBody = bodyType,
             RequestType = requestType,
             FkApikey = new Apikey
-            {
-                AddTo = APIKEY_AddTo,
-                Key = APIKey_KEY,
-                Value = APIKey_Value
-            },
+            { AddTo = APIKEY_AddTo, Key = APIKey_KEY, Value = APIKey_Value },
             FkBasicAuth = new BasicAuth
-            {
-                Password = BasicAuth_Password,
-                Username = BasicAuth_Username
-            },
+            { Password = BasicAuth_Password, Username = BasicAuth_Username },
             FkBearerToken = new BearerToken
-            {
-                Token = BearerToken_Token
-            },
+            { Token = BearerToken_Token },
             FkOauth20 = new Oauth20
-            {
-                AccessToken = OAuth2_AccessToken,
-                HeaderPrefix = OAuth2_HeaderPrefix
-            },
+            { AccessToken = OAuth2_AccessToken, HeaderPrefix = OAuth2_HeaderPrefix },
             Parameters = parameters,
             Headers = headers
         };

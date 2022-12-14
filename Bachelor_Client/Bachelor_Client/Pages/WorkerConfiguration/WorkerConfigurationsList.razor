@@ -3,10 +3,7 @@
 @using Bachelor_Client.Pages.WorkerConfiguration.SendRequest
 @using Bachelor_Client.Services.Rest
 @using Bachelor_Client.Services.WorkerConfig
-@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Components.Rendering
 @using Bachelor_Client.Models
-@using Bachelor_Client.Authentication
 @using Bachelor_Client.Pages.WorkerConfiguration.Scheduling
 @using Bachelor_Client.Services.Scheduling
 @inject NavigationManager NavigationManager
@@ -17,10 +14,7 @@
 <CascadingAuthenticationState>
     <AuthorizeView>
         <Authorized>
-
             <div class="worker-configlist py-4">
-
-
                 <div class="container">
                     <div class="row">
                         <h3> Worker Configurations </h3>
@@ -149,12 +143,6 @@
     {
         ScheduleWorkerConfirmation.ID = workerConfiguration.PkWorkerConfigurationId;
         worker = WorkerConfigService.GetWorkerConfigurationById(workerConfiguration.PkWorkerConfigurationId);
-
-
-    // to show if the current worker is active
-    //Worker worker2 =  ScheduleService.GetWorkerByWorkerConfigId(workerConfiguration.PkWorkerConfigurationId);
-    //ScheduleWorkerConfirmation.IsActive = worker2.IsActive;
-
         ScheduleWorkerConfirmation.Show();
     }
 
@@ -162,10 +150,10 @@
     {
         if (confirmed)
         {
-            worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + "/" + ScheduleWorkerConfirmation.Frequency2;
+            worker.ScheduleRate = ScheduleWorkerConfirmation.Frequency1 + "/" + 
+                                  ScheduleWorkerConfirmation.Frequency2;
             worker.StartDate = ScheduleWorkerConfirmation.DateTime;
             worker.IsActive = ScheduleWorkerConfirmation.IsActive;
-
             await ScheduleService.CreateWorker(worker);
             NavigationManager.NavigateTo("/WorkerConfigurationsList", true);
         }
