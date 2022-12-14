@@ -78,10 +78,6 @@
             {
                 displayMessage = await AccountService.EditAccount(account);
                 Console.WriteLine(displayMessage);
-                if (displayMessage.Equals("Account edited successfully"))
-                {
-                    NavigationManager.NavigateTo("/AccountsList");
-                }
             }
             else
             {
